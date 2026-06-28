@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DAY_03 CSS Fundamentals</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <!-- Header -->
+    <header>
+      <nav>
+        <h2 class="logo">MyBlog</h2>
+
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Articles</a></li>
+          <li><a href="#">Categories</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Main -->
+    <main>
+      <!-- Article -->
+      <article class="article">
+        <h4 class="category">Web Development</h4>
+
+        <h1>The Future of Web Development</h1>
+
+        <p class="subtitle">
+          Exploring the upcoming trends and technologies that will shape the
+          web.
+        </p>
+
+        <div class="author-info">
+          <img
+            src="./assets/profile photo.jpg"
+            alt="Jagan Reddy Profile"
+            class="profile-photo"
+          />
+
+          <div>
+            <h4>By Jagan Reddy</h4>
+            <p>May 28, 2026 • 5 min read</p>
+          </div>
+        </div>
+
+        <img
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxZoRXS5mJd5At0FCX0iBdzogFkH0mAmKky6YP-J9HGQ&s=10"
+          alt="Web Development Illustration"
+          class="featured-image"
+        />
+
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate,
+          exercitationem nemo architecto placeat nobis facere nostrum quae velit
+          eum unde amet dicta impedit illum sint harum ullam vel aperiam
+          reiciendis.
+        </p>
+
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
+          accusamus a natus quibusdam beatae autem soluta, modi neque
+          repellendus ullam perspiciatis.
+        </p>
+
+        <blockquote class="quote-box">
+          <p>"The best way to predict the future is to invent it."</p>
+          <cite>— Alan Kay</cite>
+        </blockquote>
+
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit impedit
+          eum possimus molestias suscipit. Odio deserunt mollitia consequatur
+          nesciunt repudiandae non voluptatum repellat nostrum pariatur dolorem,
+          suscipit ut corporis architecto.
+        </p>
+
+        <p>
+          Porro mollitia expedita debitis voluptas accusantium nam. Pariatur
+          reiciendis eos eveniet maxime facere quas iure optio illum at aliquid
+          qui illo aliquam nihil dolorem dignissimos quibusdam error recusandae.
+        </p>
+
+        <a href="#" class="btn">Read More Article →</a>
+      </article>
+
+      <!-- Sidebar -->
+      <aside>
+        <section class="about-author">
+          <h2>About the Author</h2>
+
+          <img src="./assets/profile photo.jpg" alt="Jagan Reddy" />
+
+          <h3>Jagan Reddy</h3>
+
+          <p>
+            Frontend Developer and tech enthusiast passionate about building
+            beautiful, modern and responsive web applications.
+          </p>
+
+          <div class="social-links">
+            <a href="#" aria-label="GitHub"
+              ><i class="fa-brands fa-github"></i
+            ></a>
+            <a href="#" aria-label="LinkedIn"
+              ><i class="fa-brands fa-linkedin-in"></i
+            ></a>
+          </div>
+        </section>
+
+        <section class="categories">
+          <h2>Categories</h2>
+
+          <ul>
+            <li>Web Development</li>
+            <li>JavaScript</li>
+            <li>CSS</li>
+            <li>HTML</li>
+            <li>Career</li>
+          </ul>
+        </section>
+
+        <section class="popular-articles">
+          <h2>Popular Articles</h2>
+
+          <div class="popular-card">
+            <img src="https://picsum.photos/100?1" alt="JavaScript" />
+
+            <div>
+              <h4>Why JavaScript is the Language of the Web</h4>
+              <p>May 20, 2025</p>
+            </div>
+          </div>
+
+          <div class="popular-card">
+            <img src="https://picsum.photos/100?2" alt="CSS Flexbox" />
+
+            <div>
+              <h4>Mastering CSS Flexbox Layout</h4>
+              <p>May 26, 2025</p>
+            </div>
+          </div>
+
+          <div class="popular-card">
+            <img src="https://picsum.photos/100?3" alt="VS Code Extensions" />
+
+            <div>
+              <h4>Top 10 VS Code Extensions</h4>
+              <p>Jan 10, 2026</p>
+            </div>
+          </div>
+        </section>
+      </aside>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-container">
+        <section class="footer-about">
+          <h2>MyBlog</h2>
+
+          <p>
+            Sharing knowledge about modern web development, programming,
+            JavaScript and software engineering.
+          </p>
+        </section>
+
+        <section class="quick-links">
+          <h2>Quick Links</h2>
+
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Articles</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </section>
+
+        <section class="newsletter">
+          <h2>Newsletter</h2>
+
+          <p>Subscribe to receive the latest articles and tutorials.</p>
+
+          <input type="email" placeholder="Enter your email" />
+
+          <button type="submit">Subscribe</button>
+        </section>
+      </div>
+
+      <hr />
+
+      <p class="copyright">© 2026 MyBlog. All Rights Reserved.</p>
+    </footer>
+  </body>
+</html>
