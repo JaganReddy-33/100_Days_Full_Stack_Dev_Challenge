@@ -36,7 +36,7 @@ A responsive blog article layout inspired by modern blogging platforms.
 
 ---
 
-### 2️⃣ Professional Profile Card
+### 2️⃣ Professional Developer Profile Card
 
 A modern developer profile card showcasing personal information and skills.
 
