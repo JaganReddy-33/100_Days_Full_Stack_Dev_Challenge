@@ -1,0 +1,82 @@
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: rgb(248, 230, 230);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.product-card {
+    background-color: white;
+    box-shadow: 0 10px 20px rgba(0,0, 0, 0.1);
+    width: 350px;
+    border: none;
+    border-radius: 14px;
+    position: relative;
+    overflow: hidden;
+}
+
+.product-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius:14px 14px 0 0;
+}
+
+.card-details {
+    padding: 20px;
+}
+
+.product-title {
+    margin: 0 30px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #34495e;
+}
+
+.product-price {
+    font-size: 18px;
+    font-weight: bold;
+    color: #e74c3c;
+    margin-bottom: 10px;
+}
+
+.product-info {
+    color: #7f8c8d;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.add-to-cart-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background-color: #3498db;
+    width: 100%;
+    color:white;
+    padding: 12px 0;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    border-radius: 6px;
+
+}
+
+.discount-badge{
+    position: absolute;
+    top: -5px;
+    right: -35px;
+    background-color: red;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0, 0.2);
+    padding: 10px 40px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    transform: rotate(45deg);
+}
+
+
