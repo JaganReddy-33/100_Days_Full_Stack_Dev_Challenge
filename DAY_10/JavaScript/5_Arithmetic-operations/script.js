@@ -84,11 +84,9 @@ console.log(area);
 
 // circle area 
 const PI = 3.14;
-
 let radius = 7;
-
-let area = PI * radius * radius;
-console.log(area);
+let circleArea = PI * radius * radius;
+console.log(circleArea);
 
 // celsius to fahrenheit
 let celsius = 30;

@@ -1,6 +1,5 @@
 //!----PRIMITIVE DATA TYPES---
 
-
 // Number - Storing age
 const age = 25;
 console.log(age);
@@ -74,11 +73,11 @@ console.log(fruits[0]);
 console.log(fruits[3]);
 
 // typeof
-let name = "Jagan";
-let age = 21;
+let name2 = "Jagan";
+let age2 = 21;
 let isPlaced = false;
-console.log(typeof name);
-console.log(typeof age);
+console.log(typeof name2);
+console.log(typeof age2);
 console.log(typeof isPlaced);
 
 console.log(typeof []);
