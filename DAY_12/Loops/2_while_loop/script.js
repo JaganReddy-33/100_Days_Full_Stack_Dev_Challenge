@@ -18,7 +18,6 @@ while(j>=1){
 }
 
 
-
 // Print odd numbers from 1 to 50.
 let k = 1;
 while(k<=50){

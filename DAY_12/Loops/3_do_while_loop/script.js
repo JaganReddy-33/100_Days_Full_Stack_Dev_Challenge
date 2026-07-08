@@ -56,7 +56,6 @@ do {
 } while (i6 <= 10);
 
 
-
 // Q7: Print this pattern: 
 // 5
 // 44 

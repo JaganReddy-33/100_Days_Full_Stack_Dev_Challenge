@@ -70,3 +70,27 @@ for(let i=1; i<=5; i++){
     console.log(row); 
 }
 
+
+//  Number pyramid:
+// 1
+// 12
+// 123
+// 1234
+// 12345
+for(let i=1; i<=5; i++){
+    let row = "";
+    for(let j=1; j<=i; j++){
+        row += j;
+    }
+    console.log(row);
+}
+
+console.log("\n");
+
+for(let i=5; i>=1; i--){
+    let row = "";
+    for(let j=1; j<=i; j++){
+        row += j;
+    }
+    console.log(row);
+}
