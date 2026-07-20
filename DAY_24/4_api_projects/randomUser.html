@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Random User</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: #f0f2f5;
+      }
+      #user {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        line-height: 1.6;
+      }
+      img {
+        border-radius: 50%;
+        margin-bottom: 15px;
+        border: 3px solid #007bff;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="user">
+      <p>Loading user data...</p>
+    </div>
+
+    <script>
+      const userData = document.getElementById("user");
+
+      async function user() {
+        try {
+          const res = await fetch("https://randomuser.me/api/");
+          if (!res.ok) throw new Error("Network response error");
+
+          const data = await res.json();
+          const result = data.results[0];
+
+          userData.innerHTML = `
+            <img src="${result.picture.large}" alt="${result.name.first}'s profile picture">
+            <h3>${result.name.title}. ${result.name.first} ${result.name.last}</h3>
+            <p><strong>Email:</strong> ${result.email}</p>
+            <p><strong>Phone Number:</strong> ${result.phone}</p>
+            <p><strong>Gender:</strong> ${result.gender}</p>
+            <p><strong>Country:</strong> ${result.location.country}</p>
+          `;
+        } catch (error) {
+          userData.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+        }
+      }
+
+      user();
+    </script>
+  </body>
+</html>
