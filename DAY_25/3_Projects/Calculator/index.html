@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Standard Calculator</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #0f172a;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+    .calculator {
+      background-color: #1e293b;
+      padding: 1.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+      width: 100%;
+      max-width: 340px;
+    }
+    .screen {
+      width: 100%;
+      background-color: #0f172a;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      margin-bottom: 1.25rem;
+      text-align: right;
+    }
+    #history {
+      font-size: 0.875rem;
+      color: #64748b;
+      min-height: 1.25rem;
+      word-wrap: break-word;
+      word-break: break-all;
+    }
+    #display {
+      font-size: 2.25rem;
+      color: #f8fafc;
+      font-weight: 700;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      margin-top: 0.25rem;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+    }
+    button {
+      aspect-ratio: 1;
+      font-size: 1.5rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      color: #f8fafc;
+      background-color: #334155;
+      transition: background-color 0.1s;
+    }
+    button:hover {
+      background-color: #475569;
+    }
+    button.operator {
+      background-color: #f97316;
+    }
+    button.operator:hover {
+      background-color: #ea580c;
+    }
+    button.clear {
+      background-color: #ef4444;
+      grid-column: span 2;
+      aspect-ratio: auto;
+    }
+    button.clear:hover {
+      background-color: #dc2626;
+    }
+    button.equal {
+      background-color: #22c55e;
+      grid-column: span 2;
+      aspect-ratio: auto;
+    }
+    button.equal:hover {
+      background-color: #16a34a;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="calculator">
+    <div class="screen">
+      <div id="history"></div>
+      <div id="display">0</div>
+    </div>
+    <div class="grid">
+      <button class="clear" data-type="clear">Clear</button>
+      <button class="operator" data-type="operator" data-val="/">÷</button>
+      <button class="operator" data-type="operator" data-val="*">×</button>
+      
+      <button class="number" data-type="number" data-val="7">7</button>
+      <button class="number" data-type="number" data-val="8">8</button>
+      <button class="number" data-type="number" data-val="9">9</button>
+      <button class="operator" data-type="operator" data-val="-">−</button>
+      
+      <button class="number" data-type="number" data-val="4">4</button>
+      <button class="number" data-type="number" data-val="5">5</button>
+      <button class="number" data-type="number" data-val="6">6</button>
+      <button class="operator" data-type="operator" data-val="+">+</button>
+      
+      <button class="number" data-type="number" data-val="1">1</button>
+      <button class="number" data-type="number" data-val="2">2</button>
+      <button class="number" data-type="number" data-val="3">3</button>
+      <button class="number" data-type="number" data-val=".">.</button>
+      
+      <button class="number" data-type="number" data-val="0">0</button>
+      <button class="equal" data-type="equal">=</button>
+    </div>
+  </div>
+
+  <script>
+    const displayElement = document.getElementById("display");
+    const historyElement = document.getElementById("history");
+    const grid = document.querySelector(".grid");
+
+    let firstOperand = null;
+    let operator = null;
+    let waitingForSecondOperand = false;
+    let currentDisplayValue = "0";
+
+    function updateScreen() {
+      displayElement.textContent = currentDisplayValue;
+      if (operator && firstOperand !== null) {
+        let opSymbol = operator === "*" ? "×" : operator === "/" ? "÷" : operator;
+        historyElement.textContent = `${firstOperand} ${opSymbol}`;
+      } else {
+        historyElement.textContent = "";
+      }
+    }
+
+    function inputDigit(digit) {
+      if (waitingForSecondOperand) {
+        currentDisplayValue = digit;
+        waitingForSecondOperand = false;
+      } else {
+        currentDisplayValue = currentDisplayValue === "0" ? digit : currentDisplayValue + digit;
+      }
+    }
+
+    function inputDecimal(dot) {
+      if (waitingForSecondOperand) {
+        currentDisplayValue = "0.";
+        waitingForSecondOperand = false;
+        return;
+      }
+      if (!currentDisplayValue.includes(dot)) {
+        currentDisplayValue += dot;
+      }
+    }
+
+    function handleOperator(nextOperator) {
+      const inputValue = parseFloat(currentDisplayValue);
+
+      if (currentDisplayValue === "Error") return;
+
+      if (operator && waitingForSecondOperand) {
+        operator = nextOperator;
+        return;
+      }
+
+      if (firstOperand === null && !isNaN(inputValue)) {
+        firstOperand = inputValue;
+      } else if (operator) {
+        const result = calculate(firstOperand, inputValue, operator);
+        
+        if (result === "Error") {
+          currentDisplayValue = "Error";
+          firstOperand = null;
+          operator = null;
+          waitingForSecondOperand = false;
+          return;
+        }
+
+        currentDisplayValue = `${parseFloat(result.toFixed(8))}`;
+        firstOperand = parseFloat(result.toFixed(8));
+      }
+
+      waitingForSecondOperand = true;
+      operator = nextOperator;
+    }
+
+    function calculate(first, second, op) {
+      if (op === "+") return first + second;
+      if (op === "-") return first - second;
+      if (op === "*") return first * second;
+      if (op === "/") {
+        if (second === 0) return "Error";
+        return first / second;
+      }
+      return second;
+    }
+
+    function handleEqual() {
+      if (operator === null || waitingForSecondOperand) return;
+
+      const inputValue = parseFloat(currentDisplayValue);
+      const result = calculate(firstOperand, inputValue, operator);
+
+      if (result === "Error") {
+        currentDisplayValue = "Error";
+      } else {
+        currentDisplayValue = `${parseFloat(result.toFixed(8))}`;
+      }
+      
+      firstOperand = null;
+      operator = null;
+      waitingForSecondOperand = false;
+    }
+
+    function resetCalculator() {
+      firstOperand = null;
+      operator = null;
+      waitingForSecondOperand = false;
+      currentDisplayValue = "0";
+    }
+
+    grid.addEventListener("click", (event) => {
+      const { target } = event;
+      if (!target.matches("button")) return;
+
+      const type = target.dataset.type;
+      const val = target.dataset.val;
+
+      switch (type) {
+        case "number":
+          if (val === ".") {
+            inputDecimal(val);
+          } else {
+            inputDigit(val);
+          }
+          break;
+        case "operator":
+          handleOperator(val);
+          break;
+        case "equal":
+          handleEqual();
+          break;
+        case "clear":
+          resetCalculator();
+          break;
+      }
+      updateScreen();
+    });
+  </script>
+
+</body>
+</html>

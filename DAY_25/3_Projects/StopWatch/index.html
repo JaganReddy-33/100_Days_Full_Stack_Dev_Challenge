@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stopwatch</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #0f172a;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+    .wrapper {
+      text-align: center;
+      background-color: #1e293b;
+      padding: 2.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+      width: 90%;
+      max-width: 400px;
+    }
+    .display {
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: #f8fafc;
+      font-variant-numeric: tabular-nums;
+      margin-bottom: 2rem;
+    }
+    .ms {
+      font-size: 2rem;
+      color: #38bdf8;
+    }
+    .controls {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+    button {
+      flex: 1;
+      padding: 0.75rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      color: #fff;
+    }
+    button:hover {
+      opacity: 0.9;
+    }
+    #startBtn { background-color: #22c55e; }
+    #pauseBtn { background-color: #eab308; }
+    #resetBtn { background-color: #ef4444; }
+  </style>
+</head>
+<body>
+
+  <div class="wrapper">
+    <div class="display">
+      <span id="timeDisplay">00:00:00</span><span class="ms" id="msDisplay">.00</span>
+    </div>
+    <div class="controls">
+      <button id="startBtn">Start</button>
+      <button id="pauseBtn">Pause</button>
+      <button id="resetBtn">Reset</button>
+    </div>
+  </div>
+
+  <script>
+    let timer = null;
+    let startTime = 0;
+    let elapsedTime = 0;
+
+    const timeDisplay = document.getElementById("timeDisplay");
+    const msDisplay = document.getElementById("msDisplay");
+    const startBtn = document.getElementById("startBtn");
+    const pauseBtn = document.getElementById("pauseBtn");
+    const resetBtn = document.getElementById("resetBtn");
+
+    function updateTime() {
+      const now = Date.now();
+      elapsedTime = now - startTime;
+
+      let totalSeconds = Math.floor(elapsedTime / 1000);
+      let minutes = Math.floor(totalSeconds / 60);
+      let seconds = totalSeconds % 60;
+      let hours = Math.floor(minutes / 60);
+      minutes = minutes % 60;
+      
+      let ms = Math.floor((elapsedTime % 1000) / 10);
+
+      let hStr = String(hours).padStart(2, "0");
+      let mStr = String(minutes).padStart(2, "0");
+      let sStr = String(seconds).padStart(2, "0");
+      let msStr = String(ms).padStart(2, "0");
+
+      timeDisplay.textContent = `${hStr}:${mStr}:${sStr}`;
+      msDisplay.textContent = `.${msStr}`;
+    }
+
+    startBtn.addEventListener("click", () => {
+      if (!timer) {
+        startTime = Date.now() - elapsedTime;
+        timer = setInterval(updateTime, 10);
+      }
+    });
+
+    pauseBtn.addEventListener("click", () => {
+      if (timer) {
+        clearInterval(timer);
+        timer = null;
+      }
+    });
+
+    resetBtn.addEventListener("click", () => {
+      clearInterval(timer);
+      timer = null;
+      startTime = 0;
+      elapsedTime = 0;
+      timeDisplay.textContent = "00:00:00";
+      msDisplay.textContent = ".00";
+    });
+  </script>
+
+</body>
+</html>
