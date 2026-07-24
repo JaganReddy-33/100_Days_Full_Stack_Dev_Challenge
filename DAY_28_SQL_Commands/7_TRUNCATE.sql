@@ -1,0 +1,10 @@
+
+-- TRUNCATE Command
+
+SET FOREIGN_KEY_CHECKS = 0;
+
+TRUNCATE TABLE enrollment;
+TRUNCATE TABLE course;
+TRUNCATE TABLE student_details;
+
+SET FOREIGN_KEY_CHECKS = 1;
