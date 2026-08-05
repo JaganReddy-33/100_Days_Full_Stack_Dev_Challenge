@@ -79,7 +79,6 @@ Day_37/
 │
 ├── 01_Triggers.sql
 └── README.md
-```
 
 ---
 
