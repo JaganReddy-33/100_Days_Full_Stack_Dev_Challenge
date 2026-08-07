@@ -1,0 +1,70 @@
+.profile-card {
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  width: 280px;
+  padding: 20px;
+  text-align: center;
+  background-color: #ffffff;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.profile-img {
+  height: 120px;
+  width: 120px;
+  border-radius: 50%;
+  border: 3px solid #f0f0f0;
+  object-fit: cover;
+}
+
+.profile-name {
+  font-size: 20px;
+  margin: 15px 0 5px 0;
+  color: #333;
+}
+
+.profile-role {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.profile-location {
+  margin: 5px 0 15px 0;
+  color: #888;
+  font-size: 13px;
+}
+
+.skills-section {
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+.skills-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 5px;
+}
+
+.skill-badge {
+  background-color: #e0f2fe;
+  color: #0369a1;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.github-section {
+  margin: 0;
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+  font-size: 14px;
+}
+
+.github-link {
+  color: #0066cc;
+  text-decoration: none;
+  font-weight: bold;
+}
