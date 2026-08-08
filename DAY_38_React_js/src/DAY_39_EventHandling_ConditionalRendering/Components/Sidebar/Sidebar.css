@@ -71,6 +71,7 @@
 .counter .buttons-list {
   display: flex !important;
   justify-content: space-evenly !important;
+  gap: 18px !important;
 }
 
 .counter button {
