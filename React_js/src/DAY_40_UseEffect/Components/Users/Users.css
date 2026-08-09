@@ -1,0 +1,109 @@
+.Card-section {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 40px auto;
+    max-width: 1200px;
+    gap: 25px;
+    padding: 0 20px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.user-card {
+    background-color: #ffffff;
+    color: #4a5568;
+    padding: 24px;
+    border-radius: 16px;
+    border: 2px solid #f19ab8;
+    box-shadow: 0 4px 15px rgba(241, 154, 184, 0.15);
+    flex: 1 1 calc(33.333% - 25px);
+    min-width: 280px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.user-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 24px rgba(241, 154, 184, 0.25);
+}
+
+.user-card h2 {
+    color: #1a202c;
+    font-size: 1.4rem;
+    margin: 0 0 16px 0;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(241, 154, 184, 0.3);
+}
+
+.user-card p {
+    margin: 6px 0;
+    font-size: 0.95rem;
+    color: #4a5568;
+}
+
+.user-card strong {
+    color: #d15b81;
+    font-weight: 600;
+}
+
+.user-card a {
+    color: #3182ce;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.2s ease;
+}
+
+.user-card a:hover {
+    text-decoration: underline;
+    color: #2b6cb0;
+}
+
+.address {
+    font-style: normal;
+    background-color: #f7fafc;
+    padding: 12px;
+    border-radius: 8px;
+    margin: 16px 0;
+    border-left: 3px solid #f19ab8;
+}
+
+.address p {
+    font-size: 0.9rem;
+    color: #718096;
+}
+
+.username {
+    position: absolute;
+    top: -12px;
+    right: 16px;
+    background-color: #f19ab8;
+    color: #ffffff;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: lowercase;
+    box-shadow: 0 2px 8px rgba(241, 154, 184, 0.4);
+}
+
+.loading-state, .error-state {
+    text-align: center;
+    font-family: system-ui, sans-serif;
+    font-size: 2.2rem;
+    margin: 80px auto;
+    padding: 20px;
+}
+
+.loading-state {
+    color: #0c7ced;
+}
+
+.error-state {
+    color: #ff6b6b;
+    background-color: rgba(255, 107, 107, 0.1);
+    border-radius: 8px;
+    max-width: 400px;
+}

@@ -1,0 +1,59 @@
+
+.window-size {
+  width: 100%;
+  max-width: 600px;
+  padding: 28px;
+  margin: 20px 0 20px 150px;
+  background: rgba(69, 66, 66, 0.24);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.window-size:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+}
+
+.window-size h2 {
+  margin: 0 0 24px;
+  color: #333;
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+
+.size-details {
+  display: flex;
+  gap: 16px;
+}
+
+.size-card {
+  flex: 1;
+  padding: 20px;
+  background: rgba(27, 157, 237, 0.12);
+  border: 1px solid rgba(27, 157, 237, 0.3);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.size-card span {
+  color: #555;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.size-card strong {
+  color: rgb(27, 157, 237);
+  font-size: 1.8rem;
+  font-weight: 800;
+}
+
+@media (max-width: 600px) {
+  .size-details {
+    flex-direction: column;
+  }
+}
