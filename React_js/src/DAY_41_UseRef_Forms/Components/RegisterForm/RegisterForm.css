@@ -1,0 +1,190 @@
+
+.register-card {
+  width: 100%;
+  max-width: 620px;
+  padding: 32px;
+  background: linear-gradient(135deg, #ffffff, #f7faff);
+  border: 1px solid #dbe4f0;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(30, 64, 175, 0.12);
+  box-sizing: border-box;
+}
+
+.register-heading {
+  margin-bottom: 28px;
+}
+
+.register-heading h2 {
+  margin: 0 0 8px;
+  color: #1e293b;
+  font-size: 28px;
+}
+
+.register-heading p {
+  margin: 0;
+  color: #64748b;
+}
+
+.register-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.register-group {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.register-group label {
+  color: #334155;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.register-group input,
+.register-group select {
+  width: 100%;
+  padding: 13px 14px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 9px;
+  outline: none;
+  color: #1e293b;
+  font-size: 15px;
+  box-sizing: border-box;
+  transition: 0.2s;
+}
+
+.register-group input:focus,
+.register-group select:focus {
+  border-color: #1b9ded;
+  box-shadow: 0 0 0 3px rgba(27, 157, 237, 0.13);
+}
+
+.register-error {
+  margin: 0;
+  color: #dc2626;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.terms-group {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 3px;
+}
+
+.terms-group input {
+  width: 17px;
+  height: 17px;
+  accent-color: #1b9ded;
+  cursor: pointer;
+}
+
+.terms-group label {
+  color: #475569;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.register-button {
+  margin-top: 5px;
+  padding: 14px;
+  border: none;
+  border-radius: 9px;
+  background: #1b9ded;
+  color: white;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.register-button:hover {
+  background: #087bc7;
+  transform: translateY(-1px);
+  box-shadow: 0 7px 18px rgba(27, 157, 237, 0.25);
+}
+
+.success-card {
+  width: 100%;
+  max-width: 620px;
+  padding: 35px;
+  background: linear-gradient(135deg, #ffffff, #f5fff7);
+  border: 1px solid #bbf7d0;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(22, 163, 74, 0.12);
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.success-icon {
+  width: 58px;
+  height: 58px;
+  margin: 0 auto 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #16a34a;
+  color: white;
+  font-size: 30px;
+  font-weight: 800;
+}
+
+.success-card h2 {
+  margin: 0 0 8px;
+  color: #166534;
+}
+
+.success-card > p {
+  margin: 0 0 25px;
+  color: #64748b;
+}
+
+.submitted-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 25px;
+  text-align: left;
+}
+
+.submitted-info div {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 13px 15px;
+  background: #f0fdf4;
+  border: 1px solid #dcfce7;
+  border-radius: 9px;
+}
+
+.submitted-info span {
+  color: #64748b;
+  font-size: 14px;
+}
+
+.submitted-info strong {
+  color: #166534;
+  font-size: 14px;
+}
+
+.secondary-button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 9px;
+  background: #166534;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.secondary-button:hover {
+  background: #14532d;
+  transform: translateY(-1px);
+}
