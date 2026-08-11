@@ -1,30 +1,15 @@
-import { useState } from "react";
 import Navbar from "./Components/Navbar/Navbar";
 import Profile from "./Components/Profile/Profile";
+import { UserProvider } from "./Context/UserContext";
 
-const App = ({ user }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const handleAuthToggle = () => {
-    setIsLoggedIn((prev) => !prev);
-  };
-
+const App = () => {
   return (
-    <div>
-      <Navbar
-        name={user.name}
-        isLoggedIn={isLoggedIn}
-        onAuthToggle={handleAuthToggle}
-      />
-
-      {isLoggedIn && (
-        <Profile
-          name={user.name}
-          role={user.role}
-          location={user.location}
-        />
-      )}
-    </div>
+    <UserProvider>
+      <div>
+        <Navbar />
+        <Profile />
+      </div>
+    </UserProvider>
   );
 };
 

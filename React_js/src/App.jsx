@@ -5,12 +5,6 @@
 import DAY_42 from "./DAY_42_Context_API/App";
 
 
-const user = {
-  name : "Jaganmohan",
-  role: "Full Stack Dev",
-  location: "Coimbatore"
-};
-
 function App() {
 
   return (
@@ -19,7 +13,7 @@ function App() {
     {/* <DAY_39 /> */}
     {/* <DAY_40 /> */}
     {/* <DAY_41 /> */}
-    <DAY_42 user={user}/>
+    <DAY_42 />
     </>
   )
 }
