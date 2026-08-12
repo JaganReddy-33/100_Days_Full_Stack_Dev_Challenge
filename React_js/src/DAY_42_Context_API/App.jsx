@@ -1,30 +1,41 @@
-import Navbar from "./Components/Navbar/Navbar";
-import Profile from "./Components/Profile/Profile";
-import { UserProvider } from "./Context/UserContext";
-import { ThemeContext, ThemeProvider } from "./Context/ThemeContext";
-import ThemeToggle from "./Components/ThemeToggle/ThemeToggle";
 import { useContext } from "react";
 
+import Navbar from "./Components/Navbar/Navbar";
+import Profile from "./Components/Profile/Profile";
 
+import { UserProvider } from "./Context/UserContext";
+import { ThemeContext, ThemeProvider } from "./Context/ThemeContext";
+
+import "./App.css";
 
 const Dashboard = () => {
   const { theme } = useContext(ThemeContext);
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        backgroundColor: theme === "dark" ? "#1a1a1a" : "#ffffff",
-        color: theme === "dark" ? "#ffffff" : "#000000",
-      }}
-    >
+    <div className={`dashboard ${theme}`}>
       <Navbar />
-      <ThemeToggle />
-      <Profile />
+
+      <main className="dashboard-main">
+        <section className="dashboard-header">
+          <div>
+            <p className="dashboard-label">MY WORKSPACE</p>
+
+            <h1>Welcome to your Dashboard</h1>
+
+            <p className="dashboard-description">
+              Manage your profile and explore your workspace using React
+              Context API.
+            </p>
+          </div>
+        </section>
+
+        <section className="dashboard-content">
+          <Profile />
+        </section>
+      </main>
     </div>
   );
 };
-
 
 const App = () => {
   return (
