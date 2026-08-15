@@ -3,7 +3,8 @@
 // import DAY_40 from "./DAY_40_UseEffect/App";
 // import DAY_41 from "./DAY_41_UseRef_Forms/App";
 // import DAY_42 from "./DAY_42_Context_API/App";
-import DAY_43 from "./DAY_43_useReducer_CustomHooks/App";
+// import DAY_43 from "./DAY_43_useReducer_CustomHooks/App";
+import DAY_44 from "./DAY_44_React.memo_useMemo_useCallback/App";
 
 
 function App() {
@@ -15,7 +16,8 @@ function App() {
     {/* <DAY_40 /> */}
     {/* <DAY_41 /> */}
     {/* <DAY_42 /> */}
-    <DAY_43 />
+    {/* <DAY_43 /> */}
+    <DAY_44 />
     </>
   )
 }
