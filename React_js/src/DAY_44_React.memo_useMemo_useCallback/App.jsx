@@ -1,14 +1,16 @@
-import ReactMemo from "./Components/ReactMemo/ReactMemo"
-import UseCallback from "./Components/UseCallback/UseCallback"
-import UseMemo from "./Components/UseMemo/UseMemo"
+import PerformanceDashboard from "./Components/PerformanceDashboard/PerformanceDashboard"
+// import ReactMemo from "./Components/ReactMemo/ReactMemo"
+// import UseCallback from "./Components/UseCallback/UseCallback"
+// import UseMemo from "./Components/UseMemo/UseMemo"
 
 
 const App = () => {
   return (
     <div>
-      <ReactMemo />
+      {/* <ReactMemo />
       <UseMemo />
-      <UseCallback />
+      <UseCallback /> */}
+      <PerformanceDashboard />
     </div>
   )
 }
