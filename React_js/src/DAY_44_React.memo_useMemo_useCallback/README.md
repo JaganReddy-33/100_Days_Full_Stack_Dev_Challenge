@@ -115,15 +115,6 @@ Day_44/
             └── PerformanceDashboard.css
 ```
 
-## ▶️ Running the Project
-
-```bash
-npm install
-npm run dev
-```
-
-Open the local development URL provided by Vite in the terminal.
-
 ## 📚 Key Takeaway
 
 Performance optimization is not about preventing every render.
@@ -136,4 +127,5 @@ The important part is understanding **when a render is unnecessary** and using m
 
 **Day 44 / 100 — React Performance Optimization**
 
+**Author: Ragipalyam Jaganmohan Reddy**
 React Performance → Completed ✅
