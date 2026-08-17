@@ -76,24 +76,6 @@ React.memo
 Prevents unnecessary child renders
 ```
 
-### Component Structure
-
-```text
-PerformanceDashboard
-│
-├── ProductItem
-│   └── React.memo
-│
-├── filteredProducts
-│   └── useMemo
-│
-├── totalValue
-│   └── useMemo
-│
-└── handleSelect
-    └── useCallback
-```
-
 ## 🛠️ Technologies Used
 
 * React
