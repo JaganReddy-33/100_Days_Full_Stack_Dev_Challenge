@@ -1,0 +1,85 @@
+
+:root {
+  --text-main: #1e1b4b;
+  --text-muted: #6b7280;
+  --primary-purple: #4f46e5;
+  --primary-purple-hover: #4338ca;
+  --border-light: #f3f4f6;
+  --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+.header-container {
+  font-family: var(--font-family);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 40px;
+  background-color: transparent;
+  box-sizing: border-box;
+  width: 100%;
+}
+.header-left {
+  display: flex;
+  flex-direction: column;
+}
+.header-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin: 0;
+}
+.header-subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 4px 0 0 0;
+  font-weight: 500;
+}
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.add-app-btn {
+  background-color: var(--primary-purple);
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+.add-app-btn:hover {
+  background-color: var(--primary-purple-hover);
+}
+.icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  transition: color 0.15s ease;
+}
+.icon-btn:hover {
+  color: var(--text-main);
+}
+.header-icon {
+  font-size: 22px;
+}
+.avatar-wrapper {
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+.avatar-wrapper:hover {
+  color: var(--text-main);
+}
+.avatar-icon {
+  font-size: 28px;
+}

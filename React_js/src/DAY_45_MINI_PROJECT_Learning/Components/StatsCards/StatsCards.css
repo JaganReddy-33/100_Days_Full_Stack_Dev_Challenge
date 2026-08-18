@@ -1,0 +1,95 @@
+
+:root {
+  --bg-card: #ffffff;
+  --text-main: #1e1b4b;
+  --text-muted: #6b7280;
+  --border-light: #f3f4f6;
+  --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+.stats-container {
+  font-family: var(--font-family);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  padding: 0 40px;
+  box-sizing: border-box;
+  width: 100%;
+  margin-bottom: 24px;
+}
+.stat-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+.stat-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+.stat-icon-box.applied {
+  background-color: #f0f2fe;
+  color: #6366f1;
+}
+.stat-icon-box.interview {
+  background-color: #fff7ed;
+  color: #f97316;
+}
+.stat-icon-box.offer {
+  background-color: #f0fdf4;
+  color: #22c55e;
+}
+.stat-icon-box.rejected {
+  background-color: #fef2f2;
+  color: #ef4444;
+}
+.stat-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.stat-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.stat-number {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.stat-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+.stat-sub {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+.stat-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 20px;
+}
+.offer-badge {
+  background-color: #dcfce7;
+  color: #16a34a;
+}
+.rejected-badge {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
