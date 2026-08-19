@@ -3,7 +3,20 @@ import { LuNotepadText } from "react-icons/lu";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { VscGraph } from "react-icons/vsc";
 import './Sidebar.css';
+import { useState } from 'react';
 const Sidebar = () => {
+
+
+  const [activeItem, setActiveItem] = useState("dashboard");
+
+  const navItem = [
+    {id: "dashboard", label:"Dashboard", icon: IoHome, path: "/"},
+    {id: "applications", label: "Applications", icon: LuNotepadText, path:"/applications"},
+    {id: "add-application", label: "Add Application", icon: IoMdAddCircleOutline, path:"/add-application"},
+    {id: "statistics", label: "Statistics", icon: VscGraph, path: "/statistics" },
+    {id: "settings", label: "Settings", icon: IoSettingsOutline, path: "/settings"}
+  ];
+
   return (
     <aside className="sidebar-container">
       <div className="sidebar-top">
@@ -14,26 +27,16 @@ const Sidebar = () => {
           <h1 className="brand-title">Job Tracker</h1>
         </div>
         <nav className="sidebar-nav">
-          <a href="#" className="nav-item">
-            <IoHome className="nav-icon" /> 
-            <span>Dashboard</span>
+          {navItem.map((item)=>{
+            const IconComponent = item.icon;
+            return (
+            <a key={item.id}
+              className={`nav-item ${activeItem === item.id ? "active" : ""}`} onClick={()=>setActiveItem(item.id)}>
+              <IconComponent className="nav-icon" /> 
+              <span>{item.label}</span>
           </a>
-          <a href="#" className="nav-item">
-            <LuNotepadText className="nav-icon" /> 
-            <span>Applications</span>
-          </a>
-          <a href="#" className="nav-item">
-            <IoMdAddCircleOutline className="nav-icon" /> 
-            <span>Add Application</span>
-          </a>
-          <a href="#" className="nav-item">
-            <VscGraph className="nav-icon" /> 
-            <span>Statistics</span>
-          </a>
-          <a href="#" className="nav-item">
-            <IoSettingsOutline className="nav-icon" /> 
-            <span>Settings</span>
-          </a>
+            );
+          })}
         </nav>
       </div>
       <div className="sidebar-premium-card">

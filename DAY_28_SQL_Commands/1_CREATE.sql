@@ -1,7 +1,8 @@
 
+drop DATABASE student_db;
 -- CREATE Command
 
-CREATE DATABASE student_DB;
+CREATE DATABASE IF NOT EXISTS student_DB;
 
 USE student_DB;
 

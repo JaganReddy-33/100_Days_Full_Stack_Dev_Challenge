@@ -1,0 +1,88 @@
+
+:root {
+  --bg-card: #ffffff;
+  --text-main: #1e1b4b;
+  --text-muted: #6b7280;
+  --border-light: #f3f4f6;
+  --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+.overview-card {
+  font-family: var(--font-family);
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  padding: 24px;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.overview-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin: 0 0 24px 0;
+  align-self: flex-start;
+}
+.chart-wrapper {
+  position: relative;
+  width: 160px;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+.chart-center-text {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.total-count {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1;
+}
+.total-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px 24px;
+  width: 100%;
+}
+.legend-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.legend-marker-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.legend-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+.legend-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-main);
+  padding-left: 16px;
+}
