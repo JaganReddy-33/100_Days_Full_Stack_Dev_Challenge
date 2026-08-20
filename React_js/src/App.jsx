@@ -5,7 +5,8 @@
 // import DAY_42 from "./DAY_42_Context_API/App";
 // import DAY_43 from "./DAY_43_useReducer_CustomHooks/App";
 // import DAY_44 from "./DAY_44_React.memo_useMemo_useCallback/App";
-import DAY_45 from "./DAY_45_MINI_PROJECT_Learning/App";
+// import DAY_45 from "./DAY_45_MINI_PROJECT_Learning/App";
+import DAY_46 from "./DAY_46_Routing/App";
 
 function App() {
 
@@ -18,7 +19,8 @@ function App() {
     {/* <DAY_42 /> */}
     {/* <DAY_43 /> */}
     {/* <DAY_44 /> */}
-    <DAY_45 />
+    {/* <DAY_45 /> */}
+    <DAY_46 />
     </>
   )
 }
