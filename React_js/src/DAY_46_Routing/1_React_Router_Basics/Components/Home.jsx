@@ -10,16 +10,11 @@ const Home = () => {
       
       <div style={{ marginTop: "20px" }}>
 
-        {/* standard navigation via Link component */}
 
         <Link to="/about" style={{ marginRight: "15px" }}>
           Go to About
         </Link>
         
-
-        
-        {/* programmatic routing via useNavigate hook */}
-
         <button onClick={() => navigate("/contact")}>
           Go to Contact
         </button>
