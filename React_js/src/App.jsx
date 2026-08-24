@@ -8,7 +8,7 @@
 // import DAY_45 from "./DAY_45_MINI_PROJECT_Learning/App";
 // import DAY_46 from "./DAY_46_Routing/App";
 // import DAY_47 from "./DAY_47_Adv_Forms_Validations/App";
-import DAY_48 from "./DAY_48_API_Integration_CRUD/App";
+import DAY_48 from "./DAY_48_&_49_API_Integration_CRUD/App";
 
 
 function App() {

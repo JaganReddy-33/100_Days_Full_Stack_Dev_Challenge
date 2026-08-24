@@ -13,6 +13,8 @@ import Loading from "../Components/Loading";
 import ErrorMessage from "../Components/ErrorMessage";
 
 import "./ProductDashboard.css";
+import Pagination from "../Components/Pagination";
+import ProductStats from "../Components/ProductStats";
 
 const ProductDashboard = () => {
   const [products, setProducts] = useState([]);
@@ -27,6 +29,14 @@ const ProductDashboard = () => {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [category, setCategory] = useState("all");
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+
+  const [sortBy, setSortBy] = useState("default");
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 6;
+
 
   const fetchProducts = async () => {
     try {
@@ -69,15 +79,91 @@ const ProductDashboard = () => {
           .includes(searchTerm.toLowerCase()) ||
         product.description
           ?.toLowerCase()
-          .includes(searchTerm.toLowerCase());
+          .includes(searchTerm.toLowerCase()) ||
+        product.category
+        ?.toLowerCase()
+        .includes(searchTerm.toLowerCase());
 
       const matchesCategory =
         category === "all" ||
         product.category === category;
 
-      return matchesSearch && matchesCategory;
+      const matchesPrice = 
+      (!minPrice || product.price >= Number(minPrice)) &&
+      (!maxPrice || product.price <= Number(maxPrice));
+
+      return matchesSearch && matchesCategory && matchesPrice;
     });
-  }, [products, searchTerm, category]);
+  }, [products, searchTerm, category, minPrice, maxPrice]);
+
+
+  const sortedProducts = useMemo(()=>{
+
+    const result = [...filteredProducts];
+
+    switch (sortBy) {
+      case "price-low":
+        return result.sort((a, b)=> a.price - b.price);
+      
+      case "price-high":
+        return result.sort((a, b)=> b.price - a.price);
+
+      case "rating-high":
+        return result.sort((a, b)=>b.rating - a.rating);
+
+      case "rating-low":
+        return result.sort((a, b)=> a.rating - b.rating);
+
+      case "name-asc":
+        return result.sort((a, b)=> a.title.localeCompare(b.title));
+
+      case "name-desc":
+        return result.sort((a, b)=> b.title.localeCompare(a.title));
+    
+      default:
+        return result;
+    }
+  }, [filteredProducts, sortBy]);
+
+  const handleResetFilters = ()=>{
+    setSearchTerm("");
+    setCategory("all");
+    setMinPrice("");
+    setMaxPrice("");
+    setSortBy("default");
+    setCurrentPage(1);
+  }
+
+  const totalPages = Math.ceil(
+    sortedProducts.length / productsPerPage
+  );
+  const startIndex = (currentPage - 1) * productsPerPage;
+
+  const paginatedProducts = sortedProducts.slice(
+  startIndex,
+  startIndex + productsPerPage
+);
+
+const totalProducts = products.length;
+
+const inStockProducts = products.filter(
+  (product) => product.stock > 0
+).length;
+
+const outOfStockProducts = products.filter(
+  (product) => product.stock === 0
+).length;
+
+const averageRating =
+  products.length > 0
+    ? (
+        products.reduce(
+          (total, product) =>
+            total + product.rating,
+          0
+        ) / products.length
+      ).toFixed(1)
+    : "0.0";
 
   const handleProductCreated = async (productData) => {
     try {
@@ -233,10 +319,13 @@ const ProductDashboard = () => {
             </p>
           </div>
 
-          <div className="product-count">
-            <span>{products.length}</span>
-            <small>Total Products</small>
-          </div>
+          <ProductStats 
+            totalProducts={totalProducts}
+            inStockProducts={inStockProducts}
+            outOfStockProducts={outOfStockProducts}
+            averageRating={averageRating}
+          />
+
         </header>
 
         {successMessage && (
@@ -265,13 +354,27 @@ const ProductDashboard = () => {
           category={category}
           setCategory={setCategory}
           categories={categories}
+          minPrice={minPrice}
+          setMinPrice={setMinPrice}
+          maxPrice={maxPrice}
+          setMaxPrice={setMaxPrice}
+          sortBy={sortBy}
+          setSortBy={setSortBy}
+          onReset={handleResetFilters}
         />
 
         <ProductList
-          products={filteredProducts}
+          products={paginatedProducts}
           onEdit={handleEditProduct}
           onDelete={handleDeleteProduct}
           deletingId={deletingId}
+          totalProducts={products.length}
+        />
+
+        <Pagination 
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={setCurrentPage}
         />
 
         <ProductForm

@@ -48,6 +48,24 @@
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
+.reset-button {
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 10px 16px;
+  background: #f30404d2;
+  color: #f4f5f8;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.reset-button:hover {
+  border-color: #6366f1;
+  background: #eef2ff;
+  color: #4338ca;
+}
+
 @media (max-width: 600px) {
   .product-filters {
     flex-direction: column;

@@ -6,17 +6,24 @@ const ProductList = ({
   onEdit,
   onDelete,
   deletingId,
+  totalProducts,
 }) => {
   if (products.length === 0) {
+    if(totalProducts === 0){
+      return (
+        <div className="empty-state">
+          <div className="empty-icon">📦</div>
+          <h2>No Products Available</h2>
+          <p>There are currently no products to display.</p>
+        </div>
+      );
+    }
+
     return (
       <div className="empty-state">
-        <div className="empty-icon">📦</div>
-
-        <h2>No Products Found</h2>
-
-        <p>
-          No products match your current search or filter.
-        </p>
+        <div className="empty-icon">🔍</div>
+        <h2>No Matching Products</h2>
+        <p>No products match your current search or filters.</p>
       </div>
     );
   }
