@@ -1,0 +1,166 @@
+/* =========================================
+   GLOBAL RESET
+========================================= */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 320px;
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+}
+
+
+/* =========================================
+   DASHBOARD
+========================================= */
+
+.dashboard {
+  width: 100%;
+  min-height: 100vh;
+
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+
+/* LIGHT THEME */
+
+.dashboard.light {
+  background: #f4f7fb;
+  color: #172033;
+}
+
+
+/* DARK THEME */
+
+.dashboard.dark {
+  background: #0f172a;
+  color: #f8fafc;
+}
+
+
+/* =========================================
+   MAIN CONTENT
+========================================= */
+
+.dashboard-main {
+  width: 100%;
+  min-height: calc(100vh - 74px);
+
+  padding: 42px 48px 60px;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.dashboard-header {
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.dashboard-label {
+  margin-bottom: 8px;
+
+  color: #1597e5;
+
+  font-size: 0.75rem;
+  font-weight: 800;
+
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.dashboard-header h1 {
+  margin-bottom: 10px;
+
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -1px;
+}
+
+.dashboard-description {
+  max-width: 760px;
+
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+
+/* LIGHT DESCRIPTION */
+
+.dashboard.light .dashboard-description {
+  color: #64748b;
+}
+
+
+/* DARK DESCRIPTION */
+
+.dashboard.dark .dashboard-description {
+  color: #94a3b8;
+}
+
+
+/* =========================================
+   CONTENT
+========================================= */
+
+.dashboard-content {
+  width: 100%;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 900px) {
+  .dashboard-main {
+    padding: 35px 28px 50px;
+  }
+}
+
+
+@media (max-width: 600px) {
+  .dashboard-main {
+    padding: 28px 18px 40px;
+  }
+
+  .dashboard-header {
+    margin-bottom: 22px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 2rem;
+  }
+
+  .dashboard-description {
+    font-size: 0.92rem;
+  }
+}

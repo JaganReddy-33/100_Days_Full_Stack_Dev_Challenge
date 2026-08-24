@@ -1,0 +1,59 @@
+:root {
+  --bg-card: #ffffff;
+  --text-main: #1e1b4b;
+  --text-muted: #6b7280;
+  --primary-purple: #6366f1;
+  --border-light: #e5e7eb;
+  --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+.pagination-container {
+  font-family: var(--font-family);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 40px;
+  box-sizing: border-box;
+  width: 100%;
+}
+.pagination-text {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin: 0;
+}
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.page-num-btn, .page-arrow-btn {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-light);
+  color: var(--text-muted);
+  height: 36px;
+  min-width: 36px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6px;
+  transition: all 0.15s ease;
+}
+.page-num-btn:hover, .page-arrow-btn:not(:disabled):hover {
+  background-color: #f9fafb;
+  color: var(--text-main);
+  border-color: #cbd5e1;
+}
+.page-num-btn.active {
+  background-color: var(--primary-purple);
+  color: #ffffff;
+  border-color: var(--primary-purple);
+}
+.page-arrow-btn:disabled {
+  color: #d1d5db;
+  cursor: not-allowed;
+  background-color: #f9fafb;
+}

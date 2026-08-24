@@ -1,0 +1,56 @@
+
+.focus-card {
+  width: 100%;
+  max-width: 520px;
+  padding: 28px;
+  background: linear-gradient(135deg, #ffffff, #f4f8ff);
+  border: 1px solid #dbe4f0;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(30, 64, 175, 0.1);
+}
+
+.focus-card h2 {
+  margin: 0 0 8px;
+  color: #1e293b;
+  font-size: 24px;
+}
+
+.focus-card p {
+  margin: 0 0 22px;
+  color: #64748b;
+}
+
+.focus-controls {
+  display: flex;
+  gap: 12px;
+}
+
+.focus-controls input {
+  flex: 1;
+  padding: 12px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  outline: none;
+  font-size: 15px;
+}
+
+.focus-controls input:focus {
+  border-color: #1d9ded;
+  box-shadow: 0 0 0 3px rgba(29, 157, 237, 0.15);
+}
+
+.focus-controls button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #1b9ded;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.focus-controls button:hover {
+  background: #087bc7;
+  transform: translateY(-1px);
+}

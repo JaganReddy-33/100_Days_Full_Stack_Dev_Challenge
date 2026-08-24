@@ -1,0 +1,77 @@
+
+:root {
+  --stats-font: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --stats-gap: 16px;
+  --stats-divider: #e2e8f0;
+  --stats-label-color: #64748b;
+  --stats-value-color: #0f172a;
+  --stats-success: #16a34a;
+  --stats-danger: #dc2626;
+}
+
+.header-stats-bar {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--stats-gap);
+  padding: 4px 12px;
+  font-family: var(--stats-font);
+  background-color: #f8fafc;
+  border-radius: 20px;
+  border: 1px solid var(--stats-divider);
+}
+
+.header-stat-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+}
+
+.header-stat-item:not(:last-child)::after {
+  content: "";
+  display: inline-block;
+  width: 1px;
+  height: 12px;
+  background-color: var(--stats-divider);
+  margin-left: var(--stats-gap);
+}
+
+.stat-label {
+  color: var(--stats-label-color);
+  font-weight: 500;
+}
+
+.stat-value {
+  color: var(--stats-value-color);
+  font-weight: 600;
+}
+
+.stat-value.text-success {
+  color: var(--stats-success);
+}
+
+.stat-value.text-danger {
+  color: var(--stats-danger);
+}
+
+.rating-item {
+  gap: 4px;
+}
+
+.stat-icon {
+  font-size: 0.8rem;
+}
+
+
+@media (max-width: 520px) {
+  .header-stats-bar {
+    gap: 8px;
+    padding: 4px 8px;
+  }
+  .header-stat-item:not(:last-child)::after {
+    margin-left: 8px;
+  }
+  .stat-label {
+    display: none; 
+  }
+}

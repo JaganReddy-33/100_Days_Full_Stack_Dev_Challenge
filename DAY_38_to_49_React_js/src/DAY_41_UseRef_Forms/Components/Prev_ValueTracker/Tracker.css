@@ -1,0 +1,73 @@
+
+.tracker-card {
+  width: 100%;
+  max-width: 520px;
+  padding: 28px;
+  background: linear-gradient(135deg, #ffffff, #f8fbff);
+  border: 1px solid #dbe4f0;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(30, 64, 175, 0.1);
+}
+
+.tracker-card h2 {
+  margin: 0 0 8px;
+  color: #1e293b;
+  font-size: 24px;
+}
+
+.tracker-card p {
+  margin: 0 0 20px;
+  color: #64748b;
+}
+
+.tracker-card input {
+  width: 100%;
+  padding: 13px 15px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  outline: none;
+  font-size: 15px;
+  box-sizing: border-box;
+}
+
+.tracker-card input:focus {
+  border-color: #1b9ded;
+  box-shadow: 0 0 0 3px rgba(27, 157, 237, 0.15);
+}
+
+.tracker-values {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.value-box {
+  padding: 18px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.value-box span {
+  font-size: 13px;
+  font-weight: 700;
+  color: #64748b;
+}
+
+.value-box strong {
+  min-height: 22px;
+  color: #1e293b;
+  word-break: break-word;
+}
+
+.current {
+  background: rgba(27, 157, 237, 0.1);
+  border: 1px solid rgba(27, 157, 237, 0.25);
+}
+
+.previous {
+  background: rgba(134, 184, 87, 0.12);
+  border: 1px solid rgba(134, 184, 87, 0.3);
+}

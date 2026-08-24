@@ -1,0 +1,46 @@
+
+:root {
+  --primary-purple: #6366f1;
+  --text-main: #1e1b4b;
+  --text-muted: #6b7280;
+  --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+.info-card-box {
+  font-family: var(--font-family);
+  background-color: #f5f3ff;
+  border-radius: 16px;
+  padding: 24px;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border: 1px solid rgba(99, 102, 241, 0.08);
+  margin-top: 16px;
+}
+.info-icon-wrapper {
+  background-color: var(--primary-purple);
+  color: #ffffff;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+}
+.info-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin: 0;
+}
+.info-description {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  margin: 0;
+  font-weight: 500;
+}

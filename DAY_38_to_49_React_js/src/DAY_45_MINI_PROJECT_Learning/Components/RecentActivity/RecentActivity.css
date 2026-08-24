@@ -1,0 +1,88 @@
+
+:root {
+  --bg-card: #ffffff;
+  --text-main: #1e1b4b;
+  --text-muted: #6b7280;
+  --border-light: #f3f4f6;
+  --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+.activity-card {
+  font-family: var(--font-family);
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  padding: 24px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.activity-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin: 0 0 20px 0;
+}
+.timeline-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+}
+.timeline-item {
+  display: flex;
+  gap: 16px;
+  position: relative;
+}
+.timeline-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 16px;
+  top: 36px;
+  bottom: -24px;
+  width: 2px;
+  background-color: var(--border-light);
+}
+.activity-icon-wrapper {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+  z-index: 1;
+}
+.activity-icon-wrapper.offer {
+  background-color: #f0fdf4;
+  color: #22c55e;
+}
+.activity-icon-wrapper.interview {
+  background-color: #fff7ed;
+  color: #f97316;
+}
+.activity-icon-wrapper.applied {
+  background-color: #f0f2fe;
+  color: #6366f1;
+}
+.activity-icon-wrapper.rejected {
+  background-color: #fef2f2;
+  color: #ef4444;
+}
+.activity-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 4px;
+}
+.activity-text {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-main);
+  margin: 0;
+  line-height: 1.4;
+}
+.activity-time {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 500;
+}

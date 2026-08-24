@@ -1,0 +1,99 @@
+.hook-card {
+    width: 100%;
+    max-width: 420px;
+    padding: 28px;
+    border-radius: 20px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.hook-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 35px rgba(0, 0, 0, 0.1);
+}
+
+.hook-icon {
+    font-size: 2rem;
+    margin-bottom: 14px;
+}
+
+.hook-label {
+    margin: 0 0 6px;
+    color: #6366f1;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+
+.hook-card h2 {
+    margin: 0 0 8px;
+    color: #111827;
+}
+
+.hook-description {
+    margin: 0 0 22px;
+    color: #6b7280;
+    line-height: 1.5;
+}
+
+.status-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.status-box.active {
+    background: #ecfdf5;
+    color: #047857;
+}
+
+.status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #9ca3af;
+}
+
+.status-box.active .status-dot {
+    background: #10b981;
+}
+
+.hook-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.primary-btn,
+.secondary-btn {
+    flex: 1;
+    border: none;
+    border-radius: 10px;
+    padding: 11px 16px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.primary-btn {
+    background: #4f46e5;
+    color: white;
+}
+
+.secondary-btn {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.primary-btn:hover {
+    background: #4338ca;
+}
+
+.secondary-btn:hover {
+    background: #e5e7eb;
+}
