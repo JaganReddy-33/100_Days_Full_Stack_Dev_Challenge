@@ -1,0 +1,12 @@
+
+
+# Maven
+**/target/
+
+# Eclipse
+**/.classpath
+**/.project
+**/.settings/
+
+# Database credentials
+**/db.properties
