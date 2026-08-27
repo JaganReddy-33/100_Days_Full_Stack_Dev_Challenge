@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class DataTypes {
 	public static void runProgram2() {
-		Scanner sc = new Scanner(System.in);
+		try (Scanner sc = new Scanner(System.in)) {
 		
 		System.out.println("Enter Byte value: ");
 		byte a = sc.nextByte();
@@ -34,7 +34,7 @@ public class DataTypes {
 		System.out.println("Enter Character here: ");
 		 char ch = sc.next().charAt(0);
 		System.out.println("Here is your's Character: "+ch);
-		
+		}
 		
 		
 	}

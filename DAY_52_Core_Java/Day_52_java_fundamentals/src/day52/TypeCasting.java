@@ -292,6 +292,7 @@ public class TypeCasting {
         int byteSum = firstByte + secondByte;
         System.out.println("first byte  = " + firstByte);
         System.out.println("second byte = " + secondByte);
+        System.out.println(byteSum);
 
 
         System.out.println("byte + byte -> byte");
@@ -300,6 +301,7 @@ public class TypeCasting {
         byte byteSum2 = (byte) (firstByte2 + secondByte2);
         System.out.println("first byte  = " + firstByte2);
         System.out.println("second byte = " + secondByte2);
+        System.out.println(byteSum2);
 
 
         System.out.println("char + char -> int");
@@ -308,6 +310,7 @@ public class TypeCasting {
         int charSum = firstChar + secondChar;
         System.out.println("first char  = " + firstChar);
         System.out.println("second char = " + secondChar);
+        System.out.println(charSum);
 
 
         System.out.println("int + char -> int");
@@ -316,6 +319,7 @@ public class TypeCasting {
         int intCharResult = number + character8;
         System.out.println("int    = " + number);
         System.out.println("char   = " + character8);
+        System.out.println(intCharResult);
 
 
         System.out.println("char -> int -> char");
@@ -324,6 +328,7 @@ public class TypeCasting {
         char convertedChar = (char) charNumber;
         System.out.println("original char  = " + originalChar);
         System.out.println("int value      = " + charNumber);
+        System.out.println(convertedChar);
 
 
         System.out.println("double -> int");
@@ -346,6 +351,7 @@ public class TypeCasting {
         int division1 = number1 / number2;
         System.out.println("number1  = " + number1);
         System.out.println("number2  = " + number2);
+        System.out.println(division1);
 
 
         System.out.println("int -> double division");
@@ -354,6 +360,7 @@ public class TypeCasting {
         double division2 = (double) number3 / number4;
         System.out.println("number3  = " + number3);
         System.out.println("number4  = " + number4);
+        System.out.println(division2);
 
 
         System.out.println("int -> byte overflow");
