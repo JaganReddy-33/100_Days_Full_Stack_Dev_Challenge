@@ -702,7 +702,6 @@ Continue with:
 - Better resource management
 
 ---
-
 # 📅 Challenge Information
 
 **Challenge:** 100 Days Full Stack Challenge
@@ -716,5 +715,4 @@ Continue with:
 **Status:** ✅ Completed
 
 ---
-
 ⭐ Keep Coding. Keep Building. Keep Improving.
