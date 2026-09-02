@@ -1,4 +1,3 @@
-
 # 🚀 100 Days Full Stack Challenge — Day 52
 
 # 🔌 JDBC — Day 52
@@ -702,7 +701,6 @@ Continue with:
 - Better resource management
 
 ---
-
 # 📅 Challenge Information
 
 **Challenge:** 100 Days Full Stack Challenge
@@ -716,5 +714,4 @@ Continue with:
 **Status:** ✅ Completed
 
 ---
-
 ⭐ Keep Coding. Keep Building. Keep Improving.
