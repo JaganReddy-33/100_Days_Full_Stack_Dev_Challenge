@@ -1,4 +1,4 @@
-package day02;
+package day53;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,8 +37,9 @@ public class ConnectionEx {
         }
     }
     
-    public static Connection getConnection() throws SQLException {
- 
+    public static Connection getConnection() throws SQLException, ClassNotFoundException {
+    	
+    	Class.forName("com.mysql.cj.jdbc.Driver");
         return DriverManager.getConnection(
                 URL,
                 USERNAME,
