@@ -10,3 +10,4 @@
 
 # Database credentials
 **/db.properties
+/.metadata/
