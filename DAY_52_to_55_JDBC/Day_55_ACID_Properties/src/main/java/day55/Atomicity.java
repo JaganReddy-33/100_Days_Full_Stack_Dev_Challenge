@@ -2,6 +2,7 @@ package day55;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Atomicity {
@@ -229,7 +230,7 @@ public class Atomicity {
 
                 check.setInt(1, 5);
 
-                var result = check.executeQuery();
+                ResultSet result = check.executeQuery();
 
                 if (!result.next()) {
                     throw new SQLException("Destination account does not exist");
