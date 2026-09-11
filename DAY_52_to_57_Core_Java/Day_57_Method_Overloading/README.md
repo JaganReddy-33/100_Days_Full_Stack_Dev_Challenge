@@ -1,12 +1,11 @@
-
 ````markdown
-# ☕ Day 57 — Core Java: Method Overloading — Part 1
+# ☕ Day 57 — Core Java: Method Overloading — Part 1 & Part 2
 
 ## 📌 Overview
 
-Day 57 Part 1 focused on **Method Overloading in Java**, one of the important concepts of compile-time polymorphism.
+Day 57 focused on **Method Overloading in Java**, an important concept of **compile-time polymorphism**.
 
-The practice was structured using multiple real-world examples to understand how Java allows methods with the same name to perform different operations based on their parameter list.
+The practice was structured using multiple practical and real-world examples to understand how Java allows methods with the same name to perform different operations based on their parameter list.
 
 ---
 
@@ -22,10 +21,15 @@ The practice was structured using multiple real-world examples to understand how
 - Real-World Utility Methods
 - Method Return Values
 - Integer and Decimal Calculations
+- String-Based Method Overloading
+- Employee Utility Methods
+- Maximum Value Operations
+- Area Calculations
+- Interview-Oriented Overloading Problems
 
 ---
 
-## 📂 Part 1 Folder Structure
+## 📂 Folder Structure
 
 ```text
 DAY_57_Method_Overloading/
@@ -37,7 +41,13 @@ DAY_57_Method_Overloading/
         ├── TypeOverloading_03.java
         ├── OrderOverloading_04.java
         ├── StaticMethodOverloading_05.java
-        └── Calculator_06.java
+        ├── Calculator_06.java
+        ├── AreaCalculator_07.java
+        ├── MaxValue_08.java
+        ├── StringUtility_09.java
+        ├── EmployeeUtility_10.java
+        ├── OverloadingProblems_11.java
+        └── Main.java
 ````
 
 ---
@@ -174,8 +184,8 @@ These examples demonstrated how the same operation can accept different types of
 * Method overloading based on parameter order
 * Same method name
 * Same number of parameters
-* Same parameter types
 * Different parameter order
+* Practical business operations
 
 ### Practical Methods
 
@@ -304,6 +314,240 @@ calculateDiscount(double, double, double)
 
 ---
 
+# 7️⃣ AreaCalculator_07.java
+
+### Concepts Practiced
+
+* Real-world method overloading
+* Area calculations
+* Different parameter counts
+* Different parameter data types
+* Parameter combinations
+* Integer and decimal calculations
+* Circle, square, rectangle and triangle calculations
+* Heron's Formula
+
+### Practical Methods
+
+```text
+area()
+```
+
+Examples:
+
+```text
+area(int)
+
+area(int, int)
+
+area(double)
+
+area(double, double)
+
+area(float, String)
+
+area(int, int, String)
+
+area(double, double, String)
+
+area(int, int, boolean)
+
+area(double, double, double)
+
+area(double, String, boolean)
+```
+
+This demonstrated how overloaded methods can handle different shapes and different combinations of parameters.
+
+---
+
+# 8️⃣ MaxValue_08.java
+
+### Concepts Practiced
+
+* Finding maximum values
+* Method overloading
+* Integer and decimal values
+* Different parameter counts
+* Mixed data types
+* String comparison
+* Practical utility methods
+
+### Practical Methods
+
+```text
+max()
+```
+
+Examples:
+
+```text
+max(int, int)
+
+max(double, double)
+
+max(int, int, int)
+
+max(double, double, double)
+
+max(int, double)
+
+max(double, int)
+
+max(float, float)
+
+max(long, long)
+
+max(String, String)
+
+max(int, int, String)
+```
+
+This demonstrated method overloading with different numeric types as well as String values.
+
+---
+
+# 9️⃣ StringUtility_09.java
+
+### Concepts Practiced
+
+* String utility operations
+* String-based method overloading
+* Character counting
+* Character access
+* String reversal
+* String concatenation
+* Substring extraction
+* Character replacement
+* Different parameter types and combinations
+
+### Practical Methods
+
+```text
+process()
+```
+
+Examples:
+
+```text
+process(String)
+
+process(String, String)
+
+process(String, char)
+
+process(String, int)
+
+process(String, boolean)
+
+process(String, String, String)
+
+process(String, int, int)
+
+process(String, char, char)
+
+process(String, String, String, boolean)
+```
+
+This demonstrated how a single utility method name can support different String operations through overloading.
+
+---
+
+# 🔟 EmployeeUtility_10.java
+
+### Concepts Practiced
+
+* Real-world employee operations
+* Employee information
+* Salary calculations
+* Bonus calculations
+* Experience calculations
+* Method overloading
+* Different parameter combinations
+
+### Practical Methods
+
+```text
+employeeDetails()
+calculateSalary()
+calculateBonus()
+calculateExperience()
+```
+
+Examples:
+
+```text
+employeeDetails(int)
+employeeDetails(int, String)
+employeeDetails(int, String, String)
+employeeDetails(int, String, double)
+employeeDetails(String, String, double)
+
+calculateSalary(double)
+calculateSalary(double, double)
+calculateSalary(double, double, double)
+
+calculateBonus(double, int)
+calculateBonus(double, double)
+
+calculateExperience(int, int)
+calculateExperience(int, int, String)
+```
+
+These examples demonstrated how method overloading can be applied to real-world employee and business operations.
+
+---
+
+# 1️⃣1️⃣ OverloadingProblems_11.java
+
+### Concepts Practiced
+
+* Interview-oriented method overloading
+* Parameter count
+* Parameter data types
+* Parameter order
+* Mixed data types
+* String and numeric overloading
+* Compile-time method selection
+* Type conversion scenarios
+
+### Practical Methods
+
+```text
+display()
+calculate()
+print()
+convert()
+```
+
+Examples:
+
+```text
+display(int)
+display(double)
+display(String)
+
+display(int, String)
+display(String, int)
+
+calculate(int, int)
+calculate(double, double)
+calculate(int, double)
+calculate(double, int)
+
+print(String)
+print(String, int)
+print(int, String)
+
+convert(int)
+convert(double)
+convert(String)
+```
+
+This file focused on practical and interview-style scenarios for understanding how Java selects the correct overloaded method.
+
+---
+
 # 🧠 Key Learnings
 
 * Method overloading allows multiple methods to have the **same name with different parameter lists**.
@@ -317,26 +561,28 @@ calculateDiscount(double, double, double)
 * Static methods can also be overloaded.
 * Overloaded methods can return values just like normal methods.
 * Method overloading improves code readability and provides flexibility when handling different types of input.
-* Real-world applications commonly use overloaded utility and service methods.
+* Overloaded methods can be used for real-world utilities such as calculators, employee services, payment processing, String utilities and business operations.
+* Java can select overloaded methods based on the arguments supplied during the method call.
+* `String.compareTo()` can be used when comparing String values lexicographically.
 
 ---
 
 # 🔥 Method Overloading Summary
 
 ```text
-Same Method Name
-       │
-       ├── Different Number of Parameters
-       │
-       ├── Different Parameter Types
-       │
-       └── Different Parameter Order
-                │
-                ↓
-       Method Overloading
-                │
-                ↓
-      Compile-Time Polymorphism
+                    Same Method Name
+                           │
+          ┌────────────────┼────────────────┐
+          │                │                │
+          ↓                ↓                ↓
+ Different Number   Different Types   Different Order
+  of Parameters      of Parameters    of Parameters
+          │                │                │
+          └────────────────┼────────────────┘
+                           ↓
+                 Method Overloading
+                           ↓
+               Compile-Time Polymorphism
 ```
 
 ---
@@ -362,9 +608,17 @@ Same Method Name
 * [x] Static Method Overloading
 * [x] Real-World Calculator Overloading
 
+### Core Java — Part 2
+
+* [x] Area Calculator Overloading
+* [x] Maximum Value Overloading
+* [x] String Utility Overloading
+* [x] Employee Utility Overloading
+* [x] Interview-Oriented Overloading Problems
+
 ### Status
 
-**Day 57 Core Java — Part 1: ✅ Completed**
+**Day 57 Core Java — Part 1 & Part 2: ✅ Completed**
 
 ---
 
@@ -372,17 +626,17 @@ Same Method Name
 
 Continue with:
 
-**Day 57 Core Java — Part 2**
+**Day 57 — JDBC: Advanced Transactions — Part 2**
 
 Remaining practical classes:
 
 ```text
-AreaCalculator.java
-MaxValue.java
-StringUtility.java
-EmployeeUtility.java
-OverloadingProblems.java
-Main.java
+OrderTransaction.java
+PaymentTransaction.java
+AccountTransaction.java
+ExceptionTransaction.java
+TransactionProblems.java
+App.java
 ```
 
 ---

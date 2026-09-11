@@ -119,5 +119,105 @@ public class Main {
 
     	System.out.println("Final Price After Coupon: " + calculator.calculateDiscount(10000, 10, 500));
     	
+    	
+    	
+    	AreaCalculator_07 calculator2 = new AreaCalculator_07();
+    	calculator2.area(5);
+    	calculator2.area(10, 20);
+    	calculator2.area(7.5);
+    	calculator2.area(10.0, 20.0);
+    	calculator2.area(7.5f, "sq.units");
+    	calculator2.area(10, 20, "Rectangle");
+    	calculator2.area(10.5, 20.5, "Rectangle");
+    	calculator2.area(10, 20, true);
+    	calculator2.area(3.0, 4.0, 5.0);
+    	calculator2.area(7.5, "sq.units", true);
+    	
+    	
+    	MaxValue_08 maxValue = new MaxValue_08();
+    	maxValue.max(10, 20);
+    	maxValue.max(15.5, 12.5);
+    	maxValue.max(10, 30, 20);
+    	maxValue.max(12.5, 25.5, 18.5);
+    	maxValue.max(10, 20.5);
+    	maxValue.max(30.5, 20);
+    	maxValue.max(15.5f, 25.5f);
+    	maxValue.max(100L, 200L);
+    	maxValue.max("Java", "Python");
+    	maxValue.max(50, 80, "Maximum Value");
+    	
+    	
+    	
+    	StringUtility_09 stringUtility = new StringUtility_09();
+    	stringUtility.process("Java Programming");
+    	stringUtility.process("Java", " Development");
+    	stringUtility.process("Programming", 'g');
+    	stringUtility.process("Java Programming", 5);
+    	stringUtility.process("Jagan", true);
+    	stringUtility.process("Jagan", "Reddy", " ");
+    	stringUtility.process("Java Programming", 5, 16);
+    	stringUtility.process("Java Programming", 'a', 'o');
+    	stringUtility.process("Java Java Java", "Java", "Python", true);
+    	
+    	
+    	EmployeeUtility_10 employee = new EmployeeUtility_10();
+    	employee.employeeDetails(101);
+    	employee.employeeDetails(102, "Jagan");
+    	employee.employeeDetails(103, "Ravi", "Development");
+    	employee.employeeDetails(104, "Kiran", 55000);
+    	employee.employeeDetails("Priya", "Testing", 60000);
+    	employee.calculateSalary(40000);
+    	employee.calculateSalary(40000, 5000);
+    	employee.calculateSalary(40000, 5000, 2000);
+    	employee.calculateBonus(50000, 10);
+    	employee.calculateBonus(50000, 5000);
+    	employee.calculateExperience(2022, 2026);
+    	employee.calculateExperience(2022, 2026, "years");
+    	
+    	
+    	OverloadingProblems_11 problems = new OverloadingProblems_11();
+    	problems.display(100);
+    	problems.display(99.5);
+    	problems.display("Java");
+    	problems.display(101, "Employee");
+    	problems.display("Employee", 101);
+    	problems.calculate(10, 20);
+    	problems.calculate(10.5, 20.5);
+    	problems.calculate(10, 20.5);
+    	problems.calculate(10.5, 20);
+    	problems.print("Java");
+    	problems.print("Java", 3);
+    	problems.print(101, "Employee ID");
+    	problems.convert(100);
+    	problems.convert(99.5);
+    	problems.convert("Java");
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
     }
 }

@@ -1,32 +1,37 @@
+Absolutely. I’ve kept the **same README style as your Part 1**, merged Part 2 into it, and made the **entire README one single Markdown code block** so GitHub/editor gives you **one copy button for the complete file**. The Part 1 content is preserved from your uploaded README. 
 
 ````markdown
-# Day 57 — JDBC Advanced Transactions — Part 1
+# Day 57 — JDBC Advanced Transactions — Part 1 & Part 2
 
 ## 📌 Overview
 
-Day 57 JDBC Part 1 focused on advanced transaction management using JDBC and MySQL.
+Day 57 JDBC focused on advanced transaction management using JDBC and MySQL.
 
-The main goal was to move beyond basic `commit()` and `rollback()` from Day 56 and understand how savepoints, partial rollback, transaction validation, and multiple SQL operations can be handled inside a single transaction.
+Part 1 focused on savepoints, partial rollback, transaction validation, nested exception handling, and multiple SQL operations inside a single transaction.
 
-The practical work was implemented using Java, JDBC, MySQL, `Connection`, `PreparedStatement`, `ResultSet`, `Savepoint`, transactions, and exception handling.
+Part 2 moved toward more realistic backend transaction scenarios such as order processing, payment processing, account transfers, exception handling, business validation, and multiple database operations.
+
+The practical work was implemented using Java, JDBC, MySQL, Connection, PreparedStatement, ResultSet, Savepoint, transactions, commit(), rollback(), and exception handling.
 
 ---
 
-## 📚 Topics Covered
+# 📚 Part 1 — Advanced Transaction Management
 
-### 1. Database Connection
+## 1. Database Connection
 
-- Reused the `ConnectionEx` utility
-- Loaded database configuration from `db.properties`
-- Used `Properties`
-- Used `InputStream`
-- Used `DriverManager`
+- Reused the ConnectionEx utility
+- Loaded database configuration from db.properties
+- Used Properties
+- Used InputStream
+- Used DriverManager
 - Created reusable JDBC connections
-- MySQL JDBC Driver
+- Used MySQL JDBC Driver
+- Used Maven for JDBC dependency management
+- Used try-with-resources for connection management
 
 ---
 
-### 2. Savepoints
+## 2. Savepoints
 
 Learned how to create a savepoint inside a transaction.
 
@@ -52,19 +57,20 @@ and:
 con.rollback(savepoint);
 ```
 
-`rollback()`:
+### rollback()
 
 * Rolls back the entire transaction.
 
-`rollback(savepoint)`:
+### rollback(savepoint)
 
 * Rolls back only the operations performed after the specified savepoint.
+* Operations performed before the savepoint remain inside the transaction.
 
 ---
 
-### 3. Nested Transaction Exception Handling
+## 3. Nested Transaction Exception Handling
 
-Practiced using nested `try-catch` blocks inside a transaction.
+Practiced using nested try-catch blocks inside a transaction.
 
 Example flow:
 
@@ -76,25 +82,29 @@ Operation 1
 Savepoint 1
       ↓
 try
-   Operation 2
       ↓
-   Savepoint 2
+Operation 2
       ↓
-   try
-      Operation 3
-   catch
-      rollback(Savepoint 2)
+Savepoint 2
+      ↓
+try
+      ↓
+Operation 3
 catch
-   rollback(Savepoint 1)
+      ↓
+rollback(Savepoint 2)
+catch
+      ↓
+rollback(Savepoint 1)
       ↓
 commit()
 ```
 
-This helped understand how different failures can be handled at different transaction levels.
+This helped understand how different failures can be handled at different transaction stages.
 
 ---
 
-### 4. Multiple Savepoints
+## 4. Multiple Savepoints
 
 Created multiple savepoints inside the same transaction.
 
@@ -118,7 +128,7 @@ If Operation 3 fails:
 con.rollback(sp2);
 ```
 
-Then Operation 3 is removed while Operations 1 and 2 remain.
+Then Operation 3 is removed while Operations 1 and 2 remain inside the transaction.
 
 If Operation 2 fails:
 
@@ -130,7 +140,7 @@ Then Operations 2 and 3 are removed while Operation 1 remains.
 
 ---
 
-### 5. Partial Rollback
+## 5. Partial Rollback
 
 Learned how a transaction can preserve earlier successful operations while undoing later operations.
 
@@ -160,7 +170,7 @@ This is useful when a transaction contains several stages and only later stages 
 
 ---
 
-### 6. Transaction Validation
+## 6. Transaction Validation
 
 Practiced validating business rules before performing database modifications.
 
@@ -202,7 +212,7 @@ con.rollback();
 
 ---
 
-### 7. INSERT + UPDATE in One Transaction
+## 7. INSERT + UPDATE in One Transaction
 
 Created a practical transaction involving multiple SQL operations.
 
@@ -210,11 +220,11 @@ The scenario was a deposit operation where:
 
 ```text
 UPDATE accounts
-        ↓
+      ↓
 Increase balance
-        ↓
-INSERT transaction history
-        ↓
+      ↓
+INSERT transaction_history
+      ↓
 COMMIT
 ```
 
@@ -240,13 +250,13 @@ This demonstrated the practical importance of atomic transactions.
 
 ---
 
-## 🗂️ Files Completed
+# 🗂️ Part 1 — Files Completed
 
-### `ConnectionEx.java`
+## ConnectionEx.java
 
 Responsible for:
 
-* Loading `db.properties`
+* Loading db.properties
 * Reading database URL
 * Reading username
 * Reading password
@@ -255,18 +265,18 @@ Responsible for:
 
 ---
 
-### `SavepointBasics.java`
+## SavepointBasics.java
 
 Practiced:
 
 * Transaction creation
-* `setAutoCommit(false)`
+* setAutoCommit(false)
 * First database operation
 * Creating one savepoint
 * Second database operation
 * Nested exception handling
-* `rollback(savepoint)`
-* `commit()`
+* rollback(savepoint)
+* commit()
 
 Main method:
 
@@ -276,14 +286,14 @@ SavepointBasics.savepointExample();
 
 ---
 
-### `MultipleSavepoints.java`
+## MultipleSavepoints.java
 
 Practiced:
 
 * Multiple operations
 * Savepoint 1
 * Savepoint 2
-* Nested `try-catch`
+* Nested try-catch
 * Rolling back to different savepoints
 * Partial transaction recovery
 * Final commit
@@ -296,7 +306,7 @@ MultipleSavepoints.multipleSavepointExample();
 
 ---
 
-### `PartialRollback.java`
+## PartialRollback.java
 
 Practiced:
 
@@ -315,7 +325,7 @@ PartialRollback.partialRollbackExample();
 
 ---
 
-### `TransactionValidation.java`
+## TransactionValidation.java
 
 Practiced:
 
@@ -337,12 +347,12 @@ TransactionValidation.validatedTransfer();
 
 ---
 
-### `InsertUpdateTransaction.java`
+## InsertUpdateTransaction.java
 
 Practiced:
 
-* `UPDATE`
-* `INSERT`
+* UPDATE
+* INSERT
 * Multiple SQL operations in one transaction
 * Transaction history
 * Exception handling
@@ -357,7 +367,7 @@ InsertUpdateTransaction.depositWithTransactionHistory();
 
 ---
 
-## 🗄️ Database Table Added
+# 🗄️ Part 1 — Database Table Added
 
 Created the transaction history table:
 
@@ -375,9 +385,9 @@ This table was used to practice a real-world transaction involving account balan
 
 ---
 
-## 🔄 Transaction Concepts Practiced
+# 🔄 Part 1 — Transaction Concepts Practiced
 
-### Auto Commit
+## Auto Commit
 
 ```java
 con.setAutoCommit(false);
@@ -387,7 +397,7 @@ Disabled automatic committing so multiple database operations could be treated a
 
 ---
 
-### Commit
+## Commit
 
 ```java
 con.commit();
@@ -397,7 +407,7 @@ Used to permanently save all successful operations in the current transaction.
 
 ---
 
-### Full Rollback
+## Full Rollback
 
 ```java
 con.rollback();
@@ -407,7 +417,7 @@ Used when the complete transaction needs to be undone.
 
 ---
 
-### Savepoint
+## Savepoint
 
 ```java
 Savepoint sp = con.setSavepoint("SAVEPOINT_NAME");
@@ -417,7 +427,7 @@ Created a recovery point inside a transaction.
 
 ---
 
-### Partial Rollback
+## Partial Rollback
 
 ```java
 con.rollback(sp);
@@ -427,62 +437,30 @@ Returned the transaction to a previously created savepoint instead of cancelling
 
 ---
 
-## 🧠 Important Differences Learned
-
-### `rollback()`
-
-```text
-Operation 1
-Operation 2
-Operation 3
-     ↓
-rollback()
-     ↓
-Everything undone
-```
-
-### `rollback(savepoint)`
-
-```text
-Operation 1
-     ↓
-Savepoint
-     ↓
-Operation 2
-Operation 3
-     ↓
-rollback(savepoint)
-     ↓
-Operation 1 remains
-Operation 2 and 3 removed
-```
-
----
-
-## 💡 Key Learnings
+# 💡 Part 1 — Key Learnings
 
 * A transaction can contain multiple SQL operations.
-* `setAutoCommit(false)` gives manual transaction control.
-* `commit()` permanently saves the transaction.
-* `rollback()` undoes the complete transaction.
+* setAutoCommit(false) gives manual transaction control.
+* commit() permanently saves the transaction.
+* rollback() undoes the complete transaction.
 * Savepoints provide intermediate recovery points.
-* `rollback(savepoint)` allows partial rollback.
+* rollback(savepoint) allows partial rollback.
 * Multiple savepoints can exist within one transaction.
-* Nested `try-catch` blocks can handle failures at different transaction stages.
+* Nested try-catch blocks can handle failures at different transaction stages.
 * Business validation should happen before modifying database data.
-* `executeUpdate()` returns the number of affected rows.
+* executeUpdate() returns the number of affected rows.
 * A successful SQL execution does not always mean that the expected row was modified.
 * Multiple database operations can be treated as one atomic unit.
 * Account updates and transaction history insertion should succeed or fail together.
-* `PreparedStatement` was used for parameterized SQL operations.
-* `ResultSet` was used for retrieving account balances.
-* `try-with-resources` was used for automatic resource management.
+* PreparedStatement was used for parameterized SQL operations.
+* ResultSet was used for retrieving account balances.
+* try-with-resources was used for automatic resource management.
 
 ---
 
-## 🏦 Real-World Applications
+# 🏦 Part 1 — Real-World Applications
 
-The concepts practiced in this part are directly applicable to:
+The concepts practiced in Part 1 are directly applicable to:
 
 * Banking systems
 * Payment processing
@@ -521,7 +499,748 @@ This prevents inconsistent database states.
 
 ---
 
-## 🛠️ Technologies Used
+# 🚀 Part 2 — Real-World Transaction Processing
+
+Part 2 moved from individual transaction concepts toward practical multi-step business transactions.
+
+The main focus was:
+
+* Order transactions
+* Payment transactions
+* Account transfers
+* Savepoint-based transaction handling
+* Exception handling
+* Multiple SQL operations
+* Business validation
+* Commit and rollback
+* Atomic business operations
+* Transaction failure scenarios
+* Real-world database consistency
+
+---
+
+# 📚 Part 2 — Topics Covered
+
+## 1. Order Transaction
+
+Created an order-processing transaction involving:
+
+```text
+Account
+   ↓
+Check Balance
+   ↓
+Enter Product
+   ↓
+Validate Amount
+   ↓
+Deduct Account Balance
+   ↓
+Insert Order
+   ↓
+Commit
+```
+
+The transaction ensures that the account balance deduction and order creation belong to the same transaction.
+
+If order creation fails:
+
+```text
+Balance Deduction
+      ↓
+Order Creation Fails
+      ↓
+ROLLBACK
+```
+
+The balance deduction is undone.
+
+---
+
+## 2. Payment Transaction
+
+Created a payment-processing transaction involving:
+
+* Account validation
+* Balance retrieval
+* Payment amount validation
+* Sufficient balance validation
+* Balance deduction
+* Payment record insertion
+* Payment method
+* Payment status
+* Commit
+* Rollback
+
+Transaction flow:
+
+```text
+Account ID
+    ↓
+Check Account
+    ↓
+Get Balance
+    ↓
+Payment Amount
+    ↓
+Validate Amount
+    ↓
+Check Balance
+    ↓
+Deduct Balance
+    ↓
+Insert Payment Record
+    ↓
+COMMIT
+```
+
+If any critical operation fails:
+
+```text
+ROLLBACK
+```
+
+---
+
+## 3. Account Transaction
+
+Practiced a real-world account transfer involving:
+
+* Sender account
+* Receiver account
+* Transfer amount
+* Sender validation
+* Receiver validation
+* Balance validation
+* Debit operation
+* Savepoint
+* Credit operation
+* Commit
+* Rollback
+
+Transaction flow:
+
+```text
+Sender
+   ↓
+Receiver
+   ↓
+Transfer Amount
+   ↓
+Validate Accounts
+   ↓
+Check Sender Balance
+   ↓
+Debit Sender
+   ↓
+Create Savepoint
+   ↓
+Credit Receiver
+   ↓
+Success
+   ↓
+COMMIT
+```
+
+If the receiver credit operation fails, transaction recovery is performed using the savepoint and full rollback where required.
+
+---
+
+## 4. Exception Transaction
+
+Practiced handling exceptions during multi-step database transactions.
+
+Example:
+
+```text
+Transaction Start
+      ↓
+Operation 1
+      ↓
+Operation 2
+      ↓
+Exception
+      ↓
+Transaction Failure
+      ↓
+Rollback Handling
+```
+
+The goal was to understand that transaction operations must be handled carefully when unexpected SQL exceptions occur.
+
+Practiced:
+
+* SQLException
+* try-catch
+* Transaction failure
+* Multiple SQL operations
+* Transaction state
+* Commit after successful operations
+* Rollback during failure scenarios
+
+---
+
+## 5. Transaction Problems
+
+Created additional practical transaction problems covering:
+
+* Safe deposit
+* Safe withdrawal
+* Balance validation
+* Multiple account updates
+* Failed transaction scenarios
+* Explicit rollback
+* Business validation
+* Commit after successful operations
+
+These problems reinforced the concepts learned throughout Day 57.
+
+---
+
+# 🗂️ Part 2 — Files Completed
+
+## OrderTransaction.java
+
+Practiced:
+
+* Account validation
+* Balance retrieval
+* Product input
+* Amount validation
+* Insufficient balance validation
+* Balance deduction
+* Order insertion
+* Order status
+* Multiple SQL operations
+* commit()
+* rollback()
+
+Main method:
+
+```java
+OrderTransaction.placeOrder();
+```
+
+Transaction flow:
+
+```text
+Account Validation
+      ↓
+Balance Check
+      ↓
+Product + Amount
+      ↓
+Validation
+      ↓
+Balance Deduction
+      ↓
+Order INSERT
+      ↓
+COMMIT
+```
+
+Order status used:
+
+```text
+SUCCESS
+```
+
+---
+
+## PaymentTransaction.java
+
+Practiced:
+
+* Account validation
+* Balance retrieval
+* Payment amount validation
+* Insufficient balance validation
+* Balance deduction
+* Payment record insertion
+* Payment method
+* Payment status
+* Multiple SQL operations
+* commit()
+* rollback()
+
+Main method:
+
+```java
+PaymentTransaction.makePayment();
+```
+
+Payment methods practiced:
+
+```text
+UPI
+CARD
+NET_BANKING
+WALLET
+CASH
+```
+
+Example payment record:
+
+```text
+Account ID: 3
+Amount: 1000
+Payment Method: UPI
+Payment Status: SUCCESS
+```
+
+---
+
+## AccountTransaction.java
+
+Practiced:
+
+* Sender account validation
+* Receiver account validation
+* Sender balance validation
+* Transfer amount validation
+* Debit operation
+* Savepoint creation
+* Credit operation
+* Savepoint rollback
+* Full rollback
+* Commit
+
+Main method:
+
+```java
+AccountTransaction.transferWithSavepoint();
+```
+
+Transaction flow:
+
+```text
+Sender Validation
+      ↓
+Receiver Validation
+      ↓
+Balance Validation
+      ↓
+Debit Sender
+      ↓
+Savepoint
+      ↓
+Credit Receiver
+      ↓
+COMMIT
+```
+
+---
+
+## ExceptionTransaction.java
+
+Practiced:
+
+* Exception handling inside transactions
+* SQLException
+* Multiple SQL operations
+* Transaction failure
+* Transaction state
+* Commit
+* Failure handling
+* Resource management
+
+Main method:
+
+```java
+ExceptionTransaction.handleTransactionException();
+```
+
+Example:
+
+```text
+Operation 1
+      ↓
+Operation 2
+      ↓
+Exception
+      ↓
+Transaction Failure
+      ↓
+Rollback Handling
+```
+
+---
+
+## TransactionProblems.java
+
+Created additional practical transaction problems.
+
+Methods:
+
+```java
+TransactionProblems.safeDeposit();
+
+TransactionProblems.safeWithdrawal();
+
+TransactionProblems.failedTransaction();
+
+TransactionProblems.multipleUpdates();
+
+TransactionProblems.transactionWithRollback();
+```
+
+### safeDeposit()
+
+Practiced:
+
+* Deposit validation
+* Account update
+* Commit
+* Transaction success
+
+### safeWithdrawal()
+
+Practiced:
+
+* Account validation
+* Balance retrieval
+* Withdrawal validation
+* Sufficient balance check
+* Balance update
+* Commit
+
+### failedTransaction()
+
+Practiced:
+
+* Successful operation followed by simulated failure
+* Transaction failure handling
+* Exception handling
+
+### multipleUpdates()
+
+Practiced:
+
+* Multiple UPDATE statements
+* One transaction
+* Affected-row validation
+* Commit
+
+### transactionWithRollback()
+
+Practiced:
+
+* Database update
+* Explicit rollback
+* Understanding uncommitted transaction changes
+
+---
+
+## App.java
+
+Used App.java as the testing entry point for the practical transaction programs.
+
+Example:
+
+```java
+package day57;
+
+public class App {
+
+    public static void main(String[] args)
+            throws ClassNotFoundException, Exception {
+
+        OrderTransaction.placeOrder();
+
+        // PaymentTransaction.makePayment();
+
+        // AccountTransaction.transferWithSavepoint();
+
+        // ExceptionTransaction.handleTransactionException();
+
+        // TransactionProblems.safeDeposit();
+
+        // TransactionProblems.safeWithdrawal();
+
+        // TransactionProblems.failedTransaction();
+
+        // TransactionProblems.multipleUpdates();
+
+        // TransactionProblems.transactionWithRollback();
+    }
+}
+```
+
+The transaction programs were tested individually to avoid Scanner/System.in conflicts.
+
+---
+
+# 🗄️ Part 2 — Database Tables Added
+
+## Orders Table
+
+```sql
+CREATE TABLE orders (
+    order_id INT PRIMARY KEY AUTO_INCREMENT,
+    account_id INT NOT NULL,
+    product_name VARCHAR(100) NOT NULL,
+    amount DECIMAL(10,2) NOT NULL,
+    order_status VARCHAR(30) NOT NULL
+);
+```
+
+Used for practicing:
+
+* Order creation
+* Account balance deduction
+* Order status
+* Atomic order transactions
+
+---
+
+## Payments Table
+
+```sql
+CREATE TABLE payments (
+    payment_id INT PRIMARY KEY AUTO_INCREMENT,
+    account_id INT NOT NULL,
+    amount DECIMAL(10,2) NOT NULL,
+    payment_method VARCHAR(30) NOT NULL,
+    payment_status VARCHAR(30) NOT NULL
+);
+```
+
+Used for practicing:
+
+* Payment processing
+* Payment methods
+* Payment status
+* Account balance deduction
+* Transaction recording
+
+---
+
+# 🔄 Part 2 — Transaction Patterns Practiced
+
+## Order Transaction
+
+```text
+Validate Account
+      ↓
+Check Balance
+      ↓
+Validate Order
+      ↓
+Deduct Balance
+      ↓
+Create Order
+      ↓
+Commit
+```
+
+---
+
+## Payment Transaction
+
+```text
+Validate Account
+      ↓
+Check Balance
+      ↓
+Validate Payment
+      ↓
+Deduct Balance
+      ↓
+Insert Payment Record
+      ↓
+Commit
+```
+
+---
+
+## Account Transfer
+
+```text
+Validate Sender
+      ↓
+Validate Receiver
+      ↓
+Check Balance
+      ↓
+Debit Sender
+      ↓
+Savepoint
+      ↓
+Credit Receiver
+      ↓
+Commit
+```
+
+---
+
+## Failure Scenario
+
+```text
+Operation 1
+      ↓
+Operation 2
+      ↓
+Operation 2 Fails
+      ↓
+Rollback
+      ↓
+No Partial Transaction
+```
+
+---
+
+# 🧠 Part 2 — Key Learnings
+
+* Real-world business operations often require multiple SQL statements.
+* Multiple SQL statements can be grouped into one transaction.
+* setAutoCommit(false) provides manual transaction control.
+* commit() permanently saves successful transaction operations.
+* rollback() cancels uncommitted transaction operations.
+* Savepoints provide intermediate recovery points.
+* rollback(savepoint) can recover a transaction to a specific stage.
+* Business validation should happen before critical database modifications.
+* Account existence should be checked before performing financial operations.
+* Balance should be checked before withdrawals, payments, and transfers.
+* executeUpdate() should be checked using affected-row counts.
+* An UPDATE followed by an INSERT can be treated as one transaction.
+* Order creation and balance deduction should succeed or fail together.
+* Payment processing and payment record insertion should succeed or fail together.
+* Sender debit and receiver credit belong to one logical transfer transaction.
+* PreparedStatement provides parameterized SQL operations.
+* ResultSet is used to retrieve account information.
+* try-with-resources helps automatically close JDBC resources.
+* Exception handling is important when working with database transactions.
+* Transactions help prevent inconsistent database states.
+* Database locks can affect transaction execution.
+* A transaction must be properly completed using commit() or rollback().
+* Stale transactions can cause lock wait timeout errors.
+
+---
+
+# 🔐 Real Transaction Locking Issue Practiced
+
+During the OrderTransaction testing, a real MySQL transaction locking problem occurred:
+
+```text
+Lock wait timeout exceeded
+```
+
+The problem was caused by an older JDBC connection with an active transaction.
+
+The connection was identified using:
+
+```sql
+SHOW FULL PROCESSLIST;
+```
+
+The active transaction was identified using:
+
+```sql
+SELECT *
+FROM information_schema.innodb_trx;
+```
+
+The stale connection was terminated using:
+
+```sql
+KILL 10;
+```
+
+This demonstrated a real-world database transaction problem involving:
+
+* Open transactions
+* Database locks
+* Sleeping connections
+* Lock wait timeout
+* Transaction cleanup
+* Proper commit/rollback handling
+
+This was an important practical backend learning experience.
+
+---
+
+# 🏦 Real-World Applications
+
+The transaction concepts practiced during Day 57 can be applied to:
+
+* Banking applications
+* UPI payment systems
+* Payment gateways
+* E-commerce checkout
+* Order management systems
+* Wallet applications
+* Financial applications
+* Inventory systems
+* Payroll systems
+* Ticket booking systems
+* Subscription systems
+* Transaction history systems
+* Audit systems
+
+Example e-commerce transaction:
+
+```text
+Customer Places Order
+        ↓
+Validate Customer
+        ↓
+Check Balance
+        ↓
+Validate Product
+        ↓
+Deduct Payment
+        ↓
+Create Order
+        ↓
+Update Inventory
+        ↓
+Create Transaction Record
+        ↓
+COMMIT
+```
+
+If a critical operation fails:
+
+```text
+ROLLBACK
+```
+
+This prevents partial updates and inconsistent data.
+
+---
+
+# 🔥 Day 57 — Overall Transaction Architecture
+
+```text
+                    TRANSACTION
+                         ↓
+                setAutoCommit(false)
+                         ↓
+                  Business Validation
+                         ↓
+                  Account Verification
+                         ↓
+                    SQL Operation
+                         ↓
+                    SQL Operation
+                         ↓
+                     Savepoint
+                         ↓
+                    SQL Operation
+                         ↓
+                 ┌───────┴───────┐
+                 ↓               ↓
+              SUCCESS          FAILURE
+                 ↓               ↓
+              commit()       rollback()
+                 ↓               ↓
+             Database       Changes Undone
+              Saved
+```
+
+---
+
+# 🛠️ Technologies Used
 
 * Java
 * JDBC
@@ -534,10 +1253,12 @@ This prevents inconsistent database states.
 * Savepoint
 * SQL Transactions
 * Exception Handling
+* try-with-resources
+* MySQL InnoDB Transactions
 
 ---
 
-## 📁 Part 1 Structure
+# 📁 Day 57 JDBC Complete Structure
 
 ```text
 DAY_57_Advanced_Transactions
@@ -551,7 +1272,13 @@ DAY_57_Advanced_Transactions
         │       ├── MultipleSavepoints.java
         │       ├── PartialRollback.java
         │       ├── TransactionValidation.java
-        │       └── InsertUpdateTransaction.java
+        │       ├── InsertUpdateTransaction.java
+        │       ├── OrderTransaction.java
+        │       ├── PaymentTransaction.java
+        │       ├── AccountTransaction.java
+        │       ├── ExceptionTransaction.java
+        │       ├── TransactionProblems.java
+        │       └── App.java
         │
         └── resources
             ├── db.properties
@@ -560,12 +1287,13 @@ DAY_57_Advanced_Transactions
 
 ---
 
-## 📈 Day 57 JDBC Progress
+# 📈 Day 57 JDBC Progress
 
-### Part 1 — Completed ✅
+## Part 1 — Completed ✅
 
 * [x] Database Connection
 * [x] Transaction Control
+* [x] setAutoCommit(false)
 * [x] Savepoints
 * [x] Multiple Savepoints
 * [x] Nested Try-Catch
@@ -578,30 +1306,80 @@ DAY_57_Advanced_Transactions
 * [x] PreparedStatement
 * [x] ResultSet
 
+## Part 2 — Completed ✅
+
+* [x] Order Transaction
+* [x] Payment Transaction
+* [x] Account Transfer
+* [x] Savepoint-Based Recovery
+* [x] Exception Transaction Handling
+* [x] Business Validation
+* [x] Multiple SQL Operations
+* [x] Order Creation
+* [x] Payment Record Creation
+* [x] Account Balance Deduction
+* [x] Commit Handling
+* [x] Rollback Handling
+* [x] Transaction Failure Scenarios
+* [x] Practical Transaction Problems
+* [x] MySQL Lock Wait Timeout Troubleshooting
+
 ---
 
-## 🎯 Day 57 JDBC Part 1 Outcome
+# 🎯 Day 57 JDBC Overall Outcome
 
-By completing Part 1, I learned how to control JDBC transactions beyond basic commit and rollback.
+By completing Part 1 and Part 2, I moved from basic JDBC transaction control toward practical backend transaction management.
 
-I practiced creating savepoints, rolling back to specific savepoints, handling multiple savepoints, using nested exception handling, validating business rules before database operations, and executing multiple SQL operations such as `UPDATE` and `INSERT` as one atomic transaction.
+I learned how to use setAutoCommit(false), commit(), rollback(), and Savepoint to control database transactions.
 
-The practical banking and transaction-history scenarios helped me understand how transaction management is applied in real-world backend applications.
+I practiced full rollback, partial rollback, multiple savepoints, nested try-catch handling, transaction validation, and multiple SQL operations inside a single transaction.
+
+I also implemented realistic backend scenarios such as order processing, payment processing, account transfers, transaction history, and failure handling.
+
+The practical problems helped me understand how multiple database operations can be treated as one logical business transaction and how commit and rollback protect database consistency.
+
+I also encountered and resolved a real MySQL lock wait timeout caused by an open transaction, which helped me understand the importance of properly completing and closing database transactions.
 
 ---
 
-## 🚀 Next Goal — Day 57 JDBC Part 2
+# 🚀 Day 57 Completed
 
-The next part will focus on more realistic transaction scenarios:
+```text
+DAY 57 JDBC
+     │
+     ├── Part 1
+     │    ├── Savepoints
+     │    ├── Multiple Savepoints
+     │    ├── Partial Rollback
+     │    ├── Validation
+     │    └── INSERT + UPDATE
+     │
+     └── Part 2
+          ├── Order Transaction
+          ├── Payment Transaction
+          ├── Account Transfer
+          ├── Exception Handling
+          ├── Multiple SQL Operations
+          └── Transaction Problems
+```
 
-* `OrderTransaction.java`
-* `PaymentTransaction.java`
-* `AccountTransaction.java`
-* `ExceptionTransaction.java`
-* `TransactionProblems.java`
-* `App.java`
+## ✅ Day 57 JDBC — PART 1 & PART 2 COMPLETED
 
-The focus will move from individual transaction concepts toward **real-world multi-step business transactions and failure handling**.
+---
+
+# 🎯 Next Goal
+
+Continue to the next JDBC/Core Java learning stage with more practical backend development and database programming.
+
+The next phase will build on:
+
+* JDBC Transactions
+* Core Java
+* Collections
+* SQL
+* MySQL
+* Exception Handling
+* Real-world backend problem solving
 
 ```
 ```
