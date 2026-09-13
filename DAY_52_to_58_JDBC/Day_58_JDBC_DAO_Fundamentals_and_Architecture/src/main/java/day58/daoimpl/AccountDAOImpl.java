@@ -136,15 +136,83 @@ public class AccountDAOImpl implements AccountDAO {
 	}
 
 	@Override
-	public boolean updateBalance(int accountId, BigDecimal balance) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean updateBalance(int accountId, BigDecimal amount, String operation) throws SQLException {
+		
+		if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
+	        return false;
+	    }
+
+	    if (operation == null) {
+	        return false;
+	    }
+
+	    String sql;
+		
+	    if (operation.equalsIgnoreCase("CREDIT")) {
+
+	        sql = "UPDATE accounts "
+	            + "SET balance = balance + ? "
+	            + "WHERE account_id = ? "
+	            + "AND account_status = 'ACTIVE'";
+
+	    } else if (operation.equalsIgnoreCase("DEBIT")) {
+
+	        sql = "UPDATE accounts "
+	            + "SET balance = balance - ? "
+	            + "WHERE account_id = ? "
+	            + "AND account_status = 'ACTIVE' "
+	            + "AND balance >= ?";
+
+	    } else {
+
+	        return false;
+	    }
+	    
+	    try (Connection con = ConnectionEx.getConnection();
+	    		PreparedStatement statement = con.prepareStatement(sql)) {
+	    	
+	    	statement.setBigDecimal(1, amount);
+	    	statement.setInt(2, accountId);
+
+	        if (operation.equalsIgnoreCase("DEBIT")) {
+	            statement.setBigDecimal(3, amount);
+	        }
+
+	        int rowsAffected = statement.executeUpdate();
+
+	        return rowsAffected > 0;
+	    }
 	}
 
 	@Override
 	public boolean updateAccountStatus(int accountId, String status) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+		
+		if (status == null || status.trim().isEmpty()) {
+	        return false;
+	    }
+		
+		String normalizedStatus = status.trim().toUpperCase();
+
+	    if (!normalizedStatus.equals("ACTIVE")
+	            && !normalizedStatus.equals("SUSPENDED")
+	            && !normalizedStatus.equals("BLOCKED")) {
+	        return false;
+	    }
+	    
+	    String sql = "UPDATE accounts "
+	               + "SET account_status = ? "
+	               + "WHERE account_id = ?";
+
+	    try (Connection con = ConnectionEx.getConnection();
+	         PreparedStatement statement = con.prepareStatement(sql)) {
+
+	        statement.setString(1, normalizedStatus);
+	        statement.setInt(2, accountId);
+
+	        int rowsAffected = statement.executeUpdate();
+
+	        return rowsAffected > 0;
+	    }
 	}
 
 }

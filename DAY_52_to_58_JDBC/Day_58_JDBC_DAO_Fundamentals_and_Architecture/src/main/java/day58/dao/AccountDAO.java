@@ -16,7 +16,7 @@ public interface AccountDAO {
 
     List<Account> findAllActiveAccounts() throws SQLException;
 
-    boolean updateBalance(int accountId, BigDecimal balance) throws SQLException;
+    boolean updateBalance(int accountId, BigDecimal amount, String operation) throws SQLException;
 
     boolean updateAccountStatus(int accountId, String status) throws SQLException;
 }

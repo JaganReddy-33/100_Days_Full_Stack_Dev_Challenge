@@ -41,6 +41,12 @@ public class App {
                 case 4:
                 	findAllActiveAccounts();
                 	break;
+                case 5:
+                    updateBalance();
+                    break;
+                case 6:
+                    updateAccountStatus();
+                    break;
 
                 case 0:
                     System.out.println();
@@ -75,6 +81,8 @@ public class App {
         System.out.println("2. Find Account By ID");
         System.out.println("3. Find Account By UPI_ID");
         System.out.println("4. Find All Active Accounts");
+        System.out.println("5. Update Account Balance");
+        System.out.println("6. Update Account Status");
         System.out.println("0. Exit");
         System.out.println("=================================");
         System.out.print("Enter your choice: ");
@@ -185,6 +193,73 @@ public class App {
             for (Account account : accounts) {
                 System.out.println(account);
             }
+        }
+    }
+    
+    private static void updateBalance() throws SQLException {
+
+        System.out.println("=================================");
+        System.out.println("       UPDATE ACCOUNT BALANCE");
+        System.out.println("=================================");
+
+        System.out.print("Enter account ID: ");
+        int accountId = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.print("Enter amount: ");
+        BigDecimal amount = scanner.nextBigDecimal();
+        scanner.nextLine();
+
+        System.out.print("Enter operation (CREDIT/DEBIT): ");
+        String operation = scanner.nextLine();
+
+        boolean result = accountDAO.updateBalance(accountId, amount, operation);
+
+        if (result) {
+            System.out.println("Balance updated successfully!");
+            Account updatedAccount = accountDAO.findAccountById(accountId);
+
+            if (updatedAccount != null) {
+                System.out.println("Updated Account Details:");
+                System.out.println(updatedAccount);
+            }
+        } else {
+            System.out.println("Balance update failed!");
+
+            if (operation.equalsIgnoreCase("DEBIT")) {
+                System.out.println("Possible reasons: insufficient balance, inactive account, or invalid account ID.");
+            } else {
+                System.out.println("Please check the account ID, amount, and operation.");
+            }
+        }
+    }
+    
+    private static void updateAccountStatus() throws SQLException {
+
+        System.out.println("=================================");
+        System.out.println("       UPDATE ACCOUNT STATUS");
+        System.out.println("=================================");
+
+        System.out.print("Enter account ID: ");
+        int accountId = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.print("Enter new status (ACTIVE/SUSPENDED/BLOCKED): ");
+        String status = scanner.nextLine();
+
+        boolean result = accountDAO.updateAccountStatus(accountId, status);
+
+        if (result) {
+            System.out.println("Account status updated successfully!");
+            Account updatedAccount = accountDAO.findAccountById(accountId);
+
+            if (updatedAccount != null) {
+                System.out.println("Updated Account Details:");
+                System.out.println(updatedAccount);
+            }
+        } else {
+            System.out.println("Account status update failed!");
+            System.out.println("Check the account ID or provide a valid status.");
         }
     }
 }
