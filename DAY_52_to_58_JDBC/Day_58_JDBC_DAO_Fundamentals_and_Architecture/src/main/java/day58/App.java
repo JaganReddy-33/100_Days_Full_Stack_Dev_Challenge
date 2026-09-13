@@ -2,6 +2,7 @@ package day58;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
 
 import day58.dao.AccountDAO;
@@ -37,6 +38,9 @@ public class App {
                 case 3:
                 	findAccountByUPI_Id();
                 	break;
+                case 4:
+                	findAllActiveAccounts();
+                	break;
 
                 case 0:
                     System.out.println();
@@ -70,6 +74,7 @@ public class App {
         System.out.println("1. Create Account");
         System.out.println("2. Find Account By ID");
         System.out.println("3. Find Account By UPI_ID");
+        System.out.println("4. Find All Active Accounts");
         System.out.println("0. Exit");
         System.out.println("=================================");
         System.out.print("Enter your choice: ");
@@ -163,6 +168,23 @@ public class App {
             System.out.println(foundAccount);
         } else {
             System.out.println("Account not found!");
+        }
+    }
+    
+    private static void findAllActiveAccounts() throws SQLException {
+    	
+    	List<Account> accounts = accountDAO.findAllActiveAccounts();
+    	
+        if (accounts.isEmpty()) {
+            System.out.println("No active accounts found!");
+        } else {
+            System.out.println("=================================");
+            System.out.println("       ACTIVE ACCOUNTS");
+            System.out.println("=================================");
+
+            for (Account account : accounts) {
+                System.out.println(account);
+            }
         }
     }
 }

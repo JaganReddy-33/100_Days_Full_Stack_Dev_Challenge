@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import day58.ConnectionEx;
@@ -108,8 +109,30 @@ public class AccountDAOImpl implements AccountDAO {
 
 	@Override
 	public List<Account> findAllActiveAccounts() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<Account> accounts = new ArrayList<>();
+		
+		String sql = "SELECT * FROM accounts WHERE account_status = 'ACTIVE' ";
+		
+		try(Connection con = ConnectionEx.getConnection();
+				PreparedStatement statement = con.prepareStatement(sql)){
+			
+			try(ResultSet resultSet = statement.executeQuery()){
+				while(resultSet.next()) {
+					int id = resultSet.getInt("account_id");
+	                String userName = resultSet.getString("user_name");
+	                String upi_Id = resultSet.getString("upi_id");
+	                String accNum = resultSet.getString("account_number");
+	                BigDecimal balance = resultSet.getBigDecimal("balance");
+	                String status = resultSet.getString("account_status");
+	                Timestamp createdAt = resultSet.getTimestamp("created_at");
+	                
+	                Account account = new Account(id, userName, upi_Id, accNum, balance, status, createdAt);
+	                accounts.add(account);
+				}
+			}
+		}
+		return accounts;
 	}
 
 	@Override
