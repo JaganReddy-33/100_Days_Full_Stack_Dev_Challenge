@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.List;
 
 import day58.ConnectionEx;
@@ -20,8 +21,8 @@ public class AccountDAOImpl implements AccountDAO {
 		String sql = "INSERT INTO accounts (user_name, upi_id, account_number, balance, account_status) "
 	               + "VALUES (?, ?, ?, ?, ?)";
 
-	    try (Connection connection = ConnectionEx.getConnection();
-	         PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+	    try (Connection con = ConnectionEx.getConnection();
+	         PreparedStatement statement = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
 	        statement.setString(1, account.getUserName());
 	        statement.setString(2, account.getUpiId());
@@ -50,15 +51,60 @@ public class AccountDAOImpl implements AccountDAO {
 
 	@Override
 	public Account findAccountById(int accountId) throws SQLException {
-		// TODO Auto-generated method stub
+
+		String sql = "SELECT * FROM accounts WHERE account_id = ? ";
+		
+		try(Connection con = ConnectionEx.getConnection();
+				PreparedStatement statement = con.prepareStatement(sql)){
+			
+			statement.setInt(1, accountId);
+			
+			try(ResultSet res = statement.executeQuery()){
+				
+				if(res.next()) {
+					int id = res.getInt("account_id");
+	                String userName = res.getString("user_name");
+	                String upiId = res.getString("upi_id");
+	                String accNum = res.getString("account_number");
+	                BigDecimal balance = res.getBigDecimal("balance");
+	                String status = res.getString("account_status");
+	                Timestamp createdAt = res.getTimestamp("created_at");
+	                
+	                return new Account(id, userName, upiId, accNum, balance, status, createdAt);
+				}
+			}
+		}
 		return null;
 	}
 
 	@Override
 	public Account findAccountByUpiId(String upiId) throws SQLException {
-		// TODO Auto-generated method stub
+		
+		String sql = "SELECT * FROM accounts WHERE upi_id = ? ";
+		
+		try(Connection con = ConnectionEx.getConnection();
+				PreparedStatement statement = con.prepareStatement(sql)){
+			
+			statement.setString(1, upiId);
+			
+			try(ResultSet res = statement.executeQuery()){
+				
+				if(res.next()) {
+					int id = res.getInt("account_id");
+	                String userName = res.getString("user_name");
+	                String upi_Id = res.getString("upi_id");
+	                String accNum = res.getString("account_number");
+	                BigDecimal balance = res.getBigDecimal("balance");
+	                String status = res.getString("account_status");
+	                Timestamp createdAt = res.getTimestamp("created_at");
+	                
+	                return new Account(id, userName, upi_Id, accNum, balance, status, createdAt);
+				}
+			}
+		}
 		return null;
 	}
+	
 
 	@Override
 	public List<Account> findAllActiveAccounts() throws SQLException {
