@@ -5,23 +5,20 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
-import day58.dao.AccountDAO;
-import day58.daoimpl.AccountDAOImpl;
 import day58.model.Account;
+import day58.service.AccountService;
 
 public class App {
 
     private static Scanner scanner = new Scanner(System.in);
-    private static AccountDAO accountDAO = new AccountDAOImpl();
+    private static AccountService accountService = new AccountService();
 
     public static void main(String[] args) {
 
         try {
-
+        	
             while (true) {
-
                 showMenu();
-
                 int choice = scanner.nextInt();
                 scanner.nextLine();
 
@@ -90,7 +87,6 @@ public class App {
 
     private static void createAccount() throws SQLException {
 
-        System.out.println();
         System.out.println("=================================");
         System.out.println("       CREATE ACCOUNT");
         System.out.println("=================================");
@@ -118,7 +114,7 @@ public class App {
         account.setBalance(balance);
         account.setAccountStatus(accountStatus);
 
-        boolean result = accountDAO.createAccount(account);
+        boolean result = accountService.createAccount(account);
 
         if (result) {
 
@@ -137,7 +133,6 @@ public class App {
 
     private static void findAccountById() throws SQLException {
 
-        System.out.println();
         System.out.println("=================================");
         System.out.println("       FIND ACCOUNT BY ID");
         System.out.println("=================================");
@@ -146,11 +141,9 @@ public class App {
         int accountId = scanner.nextInt();
         scanner.nextLine();
 
-        Account foundAccount = accountDAO.findAccountById(accountId);
+        Account foundAccount = accountService.findAccountById(accountId);
 
         if (foundAccount != null) {
-
-            System.out.println();
             System.out.println("Account found successfully!");
             System.out.println("Account Details:");
             System.out.println(foundAccount);
@@ -168,7 +161,7 @@ public class App {
         System.out.println("Enter account UPI_ID: ");
         String upiId = scanner.nextLine();
         
-        Account foundAccount = accountDAO.findAccountByUpiId(upiId);
+        Account foundAccount = accountService.findAccountByUpiId(upiId);
         
         if(foundAccount != null) {
         	System.out.println("Account found successfully!");
@@ -181,7 +174,7 @@ public class App {
     
     private static void findAllActiveAccounts() throws SQLException {
     	
-    	List<Account> accounts = accountDAO.findAllActiveAccounts();
+    	List<Account> accounts = accountService.findAllActiveAccounts();
     	
         if (accounts.isEmpty()) {
             System.out.println("No active accounts found!");
@@ -213,11 +206,11 @@ public class App {
         System.out.print("Enter operation (CREDIT/DEBIT): ");
         String operation = scanner.nextLine();
 
-        boolean result = accountDAO.updateBalance(accountId, amount, operation);
+        boolean result = accountService.updateBalance(accountId, amount, operation);
 
         if (result) {
             System.out.println("Balance updated successfully!");
-            Account updatedAccount = accountDAO.findAccountById(accountId);
+            Account updatedAccount = accountService.findAccountById(accountId);
 
             if (updatedAccount != null) {
                 System.out.println("Updated Account Details:");
@@ -247,11 +240,11 @@ public class App {
         System.out.print("Enter new status (ACTIVE/SUSPENDED/BLOCKED): ");
         String status = scanner.nextLine();
 
-        boolean result = accountDAO.updateAccountStatus(accountId, status);
+        boolean result = accountService.updateAccountStatus(accountId, status);
 
         if (result) {
             System.out.println("Account status updated successfully!");
-            Account updatedAccount = accountDAO.findAccountById(accountId);
+            Account updatedAccount = accountService.findAccountById(accountId);
 
             if (updatedAccount != null) {
                 System.out.println("Updated Account Details:");
