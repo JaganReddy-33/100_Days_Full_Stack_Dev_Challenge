@@ -18,20 +18,21 @@ public class Main {
 //		paymentService.generateReference();
 		
 		
-		UPIPayment upiPayment = new UPIPayment();
-
-		upiPayment.validatePayment();
-		upiPayment.processPayment();
-		upiPayment.checkRisk();
-		System.out.println(upiPayment.getPaymentStatus());
-
-		RealWorldMethodOverriding_09 cardPayment =
-		        new RealWorldMethodOverriding_09();
-
-		cardPayment.validatePayment();
-		cardPayment.processPayment();
-		cardPayment.checkRisk();
-		System.out.println(cardPayment.getPaymentStatus());
+//		UPIPayment upiPayment = new UPIPayment();
+//		upiPayment.validatePayment();
+//		upiPayment.processPayment();
+//		upiPayment.checkRisk();
+//		System.out.println(upiPayment.getPaymentStatus());
+//
+//		RealWorldMethodOverriding_09 cardPayment =
+//		        new RealWorldMethodOverriding_09();
+//		cardPayment.validatePayment();
+//		cardPayment.processPayment();
+//		cardPayment.checkRisk();
+//		System.out.println(cardPayment.getPaymentStatus());
+		
+		
+		
 		
 		
 	}

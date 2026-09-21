@@ -1,14 +1,27 @@
-
-````markdown
-# Day 58 — JDBC | Account Management System
+# Day 58–59 — JDBC | Account & Transaction Management
 
 ## 🚀 Project
 
 **Real-Time UPI Payment Fraud & Risk Scoring System**
 
-Day 58 focused on building the **Account Management foundation** of the UPI Payment Fraud & Risk Scoring System using JDBC, MySQL, DAO architecture, and a Service Layer.
+This JDBC project is being developed progressively as part of the **100 Days Full Stack Developer Challenge**.
 
-The objective was to move from basic JDBC operations toward a structured backend architecture:
+The JDBC development started with the **Account Management Domain** and has now expanded into the **Transaction Domain**.
+
+The objective is to move from basic JDBC operations toward a structured backend architecture using:
+
+* Java
+* JDBC
+* MySQL
+* DAO Pattern
+* Service Layer
+* PreparedStatement
+* ResultSet
+* Generated Keys
+* BigDecimal
+* Layered Backend Architecture
+
+Current architecture:
 
 ```text
 App
@@ -17,58 +30,72 @@ Service
  ↓
 DAO
  ↓
+DAO Implementation
+ ↓
 JDBC
  ↓
 MySQL
-````
+```
 
 ---
 
-# 📌 Day 58 JDBC Overview
+# 📌 JDBC Overview
 
-Day 58 JDBC was divided into two major parts:
+The JDBC development has been divided into four learning phases:
 
-### Part 1 — JDBC Account Domain
+```text
+Day 58 — Part 1
+        ↓
+JDBC Account Domain
+        ↓
+Day 58 — Part 2
+        ↓
+Account Service Layer
+        ↓
+Day 59 — Part 1
+        ↓
+JDBC Transaction Domain
+        ↓
+Day 59 — Part 2
+        ↓
+Transaction Service + App Integration
+```
+
+---
+
+# 🏦 Day 58 — Part 1 — Account Domain
+
+Day 58 Part 1 focused on building the first database-backed domain of the project.
+
+### Topics Covered
 
 * Database configuration
 * JDBC connection management
-* Account database table
+* MySQL database
+* Account table
 * Account model
-* DAO interface
-* DAO implementation
-* Create account
-* Find account by ID
-* Find account by UPI ID
-* Find all active accounts
-* Update account balance
-* Update account status
-
-### Part 2 — Service Layer
-
-* Understanding Service Layer
-* Connecting App with Service
-* Moving business validation into Service
-* AccountService
-* Create account validation
-* Account lookup validation
-* Balance operation validation
-* Account status validation
-* Complete App → Service → DAO architecture
-* End-to-end testing
+* AccountDAO
+* AccountDAOImpl
+* PreparedStatement
+* ResultSet
+* Generated Keys
+* Account creation
+* Account lookup
+* Active account retrieval
+* Balance updates
+* Account status updates
 
 ---
 
-# 🏦 Part 1 — Account Domain
+# 1. Database
 
-## 1. Database
-
-Database schema:
+Database:
 
 ```text
 upi_fraud_system
 ```
 
-Main table created for Day 58:
+Main table:
 
 ```text
 accounts
@@ -90,13 +117,15 @@ CREATE TABLE accounts (
 
 The table stores:
 
-* Account ID
-* User name
-* UPI ID
-* Account number
-* Balance
-* Account status
-* Creation timestamp
+```text
+account_id
+user_name
+upi_id
+account_number
+balance
+account_status
+created_at
+```
 
 ---
 
@@ -109,22 +138,21 @@ database
 └── accounts.sql
 ```
 
-The SQL file contains the `accounts` table definition for future reference.
-
-Future database tables will be added progressively as the project grows.
+The SQL file contains the `accounts` table definition.
 
 ---
 
 # 🔐 Database Configuration
 
-Database configuration is stored separately from Java source code.
+Database configuration is separated from Java source code.
 
 ```text
 src/main/resources
-└── db.properties
+├── db.properties
+└── db.properties.example
 ```
 
-Example configuration:
+Example:
 
 ```properties
 db.url=jdbc:mysql://localhost:3306/upi_fraud_system
@@ -133,12 +161,6 @@ db.password=YOUR_MYSQL_PASSWORD
 ```
 
 The real `db.properties` file is excluded from Git using `.gitignore`.
-
-A template can be maintained using:
-
-```text
-db.properties.example
-```
 
 ---
 
@@ -152,7 +174,7 @@ src/main/java/day58/ConnectionEx.java
 
 ### Responsibility
 
-`ConnectionEx` is responsible for creating a JDBC connection using the database configuration.
+`ConnectionEx` creates JDBC connections using the database configuration.
 
 It:
 
@@ -164,7 +186,7 @@ It:
 * Creates a JDBC connection
 * Returns `Connection`
 
-The application successfully connected to:
+Database:
 
 ```text
 upi_fraud_system
@@ -198,13 +220,17 @@ createdAt
 
 The model contains:
 
-* No database SQL
-* No Scanner
-* No user input
+* Constructors
 * Getters
 * Setters
-* Constructors
 * `toString()`
+
+It does not contain:
+
+* SQL
+* JDBC logic
+* Scanner
+* User input
 
 ---
 
@@ -224,9 +250,7 @@ Interface
 
 ### Responsibility
 
-`AccountDAO` defines the database operations that can be performed for an account.
-
-Methods:
+`AccountDAO` defines the database operations available for an account.
 
 ```java
 boolean createAccount(Account account) throws SQLException;
@@ -237,14 +261,23 @@ Account findAccountByUpiId(String upiId) throws SQLException;
 
 List<Account> findAllActiveAccounts() throws SQLException;
 
-boolean updateBalance(int accountId, BigDecimal amount, String operation) throws SQLException;
+boolean updateBalance(
+    int accountId,
+    BigDecimal amount,
+    String operation
+) throws SQLException;
 
-boolean updateAccountStatus(int accountId, String status) throws SQLException;
+boolean updateAccountStatus(
+    int accountId,
+    String status
+) throws SQLException;
 ```
 
-The interface defines **WHAT operations are available**.
+The DAO interface defines:
 
-It does not define the JDBC implementation details.
+> WHAT database operations are available.
+
+It does not contain the JDBC implementation.
 
 ---
 
@@ -264,7 +297,7 @@ Class
 
 ### Responsibility
 
-`AccountDAOImpl` implements `AccountDAO` and contains the actual JDBC/database logic.
+`AccountDAOImpl` implements `AccountDAO` and contains the actual JDBC logic.
 
 It uses:
 
@@ -279,7 +312,7 @@ SQLException
 
 # 6. createAccount()
 
-Creates a new account in the database.
+Creates a new account.
 
 The method:
 
@@ -296,7 +329,7 @@ Statement.RETURN_GENERATED_KEYS
 getGeneratedKeys()
 ```
 
-Example flow:
+Flow:
 
 ```text
 Account object
@@ -314,27 +347,28 @@ Account.setAccountId()
 
 # 7. findAccountById()
 
-Searches for one account using:
+Searches for an account using:
 
 ```text
 account_id
 ```
 
-SQL concept:
+SQL:
 
 ```sql
-SELECT * FROM accounts WHERE account_id = ?
+SELECT * FROM accounts
+WHERE account_id = ?
 ```
 
-Because `account_id` is the primary key, the query returns at most one account.
+Because `account_id` is the primary key, one account or no account is returned.
 
-The method:
+If the account does not exist:
 
-* Executes SELECT
-* Reads the ResultSet
-* Creates an Account object
-* Returns the Account
-* Returns `null` when no account exists
+```text
+null
+```
+
+is returned.
 
 ---
 
@@ -346,15 +380,16 @@ Searches for an account using:
 upi_id
 ```
 
-SQL concept:
+SQL:
 
 ```sql
-SELECT * FROM accounts WHERE upi_id = ?
+SELECT * FROM accounts
+WHERE upi_id = ?
 ```
 
-The `upi_id` column is UNIQUE, so one UPI ID maps to one account.
+The `upi_id` column is UNIQUE.
 
-The method converts the database row into an `Account` object.
+Therefore one UPI ID maps to one account.
 
 ---
 
@@ -366,13 +401,14 @@ Retrieves all accounts whose status is:
 ACTIVE
 ```
 
-SQL concept:
+SQL:
 
 ```sql
-SELECT * FROM accounts WHERE account_status = 'ACTIVE'
+SELECT * FROM accounts
+WHERE account_status = 'ACTIVE'
 ```
 
-The return type is:
+Return type:
 
 ```java
 List<Account>
@@ -380,27 +416,27 @@ List<Account>
 
 because multiple database rows can be returned.
 
-Important ResultSet concept:
+Important ResultSet concepts:
 
 ```text
 if(resultSet.next())
 ```
 
-is suitable when expecting one row.
+is used when expecting one row.
 
 ```text
 while(resultSet.next())
 ```
 
-is required when processing multiple rows.
+is used when processing multiple rows.
 
-If no active accounts exist, the DAO returns an empty list rather than `null`.
+If no active accounts exist, an empty list is returned.
 
 ---
 
 # 10. updateBalance()
 
-The balance operation was designed as an adjustment rather than directly replacing the existing balance.
+The balance operation adjusts the existing balance.
 
 Supported operations:
 
@@ -429,7 +465,7 @@ Example:
 Existing Balance - Amount
 ```
 
-The DAO also prevents a debit when the available balance is insufficient.
+The operation prevents a debit when the available balance is insufficient.
 
 The account must also be:
 
@@ -443,7 +479,7 @@ for the balance operation.
 
 # 11. updateAccountStatus()
 
-Updates the account status.
+Updates account status.
 
 Supported statuses:
 
@@ -453,7 +489,7 @@ SUSPENDED
 BLOCKED
 ```
 
-SQL concept:
+SQL:
 
 ```sql
 UPDATE accounts
@@ -463,7 +499,7 @@ WHERE account_id = ?
 
 The status is normalized before being stored.
 
-Examples:
+Example:
 
 ```text
 active
@@ -471,33 +507,19 @@ Active
 ACTIVE
 ```
 
-become:
+becomes:
 
 ```text
 ACTIVE
 ```
 
-Likewise:
-
-```text
-suspended
-Suspended
-SUSPENDED
-```
-
-become:
-
-```text
-SUSPENDED
-```
-
 ---
 
-# 🧠 Part 2 — Service Layer
+# 🧠 Day 58 — Part 2 — Account Service Layer
 
-After completing the Account DAO implementation, the next architectural step was introducing the Service Layer.
+After completing the Account DAO implementation, the Service Layer was introduced.
 
-The architecture became:
+Architecture:
 
 ```text
 App
@@ -566,7 +588,7 @@ Balance cannot be null
 Balance cannot be negative
 ```
 
-A newly created account receives:
+A new account receives:
 
 ```text
 ACTIVE
@@ -574,7 +596,7 @@ ACTIVE
 
 as its default status.
 
-Then the Service delegates the actual database operation:
+Flow:
 
 ```text
 AccountService
@@ -619,29 +641,11 @@ UPI ID is not empty
 
 The input is trimmed before being passed to the DAO.
 
-Example:
-
-```text
-"   santhosh@upi   "
-```
-
-becomes:
-
-```text
-"santhosh@upi"
-```
-
-The Service then delegates to:
-
-```text
-AccountDAO.findAccountByUpiId()
-```
-
 ---
 
 # 15. AccountService — findAllActiveAccounts()
 
-No input validation is required because this method doesn't receive parameters.
+No input validation is required.
 
 The Service delegates directly:
 
@@ -672,7 +676,7 @@ operation is not empty
 operation is CREDIT or DEBIT
 ```
 
-The operation is normalized:
+The operation is normalized to uppercase.
 
 ```text
 credit
@@ -700,14 +704,6 @@ becomes:
 DEBIT
 ```
 
-Then:
-
-```text
-AccountService
-      ↓
-AccountDAO.updateBalance()
-```
-
 ---
 
 # 17. AccountService — updateAccountStatus()
@@ -730,17 +726,9 @@ BLOCKED
 
 The status is normalized before delegation.
 
-Flow:
-
-```text
-AccountService
-      ↓
-AccountDAO.updateAccountStatus()
-```
-
 ---
 
-# 🖥️ App Integration
+# 🖥️ Day 58 App Integration
 
 ### File
 
@@ -748,7 +736,7 @@ AccountDAO.updateAccountStatus()
 src/main/java/day58/App.java
 ```
 
-`App` remains responsible for:
+`App` is responsible for:
 
 * Scanner
 * User input
@@ -756,7 +744,7 @@ src/main/java/day58/App.java
 * Calling Service methods
 * Displaying results
 
-The application menu contains:
+Account menu:
 
 ```text
 1. Create Account
@@ -765,10 +753,9 @@ The application menu contains:
 4. Find All Active Accounts
 5. Update Account Balance
 6. Update Account Status
-0. Exit
 ```
 
-The application now uses:
+The application calls:
 
 ```text
 AccountService
@@ -782,65 +769,835 @@ AccountDAO
 
 ---
 
-# 🏗️ Final Day 58 Architecture
+# 🧪 Day 58 End-to-End Testing
+
+The Account Domain was tested through the application.
+
+Tested operations:
 
 ```text
-                         App
-                          │
-                          ▼
-                  ┌───────────────┐
-                  │ AccountService │
-                  └───────┬───────┘
-                          │
-                          ▼
-                  ┌───────────────┐
-                  │  AccountDAO   │
-                  │   Interface   │
-                  └───────┬───────┘
-                          │
-                          ▼
-                  ┌───────────────┐
-                  │AccountDAOImpl │
-                  └───────┬───────┘
-                          │
-                          ▼
-                        JDBC
-                          │
-                          ▼
-                    MySQL Database
-                          │
-                          ▼
-                   upi_fraud_system
-                          │
-                          ▼
-                       accounts
+Create Account                  ✅
+Find Account By ID              ✅
+Find Account By UPI ID          ✅
+Find All Active Accounts        ✅
+Credit Balance                  ✅
+Update Account Status           ✅
+```
+
+The Account Domain became the first completed JDBC backend module.
+
+---
+
+# 💳 Day 59 — Part 1 — Transaction Domain
+
+Day 59 JDBC development expanded the project from the Account Domain into the Transaction Domain.
+
+The database now contains:
+
+```text
+accounts
+    +
+transactions
+```
+
+Relationship:
+
+```text
+One Account
+     │
+     │
+     └──────────► Many Transactions
 ```
 
 ---
 
-# 📂 Day 58 JDBC Folder Structure
+# 📁 Transaction Database Script
+
+Created:
 
 ```text
-Day_58_JDBC_DAO
+database
+├── accounts.sql
+└── transactions.sql
+```
+
+---
+
+# 🗄️ Transactions Table
+
+```sql
+CREATE TABLE transactions (
+    transaction_id INT PRIMARY KEY AUTO_INCREMENT,
+    account_id INT NOT NULL,
+    transaction_reference VARCHAR(100) NOT NULL UNIQUE,
+    transaction_type VARCHAR(20) NOT NULL,
+    amount DECIMAL(15,2) NOT NULL,
+    recipient_upi_id VARCHAR(100),
+    transaction_status VARCHAR(20) NOT NULL DEFAULT 'PENDING',
+    risk_score INT DEFAULT 0,
+    transaction_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (account_id) REFERENCES accounts(account_id)
+);
+```
+
+The table stores:
+
+```text
+transaction_id
+account_id
+transaction_reference
+transaction_type
+amount
+recipient_upi_id
+transaction_status
+risk_score
+transaction_time
+```
+
+---
+
+# 🔗 Account → Transaction Relationship
+
+The relationship is:
+
+```text
+accounts.account_id
+        │
+        │
+        ▼
+transactions.account_id
+```
+
+The `account_id` in `transactions` is a foreign key referencing:
+
+```text
+accounts.account_id
+```
+
+This creates a:
+
+```text
+One Account → Many Transactions
+```
+
+relationship.
+
+---
+
+# 🧱 18. Transaction Model
+
+### File
+
+```text
+src/main/java/day58/model/Transaction.java
+```
+
+### Responsibility
+
+`Transaction` represents one record from the `transactions` table.
+
+Fields:
+
+```text
+transactionId
+accountId
+transactionReference
+transactionType
+amount
+recipientUpiId
+transactionStatus
+riskScore
+transactionTime
+```
+
+The model contains:
+
+* Constructors
+* Getters
+* Setters
+* `toString()`
+
+It does not contain:
+
+* SQL
+* JDBC logic
+* Scanner
+* User input
+
+---
+
+# 🧩 19. TransactionDAO
+
+### File
+
+```text
+src/main/java/day58/dao/TransactionDAO.java
+```
+
+### Type
+
+```text
+Interface
+```
+
+### Responsibility
+
+Defines the database operations available for transactions.
+
+```java
+boolean createTransaction(Transaction transaction)
+        throws SQLException;
+
+Transaction findTransactionById(int transactionId)
+        throws SQLException;
+
+Transaction findTransactionByReference(String transactionReference)
+        throws SQLException;
+
+List<Transaction> findTransactionsByAccount(int accountId)
+        throws SQLException;
+
+List<Transaction> findAllTransactions()
+        throws SQLException;
+
+boolean updateTransactionStatus(
+        int transactionId,
+        String status
+) throws SQLException;
+
+boolean updateRiskScore(
+        int transactionId,
+        int riskScore
+) throws SQLException;
+```
+
+The interface defines:
+
+> WHAT transaction operations are available.
+
+---
+
+# 🛠️ 20. TransactionDAOImpl
+
+### File
+
+```text
+src/main/java/day58/daoimpl/TransactionDAOImpl.java
+```
+
+### Type
+
+```text
+Class
+```
+
+### Responsibility
+
+`TransactionDAOImpl` implements `TransactionDAO` and contains the actual JDBC implementation.
+
+It uses:
+
+```text
+Connection
+PreparedStatement
+ResultSet
+Statement
+SQLException
+```
+
+---
+
+# 21. createTransaction()
+
+Creates a transaction record.
+
+The INSERT stores:
+
+```text
+account_id
+transaction_reference
+transaction_type
+amount
+recipient_upi_id
+transaction_status
+risk_score
+```
+
+The database automatically generates:
+
+```text
+transaction_id
+transaction_time
+```
+
+Generated transaction ID retrieval uses:
+
+```text
+Statement.RETURN_GENERATED_KEYS
+```
+
+and:
+
+```text
+getGeneratedKeys()
+```
+
+Flow:
+
+```text
+Transaction object
+       ↓
+PreparedStatement
+       ↓
+INSERT
+       ↓
+MySQL
+       ↓
+AUTO_INCREMENT transaction_id
+       ↓
+Transaction.setTransactionId()
+```
+
+---
+
+# 22. findTransactionById()
+
+Searches using:
+
+```text
+transaction_id
+```
+
+SQL:
+
+```sql
+SELECT * FROM transactions
+WHERE transaction_id = ?
+```
+
+Because `transaction_id` is the primary key, one transaction or no transaction is returned.
+
+If the transaction does not exist:
+
+```text
+null
+```
+
+is returned.
+
+---
+
+# 23. findTransactionByReference()
+
+Searches using:
+
+```text
+transaction_reference
+```
+
+SQL:
+
+```sql
+SELECT * FROM transactions
+WHERE transaction_reference = ?
+```
+
+The `transaction_reference` column is UNIQUE.
+
+Therefore one reference maps to one transaction.
+
+---
+
+# 24. findTransactionsByAccount()
+
+Retrieves all transactions belonging to an account.
+
+SQL:
+
+```sql
+SELECT * FROM transactions
+WHERE account_id = ?
+```
+
+Return type:
+
+```java
+List<Transaction>
+```
+
+because one account can have multiple transactions.
+
+Flow:
+
+```text
+Account ID
+    ↓
+SELECT transactions
+    ↓
+ResultSet
+    ↓
+Transaction objects
+    ↓
+List<Transaction>
+```
+
+The DAO uses:
+
+```text
+while(resultSet.next())
+```
+
+to process multiple transaction records.
+
+---
+
+# 25. findAllTransactions()
+
+Retrieves all transaction records.
+
+SQL:
+
+```sql
+SELECT * FROM transactions
+```
+
+Return type:
+
+```java
+List<Transaction>
+```
+
+Each database row is converted into a `Transaction` object.
+
+---
+
+# 26. updateTransactionStatus()
+
+Updates the transaction status.
+
+SQL:
+
+```sql
+UPDATE transactions
+SET transaction_status = ?
+WHERE transaction_id = ?
+```
+
+Supported application-level statuses:
+
+```text
+PENDING
+SUCCESS
+FAILED
+CANCELLED
+```
+
+The DAO returns whether the database update affected a row.
+
+---
+
+# 27. updateRiskScore()
+
+Updates the risk score associated with a transaction.
+
+SQL:
+
+```sql
+UPDATE transactions
+SET risk_score = ?
+WHERE transaction_id = ?
+```
+
+Current application-level range:
+
+```text
+0 – 100
+```
+
+The DAO returns whether the database update affected a row.
+
+---
+
+# 🧠 Day 59 — Part 2 — Transaction Service Layer
+
+After completing the Transaction DAO implementation, the Transaction Service Layer was introduced.
+
+Architecture:
+
+```text
+App
+ ↓
+TransactionService
+ ↓
+TransactionDAO
+ ↓
+TransactionDAOImpl
+ ↓
+JDBC
+ ↓
+MySQL
+```
+
+---
+
+# 🧩 TransactionService
+
+### File
+
+```text
+src/main/java/day58/service/TransactionService.java
+```
+
+### Type
+
+```text
+Class
+```
+
+### Responsibility
+
+`TransactionService` contains transaction-related business validation and delegates database operations to the DAO.
+
+---
+
+# 28. TransactionService — createTransaction()
+
+Validates:
+
+```text
+Transaction object
+Account ID
+Transaction reference
+Transaction type
+Amount
+Recipient UPI ID
+Transaction status
+Risk score
+```
+
+Rules include:
+
+```text
+Transaction cannot be null
+
+Account ID must be greater than 0
+
+Transaction reference cannot be empty
+
+Transaction type cannot be empty
+
+Amount must be greater than 0
+
+Recipient UPI ID cannot be empty
+
+Associated account must exist
+
+Associated account must be ACTIVE
+```
+
+If transaction status is missing:
+
+```text
+PENDING
+```
+
+is assigned.
+
+Risk score must be:
+
+```text
+0 – 100
+```
+
+Flow:
+
+```text
+Transaction
+     ↓
+Account Validation
+     ↓
+Transaction Validation
+     ↓
+TransactionDAO
+     ↓
+Database
+```
+
+---
+
+# 29. TransactionService — findTransactionById()
+
+Validates:
+
+```text
+transactionId > 0
+```
+
+Then delegates to:
+
+```text
+TransactionDAO.findTransactionById()
+```
+
+Invalid IDs return:
+
+```text
+null
+```
+
+---
+
+# 30. TransactionService — findTransactionByReference()
+
+Validates:
+
+```text
+transactionReference != null
+transactionReference is not empty
+```
+
+Then delegates to:
+
+```text
+TransactionDAO.findTransactionByReference()
+```
+
+---
+
+# 31. TransactionService — findTransactionsByAccount()
+
+Validates:
+
+```text
+accountId > 0
+```
+
+If invalid:
+
+```text
+empty List<Transaction>
+```
+
+is returned.
+
+Otherwise:
+
+```text
+TransactionService
+       ↓
+TransactionDAO.findTransactionsByAccount()
+```
+
+---
+
+# 32. TransactionService — findAllTransactions()
+
+No input validation is required.
+
+The Service delegates directly:
+
+```text
+TransactionService
+       ↓
+TransactionDAO.findAllTransactions()
+```
+
+---
+
+# 33. TransactionService — updateTransactionStatus()
+
+Validates:
+
+```text
+transactionId > 0
+status != null
+status is not empty
+```
+
+The status is normalized to uppercase.
+
+Supported statuses:
+
+```text
+PENDING
+SUCCESS
+FAILED
+CANCELLED
+```
+
+Flow:
+
+```text
+App
+ ↓
+TransactionService
+ ↓
+Validate
+ ↓
+Normalize
+ ↓
+TransactionDAO
+ ↓
+Database
+```
+
+---
+
+# 34. TransactionService — updateRiskScore()
+
+Validates:
+
+```text
+transactionId > 0
+riskScore >= 0
+riskScore <= 100
+```
+
+Then delegates to:
+
+```text
+TransactionDAO.updateRiskScore()
+```
+
+The current implementation manages the risk score value only.
+
+A complete fraud-detection or risk-scoring engine has not yet been implemented.
+
+---
+
+# 🖥️ Day 59 App Integration
+
+The existing:
+
+```text
+src/main/java/day58/App.java
+```
+
+was extended to support the Transaction Domain.
+
+The existing Account functionality remains in the same application.
+
+Transaction menu:
+
+```text
+--- TRANSACTIONS ---
+
+7. Create Transaction
+8. Find Transaction By ID
+9. Find Transaction By Reference
+10. Find Transactions By Account
+11. Find All Transactions
+12. Update Transaction Status
+13. Update Risk Score
+
+0. Exit
+```
+
+The App remains responsible for:
+
+```text
+Scanner
+User Input
+Menu
+Service Calls
+Output
+```
+
+It does not contain:
+
+```text
+SQL
+JDBC queries
+Database connection logic
+Business validation rules
+```
+
+---
+
+# 🏗️ Complete JDBC Architecture
+
+The current JDBC backend contains two domains:
+
+```text
+                              App
+                               │
+                ┌──────────────┴──────────────┐
+                │                             │
+                ▼                             ▼
+        AccountService                TransactionService
+                │                             │
+                ▼                             ▼
+          AccountDAO                    TransactionDAO
+                │                             │
+                ▼                             ▼
+        AccountDAOImpl               TransactionDAOImpl
+                │                             │
+                └──────────────┬──────────────┘
+                               ▼
+                              JDBC
+                               │
+                               ▼
+                              MySQL
+                               │
+                 ┌─────────────┴─────────────┐
+                 ▼                           ▼
+              accounts                 transactions
+```
+
+---
+
+# 🔗 Current Database Relationship
+
+```text
+accounts
+   │
+   │ account_id
+   │
+   ▼
+transactions
+```
+
+One account can have multiple transactions:
+
+```text
+Account
+   │
+   ├── Transaction 1
+   ├── Transaction 2
+   ├── Transaction 3
+   └── Transaction N
+```
+
+---
+
+# 📂 Current JDBC Project Structure
+
+```text
+DAY_58_JDBC_DAO_Fundamentals
 │
 ├── database
-│   └── accounts.sql
+│   ├── accounts.sql
+│   └── transactions.sql
 │
 ├── src
 │   └── main
 │       ├── java
 │       │   └── day58
 │       │       ├── dao
-│       │       │   └── AccountDAO.java
+│       │       │   ├── AccountDAO.java
+│       │       │   └── TransactionDAO.java
 │       │       │
 │       │       ├── daoimpl
-│       │       │   └── AccountDAOImpl.java
+│       │       │   ├── AccountDAOImpl.java
+│       │       │   └── TransactionDAOImpl.java
 │       │       │
 │       │       ├── model
-│       │       │   └── Account.java
+│       │       │   ├── Account.java
+│       │       │   └── Transaction.java
 │       │       │
 │       │       ├── service
-│       │       │   └── AccountService.java
+│       │       │   ├── AccountService.java
+│       │       │   └── TransactionService.java
 │       │       │
 │       │       ├── ConnectionEx.java
 │       │       └── App.java
@@ -853,124 +1610,54 @@ Day_58_JDBC_DAO
 └── .gitignore
 ```
 
----
+### Package Namespace
 
-# 🧪 Day 58 End-to-End Testing
-
-The following operations were successfully tested.
-
-### Create Account
-
-Example:
+The JDBC project continues using:
 
 ```text
-User: Santhosh
-UPI ID: santhosh@upi
-Account Number: ACC1007
-Initial Balance: ₹12,000
+day58
 ```
 
-Result:
+The project is intentionally kept inside the same:
 
 ```text
-Account created successfully!
-Generated Account ID: 12
+DAY_58_JDBC_DAO_Fundamentals
 ```
+
+project.
+
+Day numbers represent the learning progression and do not require changing the Java package namespace.
 
 ---
 
-### Find Account By ID
+# 🧪 JDBC Testing Progress
 
-Tested invalid ID:
-
-```text
--1
-```
-
-Result:
+## Day 58 — Account Domain
 
 ```text
-Account not found!
-```
-
-Tested valid ID:
-
-```text
-2
-```
-
-Result:
-
-```text
-Account found successfully!
+Create Account                   ✅
+Find Account By ID               ✅
+Find Account By UPI ID           ✅
+Find All Active Accounts         ✅
+Credit Balance                   ✅
+Update Account Status            ✅
 ```
 
 ---
 
-### Find Account By UPI ID
-
-Tested:
+## Day 59 — Transaction Domain
 
 ```text
-santhosh@upi
+Create Transaction                ✅
+Find Transaction By ID            ✅
+Find Transaction By Reference     ✅
+Find Transactions By Account      ✅
+Find All Transactions             ✅
+Update Transaction Status         ✅
+Update Risk Score                 ✅
 ```
 
-and:
-
-```text
-Santhosh@upi
-```
-
-The Service normalization allowed the lookup to work with mixed-case input.
-
----
-
-### Find All Active Accounts
-
-Successfully retrieved multiple active accounts using:
-
-```text
-List<Account>
-```
-
----
-
-### Credit Balance
-
-Initial:
-
-```text
-₹12,000
-```
-
-Credit:
-
-```text
-₹18,000
-```
-
-Result:
-
-```text
-₹30,000
-```
-
----
-
-### Update Account Status
-
-Example:
-
-```text
-Account ID: 11
-Status: Suspended
-```
-
-Result:
-
-```text
-SUSPENDED
-```
+The Transaction Domain has been integrated into the existing application.
 
 ---
 
@@ -978,7 +1665,7 @@ SUSPENDED
 
 ## JDBC
 
-Java Database Connectivity used to communicate between Java applications and relational databases.
+Java Database Connectivity is used to communicate between Java applications and relational databases.
 
 ```text
 Java
@@ -988,9 +1675,13 @@ JDBC
 MySQL
 ```
 
+---
+
 ## Connection
 
 Used to establish communication with the database.
+
+---
 
 ## PreparedStatement
 
@@ -1000,7 +1691,7 @@ Used for parameterized SQL queries.
 ?
 ```
 
-placeholders are populated using methods such as:
+Placeholders are populated using methods such as:
 
 ```text
 setInt()
@@ -1008,13 +1699,19 @@ setString()
 setBigDecimal()
 ```
 
+---
+
 ## ResultSet
 
 Used to read data returned by SELECT queries.
 
+---
+
 ## executeQuery()
 
 Used for SELECT operations.
+
+---
 
 ## executeUpdate()
 
@@ -1026,55 +1723,92 @@ UPDATE
 DELETE
 ```
 
+---
+
 ## Generated Keys
 
 Used to retrieve AUTO_INCREMENT IDs after INSERT.
 
+Used for:
+
+```text
+account_id
+transaction_id
+```
+
+---
+
 ## BigDecimal
 
-Used for monetary values such as account balances and transaction amounts.
+Used for monetary values such as:
 
-## List<Account>
+```text
+account balance
+transaction amount
+```
 
-Used when a database query can return multiple account records.
+---
+
+## List<T>
+
+Used when a query can return multiple records.
+
+Examples:
+
+```text
+List<Account>
+List<Transaction>
+```
 
 ---
 
 # 🧠 Architecture Concepts Learned
 
-### Model
+## Model
 
 Represents application data.
 
 ```text
 Account
+Transaction
 ```
 
-### DAO
+---
 
-Represents database operations.
+## DAO
+
+Defines database operations.
 
 ```text
 AccountDAO
+TransactionDAO
 ```
 
-### DAO Implementation
+---
 
-Contains actual JDBC implementation.
+## DAO Implementation
+
+Contains the actual JDBC implementation.
 
 ```text
 AccountDAOImpl
+TransactionDAOImpl
 ```
 
-### Service
+---
+
+## Service
 
 Contains business validation and coordinates DAO operations.
 
 ```text
 AccountService
+TransactionService
 ```
 
-### App
+---
+
+## App
 
 Handles user interaction.
 
@@ -1089,7 +1823,7 @@ Output
 
 # 🔑 Important Design Principle
 
-The application should not allow database logic to spread everywhere.
+Database logic should not spread throughout the application.
 
 Instead:
 
@@ -1100,10 +1834,14 @@ Service
  ↓
 DAO
  ↓
+DAO Implementation
+ ↓
+JDBC
+ ↓
 Database
 ```
 
-This makes the application easier to:
+This separation makes the application easier to:
 
 * maintain
 * test
@@ -1113,215 +1851,207 @@ This makes the application easier to:
 
 ---
 
-# 🚧 Current Project Status
+# 🔐 Current JDBC Business Validation
 
-## Completed
+## Account Domain
 
 ```text
-Database
-   ↓
-accounts table                    ✅
+Account validation
+UPI ID validation
+Account number validation
+Balance validation
+Account status validation
+Credit / Debit validation
+```
 
-Connection
-   ↓
-ConnectionEx                      ✅
+## Transaction Domain
 
-Model
-   ↓
-Account                           ✅
+```text
+Transaction validation
+Account existence validation
+Account status validation
+Transaction reference validation
+Transaction amount validation
+Recipient UPI ID validation
+Transaction status validation
+Risk score validation
+```
 
-DAO
-   ↓
-AccountDAO                        ✅
+Current transaction risk score range:
 
-DAO Implementation
-   ↓
-AccountDAOImpl                    ✅
-
-Service
-   ↓
-AccountService                    ✅
-
-Application
-   ↓
-App                               ✅
-
-End-to-End Testing                ✅
+```text
+0 – 100
 ```
 
 ---
 
-# 🔜 Next Phase — Day 59
+# ⚠️ Current JDBC Scope
 
-The next domain will be the **Transaction Domain**.
-
-The project will expand from:
+The current JDBC implementation provides:
 
 ```text
-accounts
-```
-
-to:
-
-```text
-accounts
-    +
-transactions
-```
-
-### Day 59 JDBC
-
-```text
-Transaction Domain
-        ↓
-transactions table
-        ↓
-Transaction Model
-        ↓
-TransactionDAO
-        ↓
-TransactionDAOImpl
-```
-
-### Day 59 Core Java
-
-```text
-Inheritance
+Account Management
         +
-Method Overriding
+Transaction Management
+        +
+Basic Risk Score Storage
+```
+
+The following JDBC/project features are future phases:
+
+```text
+Atomic UPI Transfer
+Advanced Transaction Processing
+Merchant Domain
+Risk Engine
+Fraud Detection
+Fraud Alerts
+Audit Logging
+```
+
+These are not marked as completed in the current README.
+
+---
+
+# 🚧 Current JDBC Project Status
+
+## Day 58
+
+```text
+Database Configuration             ✅
+MySQL Connection                   ✅
+
+Account Table                      ✅
+Account Model                      ✅
+AccountDAO                         ✅
+AccountDAOImpl                     ✅
+
+AccountService                     ✅
+Account App Integration            ✅
+Account End-to-End Testing         ✅
+
+Day 58 JDBC COMPLETE               ✅
 ```
 
 ---
 
-# 🔥 Future Project Architecture
-
-As the project grows:
+## Day 59
 
 ```text
-                         App
-                          │
-                          ▼
-                     Services
-                          │
-             ┌────────────┼────────────┐
-             ▼            ▼            ▼
-        Account       Transaction    Merchant
-        Service         Service       Service
-             │            │            │
-             ▼            ▼            ▼
-           DAO          DAO           DAO
-             │            │            │
-             └────────────┼────────────┘
-                          ▼
-                         JDBC
-                          │
-                          ▼
-                         MySQL
+Transaction Table                  ✅
+Transaction Model                  ✅
+TransactionDAO                     ✅
+TransactionDAOImpl                 ✅
+
+Transaction CRUD / Lookup          ✅
+Transaction Service                ✅
+Transaction Validation             ✅
+Transaction App Integration        ✅
+Transaction Testing                ✅
+
+Day 59 JDBC COMPLETE               ✅
 ```
 
-Eventually:
+---
+
+# 📅 JDBC Project Roadmap
+
+| Day | JDBC / Project                          |
+| --- | --------------------------------------- |
+| 58  | Account Domain + DAO + Service          |
+| 59  | Transaction Domain + DAO + Service      |
+| 60  | Atomic UPI Transfer + JDBC Transactions |
+| 61  | Merchant Domain                         |
+| 62  | Business Exceptions + Validation        |
+| 63  | Transaction History + Filtering         |
+| 64  | Risk Score Domain                       |
+| 65  | Risk Engine                             |
+| 66  | Fraud Alert Domain                      |
+| 67  | Fraud Detection Workflow                |
+| 68  | Processing / Concurrency Concepts       |
+| 69  | Audit Logs + Integration                |
+| 70  | End-to-End JDBC Backend Testing         |
+
+The roadmap is flexible and can be extended when a concept or project module requires additional practice.
+
+---
+
+# 🎯 Current JDBC Learning Outcome
+
+The project has progressed from basic JDBC operations into a layered backend architecture.
+
+### Day 58
+
+The project established the **Account Domain**:
 
 ```text
 Account
    ↓
-Transaction
+AccountDAO
    ↓
-Risk Score
+AccountDAOImpl
    ↓
-Fraud Detection
+AccountService
    ↓
-Fraud Alert
-   ↓
-Audit Log
-```
-
----
-
-# 📅 JDBC + Core Java Project Roadmap
-
-| Day | Core Java                               | JDBC / Project                           |
-| --- | --------------------------------------- | ---------------------------------------- |
-| 58  | Encapsulation, Constructors, Static     | Account Domain + DAO + Service           |
-| 59  | Inheritance + Method Overriding         | Transaction Domain + Table + Model + DAO |
-| 60  | Polymorphism + `super` + `final`        | Atomic UPI Transfer + JDBC Transactions  |
-| 61  | Interfaces + Abstract Classes           | Merchant Domain                          |
-| 62  | Exception Handling                      | Business Exceptions + Validation         |
-| 63  | Collections                             | Transaction History + Filtering          |
-| 64  | Generics + Wrapper Classes              | Risk Score Domain                        |
-| 65  | Date/Time + Enums                       | Risk Engine                              |
-| 66  | File Handling / Properties              | Fraud Alert Domain                       |
-| 67  | Java 8+ Functional Concepts             | Fraud Detection Workflow                 |
-| 68  | Multithreading Basics                   | Processing / Concurrency Concepts        |
-| 69  | Core Java Revision + Interview Problems | Audit Logs + Integration                 |
-| 70  | Complete Core Java Revision             | End-to-End JDBC Backend Testing          |
-
-The timetable is flexible and can be extended when a concept or project module requires additional practice.
-
----
-
-# 🎯 Day 58 Final Learning Outcome
-
-By the end of Day 58, the project moved beyond basic JDBC examples into a layered backend structure:
-
-```text
-User Input
-    ↓
 App
-    ↓
-Service
-    ↓
-DAO
-    ↓
-DAO Implementation
-    ↓
+   ↓
 JDBC
-    ↓
+   ↓
 MySQL
 ```
 
-The **Account domain is now the first completed backend module** of the Real-Time UPI Payment Fraud & Risk Scoring System.
+### Day 59
 
-The next development phase is the **Transaction Domain**, which will introduce the core payment-flow functionality of the application.
+The project expanded into the **Transaction Domain**:
+
+```text
+Transaction
+   ↓
+TransactionDAO
+   ↓
+TransactionDAOImpl
+   ↓
+TransactionService
+   ↓
+App
+   ↓
+JDBC
+   ↓
+MySQL
+```
+
+The database now contains the foundation for:
+
+```text
+Account
+   ↓
+Transactions
+```
 
 ---
 
-# 👨‍💻 Project
-
-**Real-Time UPI Payment Fraud & Risk Scoring System**
-
-### Day 58 Status
+# 🏁 Current Milestone
 
 ```text
-Core Java Part 1        ✅
-Core Java Part 2        ✅
-JDBC Account Domain     ✅
-DAO Layer               ✅
-Service Layer           ✅
-App Integration         ✅
-End-to-End Testing     ✅
+DAY 58
+────────────────────────────────
+JDBC Account Domain              ✅
+DAO Layer                        ✅
+Service Layer                    ✅
+App Integration                  ✅
+End-to-End Testing               ✅
 
-Day 58 COMPLETE         ✅
-```
 
-### Next Goal
-
-```text
 DAY 59
-
-Core Java:
-Inheritance + Method Overriding
-
-JDBC:
-Transaction Domain
-        ↓
-transactions table
-        ↓
-Transaction Model
-        ↓
-TransactionDAO
-        ↓
-TransactionDAOImpl
+────────────────────────────────
+JDBC Transaction Domain          ✅
+Transaction Model                ✅
+Transaction DAO                  ✅
+Transaction DAO Implementation   ✅
+Transaction Service              ✅
+Business Validation              ✅
+App Integration                  ✅
+Transaction Testing              ✅
 ```
 
-```
-```
+**Day 58 and Day 59 JDBC development now establish the Account and Transaction foundation of the Real-Time UPI Payment Fraud & Risk Scoring System.**

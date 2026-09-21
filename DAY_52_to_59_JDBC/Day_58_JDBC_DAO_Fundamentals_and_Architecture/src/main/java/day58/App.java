@@ -6,12 +6,15 @@ import java.util.List;
 import java.util.Scanner;
 
 import day58.model.Account;
+import day58.model.Transaction;
 import day58.service.AccountService;
+import day58.service.TransactionService;
 
 public class App {
 
     private static Scanner scanner = new Scanner(System.in);
     private static AccountService accountService = new AccountService();
+	private static TransactionService transactionService = new TransactionService();
 
     public static void main(String[] args) {
 
@@ -44,7 +47,27 @@ public class App {
                 case 6:
                     updateAccountStatus();
                     break;
-
+                case 7:
+                    createTransaction();
+                    break;
+                case 8:
+                    findTransactionById();
+                    break;
+                case 9:
+                    findTransactionByReference();
+                    break;
+                case 10:
+                    findTransactionsByAccount();
+                    break;
+                case 11:
+                    findAllTransactions();
+                    break;
+                case 12:
+                    updateTransactionStatus();
+                    break;
+                case 13:
+                    updateRiskScore();
+                    break;
                 case 0:
                     System.out.println();
                     System.out.println("Exiting application...");
@@ -80,6 +103,13 @@ public class App {
         System.out.println("4. Find All Active Accounts");
         System.out.println("5. Update Account Balance");
         System.out.println("6. Update Account Status");
+        System.out.println("7. Create Transaction");
+        System.out.println("8. Find Transaction By ID");
+        System.out.println("9. Find Transaction By Reference");
+        System.out.println("10. Find Transactions By Account");
+        System.out.println("11. Find All Transactions");
+        System.out.println("12. Update Transaction Status");
+        System.out.println("13. Update Risk Score");
         System.out.println("0. Exit");
         System.out.println("=================================");
         System.out.print("Enter your choice: ");
@@ -253,6 +283,211 @@ public class App {
         } else {
             System.out.println("Account status update failed!");
             System.out.println("Check the account ID or provide a valid status.");
+        }
+    }
+    
+    public static void createTransaction() throws SQLException {
+    	System.out.println("=================================");
+        System.out.println("       CREATE TRANSACTION");
+        System.out.println("=================================");
+
+        System.out.print("Enter account ID: ");
+        int accountId = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.print("Enter transaction reference: ");
+        String transactionReference = scanner.nextLine();
+
+        System.out.print("Enter transaction type: ");
+        String transactionType = scanner.nextLine();
+
+        System.out.print("Enter transaction amount: ");
+        BigDecimal amount = scanner.nextBigDecimal();
+        scanner.nextLine();
+
+        System.out.print("Enter recipient UPI ID: ");
+        String recipientUpiId = scanner.nextLine();
+
+        System.out.print("Enter transaction status (PENDING/SUCCESS/FAILED/CANCELLED): ");
+        String transactionStatus = scanner.nextLine();
+
+        System.out.print("Enter risk score (0-100): ");
+        int riskScore = scanner.nextInt();
+        scanner.nextLine();
+
+        Transaction transaction = new Transaction();
+
+        transaction.setAccountId(accountId);
+        transaction.setTransactionReference(transactionReference);
+        transaction.setTransactionType(transactionType);
+        transaction.setAmount(amount);
+        transaction.setRecipientUpiId(recipientUpiId);
+        transaction.setTransactionStatus(transactionStatus);
+        transaction.setRiskScore(riskScore);
+        
+        boolean result = transactionService.createTransaction(transaction);
+        if(result) {
+        	System.out.println("Transaction created successfully!");
+        	System.out.println("Generated Transaction ID: " + transaction.getTransactionId());
+        	System.out.println("Transaction Details: ");
+        	System.out.println(transaction);
+        } else {
+        	System.out.println("Transaction creation failed!");
+            System.out.println("Check account status, input values, or transaction details.");
+        }
+    }
+    
+    private static void findTransactionById() throws SQLException {
+
+        System.out.println("=================================");
+        System.out.println("       FIND TRANSACTION BY ID");
+        System.out.println("=================================");
+
+        System.out.print("Enter transaction ID: ");
+        int transactionId = scanner.nextInt();
+        scanner.nextLine();
+
+        Transaction transaction = transactionService.findTransactionById(transactionId);
+
+        if (transaction != null) {
+            System.out.println("Transaction found successfully!");
+            System.out.println("Transaction Details:");
+            System.out.println(transaction);
+        } else {
+            System.out.println();
+            System.out.println("Transaction not found!");
+        }
+    }
+    
+    private static void findTransactionByReference() throws SQLException {
+
+        System.out.println("=================================");
+        System.out.println("    FIND TRANSACTION BY REFERENCE");
+        System.out.println("=================================");
+
+        System.out.print("Enter transaction reference: ");
+        String transactionReference = scanner.nextLine();
+
+        Transaction transaction =
+                transactionService.findTransactionByReference(transactionReference);
+
+        if (transaction != null) {
+            System.out.println("Transaction found successfully!");
+            System.out.println("Transaction Details:");
+            System.out.println(transaction);
+        } else {
+            System.out.println("Transaction not found!");
+        }
+    }
+    
+    private static void findTransactionsByAccount() throws SQLException {
+
+        System.out.println("=================================");
+        System.out.println("   TRANSACTIONS BY ACCOUNT");
+        System.out.println("=================================");
+
+        System.out.print("Enter account ID: ");
+        int accountId = scanner.nextInt();
+        scanner.nextLine();
+
+        List<Transaction> transactions =
+                transactionService.findTransactionsByAccount(accountId);
+
+        if (transactions.isEmpty()) {
+            System.out.println("No transactions found for this account.");
+        } else {
+            System.out.println("Transactions found: " + transactions.size());
+            System.out.println("---------------------------------");
+
+            for (Transaction transaction : transactions) {
+                System.out.println(transaction);
+            }
+        }
+    }
+    
+    private static void findAllTransactions() throws SQLException {
+    	
+        System.out.println("=================================");
+        System.out.println("       ALL TRANSACTIONS");
+        System.out.println("=================================");
+
+        List<Transaction> transactions =
+                transactionService.findAllTransactions();
+
+        if (transactions.isEmpty()) {
+            System.out.println("No transactions found.");
+        } else {
+            System.out.println("Total Transactions: " + transactions.size());
+            System.out.println("---------------------------------");
+
+            for (Transaction transaction : transactions) {
+                System.out.println(transaction);
+            }
+        }
+    }
+    
+    private static void updateTransactionStatus() throws SQLException {
+
+        System.out.println("=================================");
+        System.out.println("    UPDATE TRANSACTION STATUS");
+        System.out.println("=================================");
+
+        System.out.print("Enter transaction ID: ");
+        int transactionId = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.print("Enter new status (PENDING/SUCCESS/FAILED/CANCELLED): ");
+        String status = scanner.nextLine();
+
+        boolean result =
+                transactionService.updateTransactionStatus(transactionId, status);
+
+        if (result) {
+            System.out.println("Transaction status updated successfully!");
+
+            Transaction transaction =
+                    transactionService.findTransactionById(transactionId);
+
+            if (transaction != null) {
+                System.out.println("Updated Transaction Details:");
+                System.out.println(transaction);
+            }
+        } else {
+            System.out.println("Transaction status update failed!");
+            System.out.println("Check the transaction ID or provide a valid status.");
+        }
+    }
+    
+    private static void updateRiskScore() throws SQLException {
+
+        System.out.println("=================================");
+        System.out.println("       UPDATE RISK SCORE");
+        System.out.println("=================================");
+
+        System.out.print("Enter transaction ID: ");
+        int transactionId = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.print("Enter new risk score (0-100): ");
+        int riskScore = scanner.nextInt();
+        scanner.nextLine();
+
+        boolean result =
+                transactionService.updateRiskScore(transactionId, riskScore);
+
+        if (result) {
+            System.out.println("Risk score updated successfully!");
+
+            Transaction transaction =
+                    transactionService.findTransactionById(transactionId);
+
+            if (transaction != null) {
+                System.out.println("Updated Transaction Details:");
+                System.out.println(transaction);
+            }
+        } else {
+            System.out.println("Risk score update failed!");
+            System.out.println("Check the transaction ID or provide a valid risk score.");
         }
     }
 }
