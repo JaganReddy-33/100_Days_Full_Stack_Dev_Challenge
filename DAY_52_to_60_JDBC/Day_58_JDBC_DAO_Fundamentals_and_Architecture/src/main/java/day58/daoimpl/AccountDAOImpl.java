@@ -51,12 +51,11 @@ public class AccountDAOImpl implements AccountDAO {
 	}
 
 	@Override
-	public Account findAccountById(int accountId) throws SQLException {
+	public Account findAccountById(Connection con, int accountId) throws SQLException {
 
 		String sql = "SELECT * FROM accounts WHERE account_id = ? ";
 		
-		try(Connection con = ConnectionEx.getConnection();
-				PreparedStatement statement = con.prepareStatement(sql)){
+		try(PreparedStatement statement = con.prepareStatement(sql)){
 			
 			statement.setInt(1, accountId);
 			
@@ -79,12 +78,11 @@ public class AccountDAOImpl implements AccountDAO {
 	}
 
 	@Override
-	public Account findAccountByUpiId(String upiId) throws SQLException {
+	public Account findAccountByUpiId(Connection con, String upiId) throws SQLException {
 		
 		String sql = "SELECT * FROM accounts WHERE upi_id = ? ";
 		
-		try(Connection con = ConnectionEx.getConnection();
-				PreparedStatement statement = con.prepareStatement(sql)){
+		try(PreparedStatement statement = con.prepareStatement(sql)){
 			
 			statement.setString(1, upiId);
 			
@@ -136,7 +134,7 @@ public class AccountDAOImpl implements AccountDAO {
 	}
 
 	@Override
-	public boolean updateBalance(int accountId, BigDecimal amount, String operation) throws SQLException {
+	public boolean updateBalance(Connection con, int accountId, BigDecimal amount, String operation) throws SQLException {
 		
 		if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
 	        return false;
@@ -168,8 +166,7 @@ public class AccountDAOImpl implements AccountDAO {
 	        return false;
 	    }
 	    
-	    try (Connection con = ConnectionEx.getConnection();
-	    		PreparedStatement statement = con.prepareStatement(sql)) {
+	    try (PreparedStatement statement = con.prepareStatement(sql)) {
 	    	
 	    	statement.setBigDecimal(1, amount);
 	    	statement.setInt(2, accountId);

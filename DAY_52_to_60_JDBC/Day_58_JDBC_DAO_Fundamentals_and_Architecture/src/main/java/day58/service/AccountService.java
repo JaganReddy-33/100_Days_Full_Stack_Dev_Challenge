@@ -1,9 +1,11 @@
 package day58.service;
 
 import java.math.BigDecimal;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+import day58.ConnectionEx;
 import day58.dao.AccountDAO;
 import day58.daoimpl.AccountDAOImpl;
 import day58.model.Account;
@@ -49,22 +51,34 @@ public class AccountService {
     
     
     public Account findAccountById(int accountId) throws SQLException {
+    	Connection con = ConnectionEx.getConnection();
     	
     	if(accountId <= 0) {
     		return null;
     	}
     	
-		return accountDAO.findAccountById(accountId);
+    	try {
+    		return accountDAO.findAccountById(con, accountId);
+    	} finally {
+    		con.close();
+    	}
     	
     }
     
     public Account findAccountByUpiId(String upiId) throws SQLException {
     	
+    	Connection con = ConnectionEx.getConnection();
+    	
     	if(upiId == null || upiId.trim().isEmpty()) {
     		return null;
     	}
     	
-		return accountDAO.findAccountByUpiId(upiId.trim());
+    	try {
+            return accountDAO.findAccountByUpiId(con, upiId);
+            
+        } finally {
+            con.close();
+        }
     	
     }
     
@@ -74,6 +88,8 @@ public class AccountService {
     }
     
     public boolean updateBalance(int accountId, BigDecimal amount, String operation) throws SQLException {
+    	
+    	Connection con = ConnectionEx.getConnection();
     	
     	if(accountId <= 0) {
     		return false;
@@ -93,7 +109,11 @@ public class AccountService {
     		return false;
     	}
     	
-		return accountDAO.updateBalance(accountId, amount, normalizedOperation);
+		try {
+			return accountDAO.updateBalance(con, accountId, amount, normalizedOperation);
+		} finally {
+			con.close();
+		}
     	
     }
     

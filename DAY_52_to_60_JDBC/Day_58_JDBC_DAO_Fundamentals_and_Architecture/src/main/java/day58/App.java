@@ -5,9 +5,12 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
+import day58.daoimpl.AccountDAOImpl;
+import day58.daoimpl.TransactionDAOImpl;
 import day58.model.Account;
 import day58.model.Transaction;
 import day58.service.AccountService;
+import day58.service.PaymentService;
 import day58.service.TransactionService;
 
 public class App {
@@ -15,7 +18,10 @@ public class App {
     private static Scanner scanner = new Scanner(System.in);
     private static AccountService accountService = new AccountService();
 	private static TransactionService transactionService = new TransactionService();
+	private static PaymentService paymentService = new PaymentService(new AccountDAOImpl(), new TransactionDAOImpl());
 
+	
+	
     public static void main(String[] args) {
 
         try {
@@ -68,6 +74,10 @@ public class App {
                 case 13:
                     updateRiskScore();
                     break;
+                case 14:
+                    makeUpiPayment();
+                    break;
+                    
                 case 0:
                     System.out.println();
                     System.out.println("Exiting application...");
@@ -110,6 +120,7 @@ public class App {
         System.out.println("11. Find All Transactions");
         System.out.println("12. Update Transaction Status");
         System.out.println("13. Update Risk Score");
+        System.out.println("14. Make UPI Payment");
         System.out.println("0. Exit");
         System.out.println("=================================");
         System.out.print("Enter your choice: ");
@@ -488,6 +499,36 @@ public class App {
         } else {
             System.out.println("Risk score update failed!");
             System.out.println("Check the transaction ID or provide a valid risk score.");
+        }
+    }
+    
+    private static void makeUpiPayment() throws SQLException {
+
+        System.out.println("=================================");
+        System.out.println("          MAKE UPI PAYMENT");
+        System.out.println("=================================");
+
+        System.out.print("Enter sender account ID: ");
+        int senderAccountId = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.print("Enter payment amount: ");
+        BigDecimal amount = scanner.nextBigDecimal();
+        scanner.nextLine();
+
+        System.out.print("Enter recipient UPI ID: ");
+        String recipientUpiId = scanner.nextLine();
+
+        boolean result = paymentService.processPayment(
+                senderAccountId,
+                amount,
+                recipientUpiId
+        );
+
+        if (result) {
+            System.out.println("UPI Payment Successful!");
+        } else {
+            System.out.println("UPI Payment Failed!");
         }
     }
 }

@@ -17,15 +17,14 @@ import day58.model.Transaction;
 public class TransactionDAOImpl implements TransactionDAO{
 
 	@Override
-	public boolean createTransaction(Transaction transaction) throws SQLException {
+	public boolean createTransaction(Connection con, Transaction transaction) throws SQLException {
 
 	    String insertTransaction = "INSERT INTO transactions "
 	            + "(account_id, transaction_reference, transaction_type, amount, "
 	            + "recipient_upi_id, transaction_status, risk_score) "
 	            + "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-	    try (Connection con = ConnectionEx.getConnection();
-	         PreparedStatement stmt = con.prepareStatement(
+	    try (PreparedStatement stmt = con.prepareStatement(
 	                 insertTransaction,
 	                 Statement.RETURN_GENERATED_KEYS)) {
 
@@ -183,14 +182,13 @@ public class TransactionDAOImpl implements TransactionDAO{
 	}
 
 	@Override
-	public boolean updateTransactionStatus(int transactionId, String status) throws SQLException {
+	public boolean updateTransactionStatus(Connection con, int transactionId, String status) throws SQLException {
 		
 		 String sql = "UPDATE transactions "
 		 		+ "SET transaction_status = ? "
 		 		+ "WHERE transaction_id = ?";
 
-		    try (Connection con = ConnectionEx.getConnection();
-		         PreparedStatement stmt = con.prepareStatement(sql)) {
+		    try (PreparedStatement stmt = con.prepareStatement(sql)) {
 
 		        stmt.setString(1, status);
 		        stmt.setInt(2, transactionId);

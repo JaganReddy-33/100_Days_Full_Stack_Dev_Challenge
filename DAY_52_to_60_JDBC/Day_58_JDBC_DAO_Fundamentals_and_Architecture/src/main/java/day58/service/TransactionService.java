@@ -1,10 +1,12 @@
 package day58.service;
 
 import java.math.BigDecimal;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import day58.ConnectionEx;
 import day58.dao.TransactionDAO;
 import day58.daoimpl.TransactionDAOImpl;
 import day58.model.Account;
@@ -21,6 +23,7 @@ public class TransactionService {
     }
 
     public boolean createTransaction(Transaction transaction) throws SQLException {
+    	Connection con = ConnectionEx.getConnection();
     	
     	if(transaction == null) {
     		return false;
@@ -58,7 +61,11 @@ public class TransactionService {
     		return false;    
     	}
 
-        return transactionDAO.createTransaction(transaction);
+        try {
+        	return transactionDAO.createTransaction(con, transaction);
+        } finally {
+        	con.close();
+        }
     }
 
     
@@ -92,6 +99,9 @@ public class TransactionService {
     }
 
     public boolean updateTransactionStatus(int transactionId, String status) throws SQLException {
+    	
+    	Connection con = ConnectionEx.getConnection();
+    	
     	if(transactionId <= 0) {
     		return false;
     	}
@@ -107,7 +117,11 @@ public class TransactionService {
     		return false;
     	}
     	
-        return transactionDAO.updateTransactionStatus(transactionId, status);
+        try {
+        	return transactionDAO.updateTransactionStatus(con, transactionId, status);
+        } finally {
+        	con.close();
+        }
     }
 
     public boolean updateRiskScore(int transactionId, int riskScore) throws SQLException {
