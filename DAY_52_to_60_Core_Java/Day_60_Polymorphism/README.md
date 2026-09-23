@@ -1,305 +1,394 @@
-# DAY 60 — PART 1
+# Day 60 — Part 1 & Part 2 | Core Java
 
-## Core Java — Polymorphism
+````markdown
+# DAY 60 — PART 1 & PART 2
+## Core Java — Polymorphism & Real-World Practice
 
-This part of Day 60 focused on **Polymorphism in Java**, with guided examples followed by practical portal assessment problems.
-
----
-
-## 1. Topic Covered
-
-### Polymorphism
-
-Polymorphism means allowing the same method or reference structure to represent different behaviors.
-
-Day 60 covered:
-
-* Compile-Time Polymorphism
-* Runtime Polymorphism
-* Method Overloading
-* Method Overriding
-* Parent Reference with Child Object
-* Dynamic Method Dispatch
+Day 60 focused completely on **Polymorphism in Core Java**, progressing from the fundamentals of compile-time and runtime polymorphism to real-world assessment-style problems.
 
 ---
 
-# 2. Compile-Time Polymorphism
+## 📌 Topics Covered
 
-Compile-time polymorphism was practiced through **Method Overloading**.
+### Part 1 — Polymorphism Fundamentals
 
-### Example 01
+#### 1. Compile-Time Polymorphism
+
+Covered **Method Overloading**.
+
+Method overloading allows multiple methods in the same class to have the same method name with different parameter lists.
+
+Example concepts practiced:
+
+- Different number of parameters
+- Different parameter data types
+- Method selection at compile time
+- Real-world payment operations
+
+---
+
+### 2. Runtime Polymorphism
+
+Covered **Method Overriding** and **Dynamic Method Dispatch**.
+
+Runtime polymorphism allows a parent-class reference to refer to different child-class objects.
+
+Core structure:
+
+```text
+Parent Reference
+       ↓
+Child Object
+       ↓
+Overridden Method
+       ↓
+Runtime Method Selection
+````
+
+The same parent reference can point to different child objects and execute different overridden implementations.
+
+---
+
+## 🧪 Guided Examples
+
+### Compile-Time Polymorphism
+
+#### Example 1 — Calculator
 
 File:
 
 ```text
-day60/compiletime/MethodOverloadingEx_01.java
+MethodOverloadingEx_01.java
 ```
 
-Scenario:
+Practiced:
 
-* Calculator
-* Multiple `add()` methods
+* `add(int, int)`
+* `add(int, int, int)`
+* `add(double, double)`
+
+Focus:
+
+* Method overloading
 * Different parameter lists
-* Integer and double values
+* Compile-time method selection
 
-The compiler determines which overloaded method should be called based on the arguments supplied.
+---
 
-### Example 02
+### Example 2 — Payment Processing
 
 File:
 
 ```text
-day60/compiletime/MethodOverloadingEx_02.java
+MethodOverloadingEx_02.java
 ```
 
-Scenario:
+Practiced overloaded payment methods using different payment information.
 
-* Payment processing
-* Multiple `makePayment()` methods
-* Different parameter lists
+Examples included:
+
 * UPI payment
 * Card payment
 * Payment with description
 
-This demonstrated how the same method name can provide different behaviors based on the method parameters.
+Focus:
+
+* Method overloading
+* Real-world method design
+* Parameter variation
 
 ---
 
-# 3. Runtime Polymorphism
+### Runtime Polymorphism
 
-Runtime polymorphism was practiced through **Method Overriding**.
-
-### Example 01
+#### Example 1 — Payment Processing
 
 File:
 
 ```text
-day60/runtime/RuntimePolymorphismEx_01.java
+RuntimePolymorphismEx_01.java
 ```
 
-Hierarchy:
+Structure:
 
 ```text
 Payment
-   │
-   ├── UPIPayment
-   └── CardPayment
+├── UPIPayment
+└── CardPayment
 ```
 
-The parent class defines:
+Practiced:
 
-```text
-processPayment()
-```
-
-The child classes override the method with their own implementation.
-
-A parent reference was used to point to different child objects:
-
-```text
-Payment reference
-      ↓
-UPIPayment object
-      ↓
-processPayment()
-
-Payment reference
-      ↓
-CardPayment object
-      ↓
-processPayment()
-```
-
-This demonstrated **dynamic method dispatch**.
+* Method overriding
+* Parent reference
+* Child objects
+* Dynamic method dispatch
 
 ---
 
-### Example 02
+### Example 2 — Employee Salary
 
 File:
 
 ```text
-day60/runtime/RuntimePolymorphismEx_02.java
+RuntimePolymorphismEx_02.java
 ```
 
-Hierarchy:
+Structure:
 
 ```text
 Employee
-   │
-   ├── Manager
-   └── Developer
+├── Manager
+└── Developer
 ```
 
-The parent class defines:
+Practiced:
 
-```text
-calculateSalary()
-```
-
-`Manager` and `Developer` override the method with their own salary calculations.
-
-A common `Employee` reference was used to work with different employee objects.
+* Method overriding
+* Runtime method selection
+* Parent reference pointing to child objects
+* Real-world salary calculation
 
 ---
 
-# 4. Portal Assessment Practice
+# 🧩 Portal Assessment Practice
 
-After completing the guided examples, five practical polymorphism problems were solved from the portal assessment module.
+Five Core Java assessment problems were practiced during Day 60 Part 1.
 
-No additional artificial practice problems were added.
+### 1. Plane Flight Methods
 
----
-
-## Problem 01 — Implementing Plane Flight Methods
-
-### Concept
-
-**Method Overriding / Runtime Polymorphism**
-
-### Scenario
-
-A base class `Plane` defines general flight behavior such as:
-
-```text
-fly()
-```
-
-Different plane types override the method:
+Classes:
 
 ```text
 Plane
- ├── CargoPlane
- ├── PassengerPlane
- └── FighterPlane
+├── CargoPlane
+├── PassengerPlane
+└── FighterPlane
 ```
 
-Each subclass provides its own flying behavior.
+Practiced:
 
-The problem demonstrates invoking overridden methods using a parent class reference pointing to different child objects.
+* Inheritance
+* Method overriding
+* Runtime polymorphism
 
 ---
 
-## Problem 02 — Implementing Sound Methods
+### 2. Sound Methods
 
-### Concept
-
-**Dynamic Method Dispatch with Inheritance**
-
-### Scenario
-
-A parent `Animal` class defines:
-
-```text
-sound()
-```
-
-Different animal classes override it:
+Classes:
 
 ```text
 Animal
- ├── Dog
- ├── Cat
- └── Cow
+├── Dog
+├── Cat
+└── Cow
 ```
 
-When the method is called through a common `Animal` reference or through an array/loop, Java determines at runtime which implementation should execute.
+Each child class provided its own implementation of `sound()`.
+
+Practiced:
+
+* Method overriding
+* Dynamic dispatch
+* Parent reference → child object
 
 ---
 
-## Problem 03 — Polymorphism with Sports Classes
+### 3. Sports Classes
 
-### Concept
-
-**Method Overriding and Polymorphic Behavior Across Hierarchies**
-
-### Scenario
-
-A base class `Sport` defines methods such as:
-
-```text
-play()
-```
-
-Different sports override the method:
+Classes:
 
 ```text
 Sport
- ├── Rugby
- ├── Football
- └── Basketball
+├── Rugby
+├── Football
+└── Basketball
 ```
 
-Each subclass provides behavior specific to that sport.
+Each sport provided its own implementation of `play()`.
 
-The common parent reference allows different sports to be handled through the same parent type.
+Practiced:
+
+* Runtime polymorphism
+* Method overriding
+* Common parent type with different behavior
 
 ---
 
-## Problem 04 — Starting and Stopping Engines
+### 4. Starting / Stopping Engines
 
-### Concept
+Practiced polymorphism using:
 
-**Interface/Abstract Polymorphism for Vehicle Operations**
+* `startEngine()`
+* `stopEngine()`
+* `Car`
+* `Bike`
+* `Truck`
 
-### Scenario
+Focus:
 
-A common vehicle operation defines:
-
-```text
-startEngine()
-stopEngine()
-```
-
-Different vehicle types provide their own implementation:
-
-```text
-Vehicle
- ├── Car
- ├── Bike
- └── Truck
-```
-
-The problem demonstrates polymorphic handling of different engine operations through a common abstraction.
+* Common behavior
+* Different implementations
+* Polymorphic method calls
 
 ---
 
-## Problem 05 — Calculating Salaries
+### 5. Calculating Salaries
 
-### Concept
-
-**Polymorphic Method Call for Data Computation**
-
-### Scenario
-
-A generic `Employee` class provides:
-
-```text
-calculateSalary()
-```
-
-Different employee types override the method:
+Classes:
 
 ```text
 Employee
- ├── FullTimeEmployee
- ├── PartTimeEmployee
- └── Contractor
+├── FullTimeEmployee
+├── PartTimeEmployee
+└── Contractor
 ```
 
-Each employee type can use a different salary calculation approach.
+Each employee type implemented its own `calculateSalary()` behavior.
 
-Examples include:
+Focus:
 
-* Fixed monthly salary
-* Hourly rate × hours worked
-* Contract-based calculation
-
-The same polymorphic method call can therefore produce different salary calculations depending on the actual employee object.
+* Inheritance
+* Method overriding
+* Runtime polymorphism
+* Real-world calculations
 
 ---
 
-# 5. Day 60 Part 1 Structure
+# 🚀 Part 2 — Real-World Polymorphism Practice
+
+Part 2 focused on applying polymorphism to realistic application scenarios instead of only basic examples.
+
+---
+
+## 1. UPI Payment Gateway
+
+File:
+
+```text
+UPIPaymentGateway.java
+```
+
+Structure:
+
+```text
+PaymentMethod
+├── UPI
+├── CreditCard
+└── NetBanking
+```
+
+Each payment method overrides:
+
+```text
+processPayment()
+```
+
+The application uses a parent reference:
+
+```text
+PaymentMethod
+      ↓
+UPI / CreditCard / NetBanking
+```
+
+Practiced:
+
+* Runtime polymorphism
+* Method overriding
+* Parent reference
+* Child objects
+* Instance-level state
+* Real-world payment processing
+
+The payment-method object maintains its own `totalBalance`.
+
+---
+
+## 2. E-Commerce Order Pricing
+
+Problem focused on different order types:
+
+```text
+Order
+├── RegularOrder
+├── PremiumOrder
+└── InternationalOrder
+```
+
+Each order type calculates its final amount differently.
+
+Practiced:
+
+* Runtime polymorphism
+* Method overriding
+* Order-specific pricing behavior
+* Method overloading through product operations
+* Real-world e-commerce modeling
+
+---
+
+## 3. Banking Transaction Processor
+
+Structure:
+
+```text
+BankTransaction
+├── Deposit
+├── Withdrawal
+├── Transfer
+└── BillPayment
+```
+
+Different transaction types provide their own implementations for:
+
+```text
+processTransaction()
+calculateFee()
+```
+
+Practiced:
+
+* Runtime polymorphism
+* Multiple overridden methods
+* Transaction-specific behavior
+* Fee calculation
+* Banking domain modeling
+
+---
+
+## 4. Fraud Risk Evaluation
+
+Structure:
+
+```text
+RiskEvaluator
+├── LowRiskEvaluator
+├── MediumRiskEvaluator
+└── HighRiskEvaluator
+```
+
+Different risk evaluators provide their own implementations for:
+
+```text
+calculateRiskScore()
+getRiskLevel()
+```
+
+Practiced:
+
+* Runtime polymorphism
+* Strategy-style behavior
+* Risk evaluation modeling
+* Different implementations behind a common parent type
+* Real-world fraud/risk domain concepts
+
+This problem also connects conceptually with the larger UPI Fraud & Risk project being developed separately through JDBC.
+
+---
+
+# 📁 Project Structure
 
 ```text
 day60/
@@ -313,14 +402,15 @@ day60/
 │   └── RuntimePolymorphismEx_02.java
 │
 └── problems/
-    └── Portal Assessment Problems
+    ├── UPIPaymentGateway.java
+    ├── EcommerceOrderPricing.java
+    ├── BankingTransactionProcessor.java
+    └── FraudRiskEvaluation.java
 ```
-
-The `problems` package contains the actual portal assessment practice rather than invented examples.
 
 ---
 
-# 6. Key Concepts Practiced
+# 🧠 Core Concepts Learned
 
 ```text
 Polymorphism
@@ -330,46 +420,89 @@ Polymorphism
 │
 └── Runtime Polymorphism
     ├── Method Overriding
+    ├── Parent Reference
+    ├── Child Object
     └── Dynamic Method Dispatch
 ```
 
-Important Java concepts practiced:
+Important relationship:
 
-* Method overloading
-* Method overriding
+```text
+Parent Reference
+      ↓
+Child Object
+      ↓
+Overridden Method
+      ↓
+Runtime decides implementation
+```
+
+---
+
+# 🔥 Real-World Applications Practiced
+
+The concepts were applied to multiple domains:
+
+```text
+Payment Systems
+      ↓
+E-Commerce
+      ↓
+Banking
+      ↓
+Fraud Risk Evaluation
+```
+
+This helped connect the Core Java polymorphism concepts with the type of backend systems being built later.
+
+---
+
+# 🛠️ Technologies
+
+* Java
+* Core Java
+* OOP
 * Inheritance
-* Parent class reference
-* Child class object
-* `@Override`
-* Dynamic method dispatch
-* Runtime method selection
-* Polymorphic method calls
+* Method Overloading
+* Method Overriding
+* Runtime Polymorphism
+* Dynamic Method Dispatch
+* Scanner
+* Eclipse IDE
 
 ---
 
-# 7. Day 60 Part 1 Status
+# 📌 Day 60 Learning Progress
 
-**Core Java — Polymorphism: COMPLETED**
+### Part 1
 
-Guided Examples:
+```text
+Method Overloading          ✅
+Runtime Polymorphism        ✅
+Method Overriding           ✅
+Dynamic Dispatch            ✅
+Portal Assessment Practice  ✅
+```
 
-* Method Overloading Example 01 — Completed
-* Method Overloading Example 02 — Completed
-* Runtime Polymorphism Example 01 — Completed
-* Runtime Polymorphism Example 02 — Completed
+### Part 2
 
-Portal Assessment Practice:
-
-* Plane polymorphism — Completed
-* Animal sound polymorphism — Completed
-* Sports polymorphism — Completed
-* Vehicle engine polymorphism — Completed
-* Employee salary polymorphism — Completed
+```text
+UPI Payment Gateway         ✅
+E-Commerce Pricing          ✅
+Banking Transactions       ✅
+Fraud Risk Evaluation      ✅
+Real-World Polymorphism    ✅
+```
 
 ---
 
-## Day 60 Part 1 Conclusion
+# 🎯 Day 60 Core Java Status
 
-Day 60 Part 1 focused entirely on **Core Java Polymorphism**, progressing from method overloading to runtime method overriding and then applying polymorphism through five portal assessment problems.
+**COMPLETED ✅**
 
-**Status: Core Java Day 60 Part 1 — Complete**
+Day 60 Core Java covered polymorphism from fundamentals through real-world application scenarios and assessment practice.
+
+The next learning phase continues with the **JDBC portion of Day 60 Part 2**.
+
+```
+```
