@@ -14,6 +14,10 @@ public interface TransactionDAO {
 	
 	Transaction findTransactionByReference(String transactionReference) throws SQLException;
 	
+	Transaction findTransactionByIdempotencyKey(String idempotencyKey) throws SQLException;
+	
+	Transaction findTransactionByIdempotencyKey( Connection con, String idempotencyKey) throws SQLException;
+	
 	List<Transaction> findTransactionsByAccount(int accountId) throws SQLException;
 	
 	List<Transaction> findAllTransactions() throws SQLException;

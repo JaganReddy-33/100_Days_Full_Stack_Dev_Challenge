@@ -7,6 +7,7 @@ public class Transaction {
 	private int transactionId;
 	private int accountId;
 	private String transactionReference;
+	private String idempotencyKey;
 	private String transactionType;
 	private BigDecimal amount;
 	private String recipientUpiId;
@@ -20,12 +21,13 @@ public class Transaction {
 	}
 	
 	public Transaction(int transactionId, int accountId,String transactionReference, 
-			String transactionType, BigDecimal amount, String recipientUpiId, 
+			String idempotencyKey, String transactionType, BigDecimal amount, String recipientUpiId, 
 			String transactionStatus, int riskScore, Timestamp transactionTime) {
 		
 		this.setTransactionId(transactionId);
 		this.setAccountId(accountId);
 		this.setTransactionReference(transactionReference);
+		this.setIdempotencyKey(idempotencyKey);
 		this.setTransactionType(transactionType);
 		this.setAmount(amount);
 		this.setRecipientUpiId(recipientUpiId);
@@ -56,6 +58,14 @@ public class Transaction {
 
 	public void setTransactionReference(String transactionReference) {
 		this.transactionReference = transactionReference;
+	}
+	
+	public String getIdempotencyKey() {
+	    return idempotencyKey;
+	}
+	
+	public void setIdempotencyKey(String idempotencyKey) {
+	    this.idempotencyKey = idempotencyKey;
 	}
 
 	public String getTransactionType() {
@@ -112,6 +122,7 @@ public class Transaction {
                 "transactionId=" + transactionId +
                 ", accountId=" + accountId +
                 ", transactionReference='" + transactionReference + '\'' +
+                ", idempotencyKey='" + idempotencyKey + '\'' +
                 ", transactionType='" + transactionType + '\'' +
                 ", amount=" + amount +
                 ", recipientUpiId='" + recipientUpiId + '\'' +

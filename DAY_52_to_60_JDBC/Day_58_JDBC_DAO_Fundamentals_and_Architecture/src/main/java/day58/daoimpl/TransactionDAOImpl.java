@@ -20,7 +20,7 @@ public class TransactionDAOImpl implements TransactionDAO{
 	public boolean createTransaction(Connection con, Transaction transaction) throws SQLException {
 
 	    String insertTransaction = "INSERT INTO transactions "
-	            + "(account_id, transaction_reference, transaction_type, amount, "
+	            + "(account_id, transaction_reference, idempotency_key, transaction_type, amount, "
 	            + "recipient_upi_id, transaction_status, risk_score) "
 	            + "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
@@ -28,13 +28,14 @@ public class TransactionDAOImpl implements TransactionDAO{
 	                 insertTransaction,
 	                 Statement.RETURN_GENERATED_KEYS)) {
 
-	        stmt.setInt(1, transaction.getAccountId());
-	        stmt.setString(2, transaction.getTransactionReference());
-	        stmt.setString(3, transaction.getTransactionType());
-	        stmt.setBigDecimal(4, transaction.getAmount());
-	        stmt.setString(5, transaction.getRecipientUpiId());
-	        stmt.setString(6, transaction.getTransactionStatus());
-	        stmt.setInt(7, transaction.getRiskScore());
+	    	stmt.setInt(1, transaction.getAccountId());
+            stmt.setString(2, transaction.getTransactionReference());
+            stmt.setString(3, transaction.getIdempotencyKey());
+            stmt.setString(4, transaction.getTransactionType());
+            stmt.setBigDecimal(5, transaction.getAmount());
+            stmt.setString(6, transaction.getRecipientUpiId());
+            stmt.setString(7, transaction.getTransactionStatus());
+            stmt.setInt(8, transaction.getRiskScore());
 
 	        int rowsAffected = stmt.executeUpdate();
 
@@ -71,6 +72,7 @@ public class TransactionDAOImpl implements TransactionDAO{
 					int transId = resultSet.getInt("transaction_id");
 					int accountId = resultSet.getInt("account_id");
 					String transRef = resultSet.getString("transaction_reference");
+					String idempotencyKey = resultSet.getString("idempotency_key");
 					String transType = resultSet.getString("transaction_type");
 					BigDecimal amt = resultSet.getBigDecimal("amount");
 					String recipientUpiId = resultSet.getString("recipient_upi_id");
@@ -78,7 +80,7 @@ public class TransactionDAOImpl implements TransactionDAO{
 					int riskScore = resultSet.getInt("risk_score");
 					Timestamp transTime = resultSet.getTimestamp("transaction_time");
 					
-					return new Transaction(transId, accountId, transRef, transType, amt, recipientUpiId, transStatus, riskScore, transTime);
+					return new Transaction(transId, accountId, transRef, idempotencyKey, transType, amt, recipientUpiId, transStatus, riskScore, transTime);
 				}
 			}
 		}
@@ -101,6 +103,7 @@ public class TransactionDAOImpl implements TransactionDAO{
 					int transId = resultSet.getInt("transaction_id");
 					int accountId = resultSet.getInt("account_id");
 					String transRef = resultSet.getString("transaction_reference");
+					String idempotencyKey = resultSet.getString("idempotency_key");
 					String transType = resultSet.getString("transaction_type");
 					BigDecimal amt = resultSet.getBigDecimal("amount");
 					String recipientUpiId = resultSet.getString("recipient_upi_id");
@@ -108,12 +111,129 @@ public class TransactionDAOImpl implements TransactionDAO{
 					int riskScore = resultSet.getInt("risk_score");
 					Timestamp transTime = resultSet.getTimestamp("transaction_time");
 					
-					return new Transaction(transId, accountId, transRef, transType, amt, recipientUpiId, transStatus, riskScore, transTime);
+					return new Transaction(transId, accountId, transRef, idempotencyKey, transType, amt, recipientUpiId, transStatus, riskScore, transTime);
 				}
 			}
 		}
 		return null;
 	}
+	
+	@Override
+	public Transaction findTransactionByIdempotencyKey(String idempotencyKey)
+	        throws SQLException {
+
+	    String sql =
+	            "SELECT transaction_id, account_id, transaction_reference, " +
+	            "idempotency_key, transaction_type, amount, recipient_upi_id, " +
+	            "transaction_status, risk_score, transaction_time " +
+	            "FROM transactions " +
+	            "WHERE idempotency_key = ?";
+
+	    try (Connection con = ConnectionEx.getConnection();
+	         PreparedStatement stmt = con.prepareStatement(sql)) {
+
+	        stmt.setString(1, idempotencyKey);
+
+	        try (ResultSet rs = stmt.executeQuery()) {
+
+	            if (rs.next()) {
+
+	                Transaction transaction = new Transaction();
+
+	                transaction.setTransactionId(
+	                        rs.getInt("transaction_id"));
+
+	                transaction.setAccountId(
+	                        rs.getInt("account_id"));
+
+	                transaction.setTransactionReference(
+	                        rs.getString("transaction_reference"));
+
+	                transaction.setIdempotencyKey(
+	                        rs.getString("idempotency_key"));
+
+	                transaction.setTransactionType(
+	                        rs.getString("transaction_type"));
+
+	                transaction.setAmount(
+	                        rs.getBigDecimal("amount"));
+
+	                transaction.setRecipientUpiId(
+	                        rs.getString("recipient_upi_id"));
+
+	                transaction.setTransactionStatus(
+	                        rs.getString("transaction_status"));
+
+	                transaction.setRiskScore(
+	                        rs.getInt("risk_score"));
+
+	                transaction.setTransactionTime(
+	                        rs.getTimestamp("transaction_time"));
+
+	                return transaction;
+	            }
+	        }
+	    }
+
+	    return null;
+	}
+	
+	@Override
+    public Transaction findTransactionByIdempotencyKey(
+            Connection con,
+            String idempotencyKey) throws SQLException {
+
+        String sql =
+                "SELECT * FROM transactions " +
+                "WHERE idempotency_key = ?";
+
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+
+            stmt.setString(1, idempotencyKey);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+
+                if (rs.next()) {
+
+                	Transaction transaction = new Transaction();
+
+	                transaction.setTransactionId(
+	                        rs.getInt("transaction_id"));
+
+	                transaction.setAccountId(
+	                        rs.getInt("account_id"));
+
+	                transaction.setTransactionReference(
+	                        rs.getString("transaction_reference"));
+
+	                transaction.setIdempotencyKey(
+	                        rs.getString("idempotency_key"));
+
+	                transaction.setTransactionType(
+	                        rs.getString("transaction_type"));
+
+	                transaction.setAmount(
+	                        rs.getBigDecimal("amount"));
+
+	                transaction.setRecipientUpiId(
+	                        rs.getString("recipient_upi_id"));
+
+	                transaction.setTransactionStatus(
+	                        rs.getString("transaction_status"));
+
+	                transaction.setRiskScore(
+	                        rs.getInt("risk_score"));
+
+	                transaction.setTransactionTime(
+	                        rs.getTimestamp("transaction_time"));
+
+	                return transaction;
+                }
+            }
+        }
+
+        return null;
+    }
 
 	@Override
 	public List<Transaction> findTransactionsByAccount(int accountId) throws SQLException {
@@ -133,6 +253,7 @@ public class TransactionDAOImpl implements TransactionDAO{
 					int transId = resultSet.getInt("transaction_id");
 					int accId = resultSet.getInt("account_id");
 					String transRef = resultSet.getString("transaction_reference");
+					String idempotencyKey = resultSet.getString("idempotency_key");
 					String transType = resultSet.getString("transaction_type");
 					BigDecimal amt = resultSet.getBigDecimal("amount");
 					String recipientUpiId = resultSet.getString("recipient_upi_id");
@@ -140,7 +261,7 @@ public class TransactionDAOImpl implements TransactionDAO{
 					int riskScore = resultSet.getInt("risk_score");
 					Timestamp transTime = resultSet.getTimestamp("transaction_time");
 					
-					Transaction transaction = new Transaction(transId, accId, transRef, transType, amt, recipientUpiId, transStatus, riskScore, transTime);
+					Transaction transaction = new Transaction(transId, accId, transRef, idempotencyKey, transType, amt, recipientUpiId, transStatus, riskScore, transTime);
 					transactions.add(transaction);
 				}
 			}
@@ -166,6 +287,7 @@ public class TransactionDAOImpl implements TransactionDAO{
 					int transId = resultSet.getInt("transaction_id");
 					int accId = resultSet.getInt("account_id");
 					String transRef = resultSet.getString("transaction_reference");
+					String idempotencyKey = resultSet.getString("idempotency_key");
 					String transType = resultSet.getString("transaction_type");
 					BigDecimal amt = resultSet.getBigDecimal("amount");
 					String recipientUpiId = resultSet.getString("recipient_upi_id");
@@ -173,7 +295,7 @@ public class TransactionDAOImpl implements TransactionDAO{
 					int riskScore = resultSet.getInt("risk_score");
 					Timestamp transTime = resultSet.getTimestamp("transaction_time");
 					
-					Transaction transaction = new Transaction(transId, accId, transRef, transType, amt, recipientUpiId, transStatus, riskScore, transTime);
+					Transaction transaction = new Transaction(transId, accId, transRef, idempotencyKey, transType, amt, recipientUpiId, transStatus, riskScore, transTime);
 					allTransactions.add(transaction);
 				}
 			}

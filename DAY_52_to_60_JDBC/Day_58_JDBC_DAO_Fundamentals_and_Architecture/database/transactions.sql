@@ -13,3 +13,7 @@ CREATE TABLE transactions (
     transaction_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (account_id) REFERENCES accounts(account_id)
 );
+
+ALTER TABLE transactions
+ADD COLUMN idempotency_key VARCHAR(100) NOT NULL UNIQUE
+AFTER transaction_reference;

@@ -13,8 +13,12 @@ public interface AccountDAO {
 
     Account findAccountById(Connection con, int accountId) throws SQLException;
 
+    Account findAccountByIdForUpdate(Connection con, int accountId) throws SQLException;
+    
     Account findAccountByUpiId(Connection con, String upiId) throws SQLException;
 
+    Account findAccountByUpiIdForUpdate(Connection con, String upiId) throws SQLException;
+    
     List<Account> findAllActiveAccounts() throws SQLException;
 
     boolean updateBalance(Connection con, int accountId, BigDecimal amount, String operation) throws SQLException;

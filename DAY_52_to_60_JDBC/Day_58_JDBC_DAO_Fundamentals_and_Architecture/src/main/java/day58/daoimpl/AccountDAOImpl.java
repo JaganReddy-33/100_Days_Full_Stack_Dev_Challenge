@@ -76,6 +76,41 @@ public class AccountDAOImpl implements AccountDAO {
 		}
 		return null;
 	}
+	
+	
+	@Override
+	public Account findAccountByIdForUpdate(Connection con, int accountId) throws SQLException {
+		
+		String sql = "SELECT account_id, user_name, upi_id, account_number, "
+				+ "balance, account_status, created_at "
+				+ "FROM accounts "
+				+ "WHERE account_id = ? "
+				+ "FOR UPDATE";
+		
+		try(PreparedStatement stmt = con.prepareStatement(sql)){
+			
+			stmt.setInt(1, accountId);
+			
+			try(ResultSet res = stmt.executeQuery()){
+				
+				if(res.next()) {
+					Account account = new Account();
+
+	                account.setAccountId(res.getInt("account_id"));
+	                account.setUserName(res.getString("user_name"));
+	                account.setUpiId(res.getString("upi_id"));
+	                account.setAccountNumber(res.getString("account_number"));
+	                account.setBalance(res.getBigDecimal("balance"));
+	                account.setAccountStatus(res.getString("account_status"));
+	                account.setCreatedAt(res.getTimestamp("created_at"));
+
+	                return account;
+				}
+			}
+			
+		}
+		return null;
+	}
 
 	@Override
 	public Account findAccountByUpiId(Connection con, String upiId) throws SQLException {
@@ -104,7 +139,39 @@ public class AccountDAOImpl implements AccountDAO {
 		return null;
 	}
 	
-
+	
+	@Override
+	public Account findAccountByUpiIdForUpdate(Connection con, String upiId) throws SQLException {
+		
+		String sql = "SELECT account_id, user_name, upi_id, account_number, "
+				+ " balance, account_status, created_at "
+				+ "FROM accounts "
+				+ "WHERE upi_id = ? "
+				+ "FOR UPDATE";
+		
+		try(PreparedStatement statement = con.prepareStatement(sql)){
+			
+			statement.setString(1, upiId);
+			
+			try(ResultSet res = statement.executeQuery()){
+				
+				if(res.next()) {
+					int id = res.getInt("account_id");
+	                String userName = res.getString("user_name");
+	                String upi_Id = res.getString("upi_id");
+	                String accNum = res.getString("account_number");
+	                BigDecimal balance = res.getBigDecimal("balance");
+	                String status = res.getString("account_status");
+	                Timestamp createdAt = res.getTimestamp("created_at");
+	                
+	                return new Account(id, userName, upi_Id, accNum, balance, status, createdAt);
+				}
+			}
+		}
+		return null;
+	}
+	
+	
 	@Override
 	public List<Account> findAllActiveAccounts() throws SQLException {
 		

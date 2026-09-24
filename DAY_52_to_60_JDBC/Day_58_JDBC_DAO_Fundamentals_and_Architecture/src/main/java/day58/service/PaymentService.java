@@ -21,11 +21,12 @@ public class PaymentService {
         this.transactionDAO = transactionDAO;
     }
 
-    public boolean processPayment(int senderAccountId, BigDecimal amount, String recipientUpiId)
-            throws SQLException {
+    public boolean processPayment(int senderAccountId, BigDecimal amount, String recipientUpiId,
+            String idempotencyKey) throws SQLException {
 
         Connection con = ConnectionEx.getConnection();
         con.setAutoCommit(false);
+        con.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
 
         try {
 
@@ -39,26 +40,76 @@ public class PaymentService {
                 return false;
             }
 
-            Account sender = accountDAO.findAccountById(con, senderAccountId);
+            if (idempotencyKey == null || idempotencyKey.trim().isEmpty()) {
+                con.rollback();
+                return false;
+            }
+
+            Transaction existingTransaction =
+                    transactionDAO.findTransactionByIdempotencyKey(
+                            con,
+                            idempotencyKey
+                    );
+
+            if (existingTransaction != null) {
+                con.rollback();
+
+                return "SUCCESS".equalsIgnoreCase(
+                        existingTransaction.getTransactionStatus()
+                );
+            }
+
+            Account sender = accountDAO.findAccountById(
+                    con,
+                    senderAccountId
+            );
 
             if (sender == null) {
                 con.rollback();
                 return false;
             }
 
-            if (!"ACTIVE".equalsIgnoreCase(sender.getAccountStatus())) {
-                con.rollback();
-                return false;
-            }
-
-            if (sender.getBalance().compareTo(amount) < 0) {
-                con.rollback();
-                return false;
-            }
-
-            Account receiver = accountDAO.findAccountByUpiId(con, recipientUpiId);
+            Account receiver = accountDAO.findAccountByUpiId(
+                    con,
+                    recipientUpiId
+            );
 
             if (receiver == null) {
+                con.rollback();
+                return false;
+            }
+
+            if (sender.getAccountId() == receiver.getAccountId()) {
+                con.rollback();
+                return false;
+            }
+
+            if (sender.getAccountId() < receiver.getAccountId()) {
+
+                sender = accountDAO.findAccountByIdForUpdate(
+                        con,
+                        sender.getAccountId()
+                );
+
+                receiver = accountDAO.findAccountByUpiIdForUpdate(
+                        con,
+                        receiver.getUpiId()
+                );
+
+            } else {
+
+                receiver = accountDAO.findAccountByUpiIdForUpdate(
+                        con,
+                        receiver.getUpiId()
+                );
+
+                sender = accountDAO.findAccountByIdForUpdate(
+                        con,
+                        sender.getAccountId()
+                );
+            }
+
+            if (!"ACTIVE".equalsIgnoreCase(sender.getAccountStatus())) {
                 con.rollback();
                 return false;
             }
@@ -68,7 +119,7 @@ public class PaymentService {
                 return false;
             }
 
-            if (sender.getAccountId() == receiver.getAccountId()) {
+            if (sender.getBalance().compareTo(amount) < 0) {
                 con.rollback();
                 return false;
             }
@@ -79,6 +130,7 @@ public class PaymentService {
 
             transaction.setAccountId(senderAccountId);
             transaction.setTransactionReference(transactionReference);
+            transaction.setIdempotencyKey(idempotencyKey);
             transaction.setTransactionType("UPI_PAYMENT");
             transaction.setAmount(amount);
             transaction.setRecipientUpiId(recipientUpiId);
