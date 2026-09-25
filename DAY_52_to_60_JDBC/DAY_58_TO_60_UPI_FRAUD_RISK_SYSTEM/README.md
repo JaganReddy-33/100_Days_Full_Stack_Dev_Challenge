@@ -736,7 +736,7 @@ as the configuration template.
 ## 1. Clone the repository
 
 ```bash
-git clone <YOUR_REPOSITORY_URL>
+git clone https://github.com/JaganReddy-33/100_Days_Full_Stack_Dev_Challenge/tree/main/DAY_52_to_60_JDBC/DAY_58_TO_60_UPI_FRAUD_RISK_SYSTEM
 cd Day_58_to_60_UPI_FRAUD_RISK_SYSTEM
 ```
 
