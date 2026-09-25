@@ -737,7 +737,7 @@ as the configuration template.
 
 ```bash
 git clone <YOUR_REPOSITORY_URL>
-cd DAY_58_JDBC_DAO_Fundamentals_and_Architecture
+cd Day_58_to_60_UPI_FRAUD_RISK_SYSTEM
 ```
 
 ## 2. Create the database
