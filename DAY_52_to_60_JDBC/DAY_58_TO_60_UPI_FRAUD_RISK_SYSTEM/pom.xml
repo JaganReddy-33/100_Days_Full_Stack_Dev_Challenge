@@ -3,11 +3,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.jagan</groupId>
-  <artifactId>Day_58_JDBC_DAO_Fundamentals_and_Architecture</artifactId>
+  <artifactId>DAY_58_TO_60_UPI_FRAUD_RISK_SYSTEM</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>Day_58_JDBC_DAO_Fundamentals_and_Architecture</name>
+  <name>DAY_58_TO_60_UPI_FRAUD_RISK_SYSTEM</name>
   <url>http://maven.apache.org</url>
 
   <properties>
