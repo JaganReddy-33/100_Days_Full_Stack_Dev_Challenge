@@ -1,13 +1,98 @@
-# Maven
-**/target/
+# ==============================================================================
+# ENVIRONMENT, SECRETS & CREDENTIALS (CRITICAL - NEVER PUSH TO GITHUB)
+# ==============================================================================
+.env
+.env.*
+*.env
+**/.env
+**/.env.*
+**/*.env
+!*.env.example
+!**/*.env.example
+!**/.env.example
 
-# Eclipse
-**/.classpath
-**/.project
-**/.settings/
-
-# Database credentials
+# Sensitive Java & Spring/Tomcat properties
+application.properties
+**/application.properties
+application-*.properties
+**/application-*.properties
+db.properties
 **/db.properties
+*.properties.local
+**/*.properties.local
+!application.properties.example
+!**/application.properties.example
 
-# Eclipse workspace
-/.metadata/
+# Keys & Certificates
+*.pem
+*.key
+*.cert
+*.crt
+*.p12
+*.pfx
+*.jks
+*.keystore
+*credentials*.json
+*secret*.json
+!*credentials*.example.json
+!*secret*.example.json
+
+# Archives & Large Zips
+*.zip
+*.tar
+*.gz
+*.tgz
+*.rar
+*.7z
+
+# ==============================================================================
+# BUILD ARTIFACTS
+# ==============================================================================
+target/
+**/target/
+*.class
+bin/
+**/bin/
+*.war
+*.jar
+!**/lib/*.jar
+tomcat.*
+*.log
+logs/
+**/logs/
+
+# Frontend
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+dist-ssr/
+**/dist-ssr/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.vite/
+**/.vite/
+
+# ==============================================================================
+# IDE & WORKSPACE CONFIGS
+# ==============================================================================
+.metadata/
+**/.metadata/
+Servers/
+**/Servers/
+.settings/
+**/.settings/
+.project
+**/.project
+.classpath
+**/.classpath
+.idea/
+**/.idea/
+*.iml
+.vscode/
+**/.vscode/
+
+# OS Artifacts
+.DS_Store
+Thumbs.db
