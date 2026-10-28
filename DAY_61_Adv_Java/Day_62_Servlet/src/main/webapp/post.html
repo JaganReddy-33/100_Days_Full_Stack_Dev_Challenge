@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Account</title>
+
+<style>
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	min-height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 40px 20px;
+	font-family: Arial, sans-serif;
+	background: #f1f5f9;
+	color: #0f172a;
+}
+
+.register-card {
+	width: 100%;
+	max-width: 850px;
+	display: grid;
+	grid-template-columns: 0.9fr 1.1fr;
+	overflow: hidden;
+	border-radius: 24px;
+	background: #ffffff;
+	box-shadow: 0 20px 60px rgba(15, 23, 42, 0.15);
+}
+
+.left-panel {
+	padding: 50px 40px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	background: linear-gradient(145deg, #1d4ed8, #2563eb);
+	color: white;
+}
+
+.brand {
+	font-size: 28px;
+	font-weight: 700;
+	margin-bottom: 45px;
+}
+
+.left-panel h1 {
+	font-size: 36px;
+	line-height: 1.15;
+	margin-bottom: 18px;
+}
+
+.left-panel p {
+	color: #dbeafe;
+	font-size: 15px;
+	line-height: 1.7;
+	margin-bottom: 35px;
+}
+
+.features {
+	display: flex;
+	flex-direction: column;
+	gap: 18px;
+}
+
+.feature {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	font-size: 14px;
+	color: #eff6ff;
+}
+
+.check {
+	width: 28px;
+	height: 28px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.15);
+	font-size: 14px;
+}
+
+.right-panel {
+	padding: 50px 45px;
+}
+
+.right-panel h2 {
+	font-size: 28px;
+	margin-bottom: 8px;
+}
+
+.subtitle {
+	color: #64748b;
+	font-size: 14px;
+	margin-bottom: 30px;
+}
+
+.form-row {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 18px;
+}
+
+.form-group {
+	margin-bottom: 20px;
+}
+
+label {
+	display: block;
+	margin-bottom: 8px;
+	font-size: 13px;
+	font-weight: 600;
+	color: #334155;
+}
+
+input {
+	width: 100%;
+	padding: 13px 14px;
+	border: 1px solid #cbd5e1;
+	border-radius: 9px;
+	outline: none;
+	background: #f8fafc;
+	color: #0f172a;
+	font-size: 14px;
+	transition: 0.2s;
+}
+
+input:focus {
+	border-color: #2563eb;
+	background: #ffffff;
+	box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+input::placeholder {
+	color: #94a3b8;
+}
+
+.terms {
+	display: flex;
+	align-items: flex-start;
+	gap: 9px;
+	margin: 5px 0 22px;
+	font-size: 12px;
+	color: #64748b;
+	line-height: 1.5;
+}
+
+.terms input {
+	width: auto;
+	margin-top: 2px;
+}
+
+.terms a {
+	color: #2563eb;
+	text-decoration: none;
+	font-weight: 600;
+}
+
+button {
+	width: 100%;
+	padding: 14px;
+	border: none;
+	border-radius: 9px;
+	background: #2563eb;
+	color: white;
+	font-size: 15px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: 0.2s;
+}
+
+button:hover {
+	background: #1d4ed8;
+	transform: translateY(-1px);
+}
+
+.login-text {
+	margin-top: 22px;
+	text-align: center;
+	color: #64748b;
+	font-size: 13px;
+}
+
+.login-text a {
+	color: #2563eb;
+	text-decoration: none;
+	font-weight: 600;
+}
+
+@media ( max-width : 700px) {
+	.register-card {
+		grid-template-columns: 1fr;
+	}
+	.left-panel {
+		padding: 35px;
+	}
+	.left-panel h1 {
+		font-size: 30px;
+	}
+	.brand {
+		margin-bottom: 25px;
+	}
+	.right-panel {
+		padding: 35px;
+	}
+}
+
+@media ( max-width : 500px) {
+	.form-row {
+		grid-template-columns: 1fr;
+		gap: 0;
+	}
+}
+</style>
+</head>
+
+<body>
+
+	<div class="register-card">
+
+		<div class="left-panel">
+
+			<div class="brand">DevPortal</div>
+
+			<h1>Build your account.</h1>
+
+			<p>Create your account and get started with a simple, secure
+				registration experience.</p>
+
+			<div class="features">
+
+				<div class="feature">
+					<span class="check">✓</span> <span>Quick and simple
+						registration</span>
+				</div>
+
+				<div class="feature">
+					<span class="check">✓</span> <span>Secure account
+						information</span>
+				</div>
+
+				<div class="feature">
+					<span class="check">✓</span> <span>Access your personal
+						dashboard</span>
+				</div>
+
+			</div>
+
+		</div>
+
+		<div class="right-panel">
+
+			<h2>Create Account</h2>
+
+			<p class="subtitle">Fill in your details to create your account.
+			</p>
+
+			<form action="post" method="post">
+
+				<div class="form-row">
+
+					<div class="form-group">
+						<label for="firstName">First Name</label> <input type="text"
+							id="firstName" name="firstName" placeholder="John" required>
+					</div>
+
+					<div class="form-group">
+						<label for="lastName">Last Name</label> <input type="text"
+							id="lastName" name="lastName" placeholder="Doe" required>
+					</div>
+
+				</div>
+
+				<div class="form-group">
+					<label for="email">Email Address</label> <input type="email"
+						id="email" name="email" placeholder="john@example.com" required>
+				</div>
+
+				<div class="form-group">
+					<label for="phone">Phone Number</label> <input type="tel"
+						id="phone" name="phone" placeholder="+91 98765 43210" required>
+				</div>
+
+				<div class="form-row">
+
+					<div class="form-group">
+						<label for="password">Password</label> <input type="password"
+							id="password" name="password" placeholder="Create password"
+							required>
+					</div>
+
+					<div class="form-group">
+						<label for="confirmPassword">Confirm Password</label> <input
+							type="password" id="confirmPassword" name="confirmPassword"
+							placeholder="Confirm password" required>
+					</div>
+
+				</div>
+
+				<label class="terms"> <input type="checkbox" name="terms"
+					required> <span> I agree to the <a href="#">Terms
+							of Service</a> and <a href="#">Privacy Policy</a>.
+				</span>
+				</label>
+
+				<button type="submit">Create Account</button>
+
+			</form>
+
+			<p class="login-text">
+				Already have an account? <a href="#">Sign in</a>
+			</p>
+
+		</div>
+
+	</div>
+
+</body>
+</html>
